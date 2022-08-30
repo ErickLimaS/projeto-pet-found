@@ -1,3 +1,19 @@
+:root{
+
+  --brand-color: #FFAC4A;
+  --brand-color2: #F9C87C;
+
+  --white: rgb(250, 250, 250);
+  --nav-items-color: #005e80;
+
+}
+
+html{
+
+  font-size: 62.5%;
+
+}
+
 html,
 body {
   padding: 0;
@@ -11,16 +27,15 @@ a {
   text-decoration: none;
 }
 
+ul, li{
+
+  list-style-type: none;
+
+}
+
 * {
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
