@@ -1,11 +1,15 @@
-.header, .header nav, .list {
+.header, .header nav, .list, .logo, span.login {
 
     display: flex;
     flex-direction: row;
 
+}
+
+.header, .header nav, .list {
+
     font-size: 1.8rem;
     font-weight: 600;
-    color: var(--nav-items-color);
+    color: var(--white);
 
 }
 
@@ -20,6 +24,19 @@
 
 }
 
+div.logo svg{
+
+    cursor: pointer;
+
+    transform: scale(1.4);
+
+}
+@media(max-width: 768px) {
+
+    div.logo svg{
+        transform: scale(1.2);
+    }
+}
 
 .header nav {
 
@@ -70,6 +87,27 @@
 .header nav>div {
 
     height: fit-content;
+
+}
+
+.header span.login{
+
+    cursor: pointer;
+
+    color: var(--white);
+
+}
+
+.header .login_desktop a:hover span{
+
+    border-bottom: 2px solid wheat;
+
+}
+
+.header span.login svg{
+
+    margin-right: 0.5rem;
+    fill: var(--white);
 
 }
 
