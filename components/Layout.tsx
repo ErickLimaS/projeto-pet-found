@@ -10,14 +10,11 @@ function Layout({ children }: any) {
             <Meta />
             <Header />
 
-            <div className={styles.container}>
-                <main className={styles.main}>
+            <main className={styles.main}>
 
+                {children}
 
-                    {children}
-
-                </main>
-            </div>
+            </main>
 
             <Footer />
         </>

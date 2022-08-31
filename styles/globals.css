@@ -2,8 +2,15 @@
 
   --brand-color: #FFAC4A;
   --brand-color2: #F9C87C;
+  --brand-color3: #ffad32;
 
   --white: rgb(250, 250, 250);
+  --white2: rgb(235, 235, 235);
+
+  --black: #000;
+  --black2: #181818; 
+  --black3: #212121; 
+
   --nav-items-color: #005e80;
 
 }

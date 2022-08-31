@@ -4,7 +4,7 @@
 
     font-size: 1.5rem;
     font-weight: 500;
-    color: var(--nav-items-color);
+    color: var(--white);
 
 }
 
@@ -90,9 +90,9 @@
 
     font-size: 1.6rem;
     font-weight: 500;
-    color: var(--white);
+    color: var(--white2);
 
-    border-bottom: 2px solid var(--white);
+    border-bottom: 2px solid var(--white2);
 
 }
 

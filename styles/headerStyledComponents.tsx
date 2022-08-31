@@ -8,6 +8,8 @@ interface Props {
 
 export const mobileList  = styled.ul<Props>`
 
+    z-index: 10;
+
     display: ${props => props.mobileMenu === true ? 'flex!important' : 'none!important'};
     flex-direction: column;
 
