@@ -21,7 +21,7 @@ export const mobileList  = styled.ul<Props>`
     width: 100%;
 
     background-color: var(--brand-color);
-    box-shadow: 20px 0px 20px 0px #5f5f5f;
+    box-shadow: 0px 0px 10px 0px #8080809e;
 
     li{
         margin: 0.5rem 1rem;

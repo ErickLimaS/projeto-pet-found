@@ -31,19 +31,19 @@ function Header() {
 
                 <ul className={headerStyles.list}>
                     <li>
-                        <Link href='/'>Home</Link>
+                        <Link href='/'>Início</Link>
                     </li>
 
                     <li>
-                        <Link href='/about'>Placeholder</Link>
+                        <Link href='/perdi-meu-pet'>Perdi Meu Pet</Link>
                     </li>
 
                     <li>
-                        <Link href='/about'>Placeholder</Link>
+                        <Link href='/achei-um-pet'>Achei Um Pet</Link>
                     </li>
 
                     <li>
-                        <Link href='/about'>Placeholder</Link>
+                        <Link href='/como-funciona'>Como Funciona</Link>
                     </li>
                 </ul>
 
@@ -84,19 +84,19 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/'>Home</Link>
+                            <Link href='/'>Início</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='/perdi-meu-pet'>Perdi Meu Pet</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='/achei-um-pet'>Achei Um Pet</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='/como-funciona'>Como Funciona</Link>
                         </li>
 
                     </C.mobileList>

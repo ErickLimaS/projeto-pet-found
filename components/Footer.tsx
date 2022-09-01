@@ -9,27 +9,23 @@ function Footer() {
             <nav>
 
                 <div>
-                    <h1>Placeholder</h1>
+                    <h1>Sobre</h1>
 
                     <ul className={footerStyles.list}>
                         <li>
-                            <Link href='/'>Placeholder</Link>
+                            <Link href='/#about'>Sobre Nós</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='/#our-team'>Nossa Equipe</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='/#our-mission'>Nossa Missão</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
-                        </li>
-
-                        <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='/#newsletter'>Newsletter</Link>
                         </li>
                     </ul>
                 </div>

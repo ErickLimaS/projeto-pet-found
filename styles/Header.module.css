@@ -144,13 +144,23 @@ div.drawer_sidebar_mobile {
     }
     div.drawer_sidebar_mobile button svg{
 
-        fill: var(--nav-items-color);
+        fill: var(--white);
         
 
     }
     .drawer_sidebar_mobile ul{
 
         display: none;
+
+    }
+    .drawer_sidebar_mobile li{
+
+        border-bottom: 1px solid #dddddd8a;
+
+    }
+    .drawer_sidebar_mobile li:last-child{
+
+        border-bottom: 0;
 
     }
 }
