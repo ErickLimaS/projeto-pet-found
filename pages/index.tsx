@@ -1,5 +1,6 @@
 import homeStyles from '../styles/Home.module.css'
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import Meta from '../components/Meta'
 
 const Home: NextPage = () => {
@@ -8,7 +9,6 @@ const Home: NextPage = () => {
       <Meta title='Início' />
 
       <div className={homeStyles.first_content}>
-
         <div className={homeStyles.text}>
 
           <span>SEJA BEM VINDO</span>
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
           <h1>VOCÊ VIU O MEU DONO ?</h1>
 
           <p>
-            Nossa <span>ONG</span> ajuda a seus <span>ANIMAIS</span> a reencontrarem seus <span>DONOS</span>
+            Nossa <span>ONG</span> ajuda com o reencontro de <span>ANIMAIS</span> com seus <span>DONOS</span>
           </p>
 
         </div>
@@ -51,7 +51,99 @@ const Home: NextPage = () => {
 
         </section>
 
-        <section className={homeStyles.our_team} id='our-team'>
+        <section className={homeStyles.our_mission_section} id='our-mission'>
+
+          <h2>Nossa Missão</h2>
+
+          <div className={homeStyles.our_standarts}>
+
+            <div className={homeStyles.standart}>
+
+              <div className={homeStyles.img_container}>
+
+                <Image src='/imgs/svg/binoculars.svg' alt='Figura de Binoculos' width={160} height={160} layout='intrinsic'></Image>
+
+              </div>
+
+              <div className={homeStyles.info}>
+
+                <h3>Visão</h3>
+
+                <p>Lorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem</p>
+
+              </div>
+
+            </div>
+
+            <div className={homeStyles.standart}>
+
+              <div className={homeStyles.img_container}>
+
+                <Image src='/imgs/svg/rocket2.svg' alt='Figura de Foguete' width={160} height={160} layout='intrinsic'></Image>
+
+              </div>
+
+              <div className={homeStyles.info}>
+
+                <h3>Missão</h3>
+
+                <p>Lorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem</p>
+
+              </div>
+
+            </div>
+
+            <div className={homeStyles.standart}>
+
+              <div className={homeStyles.img_container}>
+
+                {/* <img src='/imgs/svg/target.svg' alt='Figura de Binoculos'></img> */}
+                <Image src='/imgs/svg/target.svg' alt='Figura de Alvo' width={160} height={160} layout='intrinsic'></Image>
+
+              </div>
+
+              <div className={homeStyles.info}>
+
+                <h3>Meta</h3>
+
+                <p>Lorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem</p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* SECTION - SHOWING PEOPLE WHO ALREADY HAVE BEEN USING THE WEBSITE BEFORE */}
+        {/* <section className={homeStyles.who_approves_section} id='who-approves'>
+
+          <h2>Sobre Nós</h2>
+
+          <div className={homeStyles.text_section}>
+
+            <img src='./imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido'></img>
+
+            <div className={homeStyles.text}>
+
+              <h3>Lorem Lorem Lorem</h3>
+
+              <small>Lorem Lorem</small>
+
+              <span></span>
+
+              <p>
+                Lorem Lorem LoremLorem Lorem Lorem Lorem Lorem LoremLorem Lorem LoremvLorem Lorem LoremLorem Lorem Lorem
+              </p>
+
+            </div>
+
+          </div>
+
+        </section> */}
+
+        <section className={homeStyles.our_team_section} id='our-team'>
 
           <h2>Nosso Time</h2>
 
@@ -140,32 +232,6 @@ const Home: NextPage = () => {
 
         </section>
 
-        {/* <section className={homeStyles.our_mission_seaction} id='our-mission'>
-
-          <h2>Sobre Nós</h2>
-
-          <div className={homeStyles.text_section}>
-
-            <img src='./imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido'></img>
-
-            <div className={homeStyles.text}>
-
-              <h3>Lorem Lorem Lorem</h3>
-
-              <small>Lorem Lorem</small>
-
-              <span></span>
-
-              <p>
-                Lorem Lorem LoremLorem Lorem Lorem Lorem Lorem LoremLorem Lorem LoremvLorem Lorem LoremLorem Lorem Lorem
-              </p>
-
-            </div>
-
-          </div>
-
-        </section> */}
-
         <section className={homeStyles.newsletter_section} id='newsletter'>
 
           <div className={homeStyles.text_section}>
@@ -179,6 +245,10 @@ const Home: NextPage = () => {
               </p>
 
               <form onSubmit={() => console.log('submit')}>
+
+                <label htmlFor='name'>
+                  <input type='text' id='name' placeholder='Seu nome'></input>
+                </label>
 
                 <label htmlFor='email'>
                   <input type='email' id='email' placeholder='Email'></input>
