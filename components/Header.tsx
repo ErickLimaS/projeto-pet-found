@@ -70,7 +70,7 @@ function Header() {
 
                     </button>
 
-                    <C.mobileList mobileMenu={mobileMenu}>
+                    <C.MobileList mobileMenu={mobileMenu}>
 
                         <li>
                             <Link href='/login'>
@@ -99,7 +99,7 @@ function Header() {
                             <Link href='/como-funciona'>Como Funciona</Link>
                         </li>
 
-                    </C.mobileList>
+                    </C.MobileList>
 
                 </div>
 

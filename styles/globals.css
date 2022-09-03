@@ -1,4 +1,4 @@
-:root{
+:root {
 
   --brand-color: #FFAC4A;
   --brand-color2: #F9C87C;
@@ -7,32 +7,37 @@
   --white: rgb(250, 250, 250);
   --white2: rgb(235, 235, 235);
 
-  --grey: rgb(95, 95, 95); 
+  --grey: rgb(95, 95, 95);
   --grey2: grey;
-  --grey3: #c0c0c0; 
+  --grey3: #c0c0c0;
   --grey4: #e1e1e1;
 
   --black: #000;
-  --black2: #181818; 
-  --black3: #212121; 
+  --black2: #181818;
+  --black3: #212121;
   --black4: #2c2c2c;
 
   --nav-items-color: #005e80;
 
 }
 
-html{
+html {
 
   font-size: 62.5%;
 
 }
 
-html,
-body {
+html, body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body{
+
+  font-size: 1.6rem;
+
 }
 
 a {
@@ -40,7 +45,7 @@ a {
   text-decoration: none;
 }
 
-ul, li{
+ul, li {
 
   list-style-type: none;
 
@@ -51,4 +56,3 @@ ul, li{
   margin: 0;
   box-sizing: border-box;
 }
-

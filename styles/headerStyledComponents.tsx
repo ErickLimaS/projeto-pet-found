@@ -6,7 +6,7 @@ interface Props {
 
 }
 
-export const mobileList  = styled.ul<Props>`
+export const MobileList  = styled.ul<Props>`
 
     z-index: 10;
 

@@ -2,6 +2,7 @@ import homeStyles from '../styles/Home.module.css'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import Meta from '../components/Meta'
+import * as SVG from '../public/imgs/svg'
 
 const Home: NextPage = () => {
   return (
@@ -31,7 +32,7 @@ const Home: NextPage = () => {
 
           <div className={homeStyles.text_section}>
 
-            <img src='./imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido'></img>
+            <Image src='/imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido' height={400} width={400} layout='intrinsic'/>;
 
             <div className={homeStyles.text}>
 
@@ -61,7 +62,7 @@ const Home: NextPage = () => {
 
               <div className={homeStyles.img_container}>
 
-                <Image src='/imgs/svg/binoculars.svg' alt='Figura de Binoculos' width={160} height={160} layout='intrinsic'></Image>
+                <SVG.Binoculars />
 
               </div>
 
@@ -79,7 +80,7 @@ const Home: NextPage = () => {
 
               <div className={homeStyles.img_container}>
 
-                <Image src='/imgs/svg/rocket2.svg' alt='Figura de Foguete' width={160} height={160} layout='intrinsic'></Image>
+                <SVG.Rocket2 />
 
               </div>
 
@@ -97,8 +98,7 @@ const Home: NextPage = () => {
 
               <div className={homeStyles.img_container}>
 
-                {/* <img src='/imgs/svg/target.svg' alt='Figura de Binoculos'></img> */}
-                <Image src='/imgs/svg/target.svg' alt='Figura de Alvo' width={160} height={160} layout='intrinsic'></Image>
+                <SVG.Target />
 
               </div>
 
