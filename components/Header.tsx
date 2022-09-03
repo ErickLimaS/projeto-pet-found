@@ -35,7 +35,7 @@ function Header() {
                     </li>
 
                     <li>
-                        <Link href='/perdi-meu-pet'>Perdi Meu Pet</Link>
+                        <Link href='/criar-anuncio'>Criar Anúncio</Link>
                     </li>
 
                     <li>
@@ -88,7 +88,7 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/perdi-meu-pet'>Perdi Meu Pet</Link>
+                            <Link href='/criar-anuncio'>Criar Anúncio</Link>
                         </li>
 
                         <li>
