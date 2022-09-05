@@ -24,7 +24,8 @@
     align-items: center;
 
 }
-@media(max-width: 620px){
+
+@media(max-width: 620px) {
 
     .heading_and_creating_post_progress {
         margin-top: 4rem;
@@ -47,106 +48,19 @@ div.pet_posters {
 
 }
 
-.pet_posters ul {
 
-    display: grid;
-    grid-template-columns: 30% 30% 30%;
-    gap: 0 2rem;
-    justify-content: center;
-    align-items: center;
-
-}
-@media(max-width: 768px){
-
-    .pet_posters ul {
-
-        margin: 2rem 0;
-
-        gap: 1rem 2rem;
-        grid-template-columns: 40% 40%;
-    }
-}
-@media(max-width: 425px){
-
-    .pet_posters ul {
-
-        margin: 2rem 0;
-
-        gap: 1rem 0;
-        grid-template-columns: 90%;
-    }
-}
-
-.pet_posters ul li {
-
-    height: 100%;
-
-    border: 2px solid var(--brand-color2);
-
-    border-radius: 4px;
-
-    padding: 4rem 1rem;
-
-}
-
-.pet_posters ul li a.center_img {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100%;
-    width: 100%;
-
-}
-
-.pet_posters ul li:hover {
-
-    transition: all ease 200ms;
-    top: 2vh !important;
-
-    box-shadow: 20px 20px 15px 0px rgb(201, 201, 201);
-}
-
-.pet_posters ul li img {
-
-    border-radius: 4px;
-
-}
-
-.pet_posters ul li:hover img {
-
-    transition: all ease 200ms;
-
-    top: -1vh !important;
-
-    transform: scale(1.1);
-    border-radius: 49px 49px 39px 39px;
-
-}
-
-.pet_posters ul li h2 {
-
-    margin-top: 1rem;
-
-    font-size: 2rem;
-    font-weight: 400;
-
-}
-
-div.next_page{
-
-    width: 80%;
+div.next_page {
 
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-evenly;
 
 }
-div.next_page button{
 
-    transition: all ease-in-out 100ms;
+div.next_page button {
+
+    transition: all ease-in-out 160ms;
 
     display: flex;
     flex-direction: row;
@@ -165,7 +79,8 @@ div.next_page button{
     font-size: 1.6rem;
     font-weight: 600;
 }
-div.next_page button svg{
+
+div.next_page button svg {
 
     transform: scale(1.4);
 
@@ -174,7 +89,7 @@ div.next_page button svg{
 }
 
 
-div.next_page button:hover{
+div.next_page button:hover {
 
     color: var(--white);
     background-color: var(--brand-color3);

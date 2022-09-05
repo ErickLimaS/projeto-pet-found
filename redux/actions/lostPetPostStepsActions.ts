@@ -1,5 +1,5 @@
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
-import { COMPLETE_CREATING_POST, REINICIATE_CREATING_POST, STEP_1_CREATING_POST, STEP_2_CREATING_POST, STEP_3_CREATING_POST } from "../constants/lostPetPostStepsContants";
+import { CAT_PET_CHOSE, COMPLETE_CREATING_POST, DOG_PET_CHOSE, ERROR_PET_CHOSE, OTHER_PET_CHOSE, REINICIATE_CREATING_POST, STEP_1_CREATING_POST, STEP_2_CREATING_POST, STEP_3_CREATING_POST } from "../constants/lostPetPostStepsContants";
 
 export const changeCreateLostPetPostSteps = (currentStep: number) => async (dispatch: Dispatch<AnyAction>) => {
 
@@ -37,5 +37,38 @@ export const changeCreateLostPetPostSteps = (currentStep: number) => async (disp
     }
 
 
+
+}
+
+export const chooseWhichAnimal = (animal: string) => async (dispatch: Dispatch<AnyAction>) => {
+
+    switch (animal) {
+
+        case 'DOG':
+            dispatch({
+                type: DOG_PET_CHOSE,
+                payload: "DOG"
+            })
+            break
+        case 'CAT':
+            dispatch({
+                type: CAT_PET_CHOSE,
+                payload: "CAT"
+            })
+            break
+        case 'OTHER':
+            dispatch({
+                type: OTHER_PET_CHOSE,
+                payload: "OTHER"
+            })
+            break
+        default:
+            dispatch({
+                type: ERROR_PET_CHOSE,
+                payload: "ERROR"
+            })
+            break
+
+    }
 
 }

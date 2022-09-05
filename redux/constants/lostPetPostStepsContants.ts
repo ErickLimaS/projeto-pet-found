@@ -3,3 +3,8 @@ export const STEP_2_CREATING_POST: string = "STEP_2_CREATING_POST"
 export const STEP_3_CREATING_POST: string = "STEP_3_CREATING_POST"
 export const COMPLETE_CREATING_POST: string = "COMPLETE_CREATING_POST"
 export const REINICIATE_CREATING_POST: string = "REINICIATE_CREATING_POST"
+
+export const DOG_PET_CHOSE: string = "DOG_PET_CHOSE"
+export const CAT_PET_CHOSE: string = "CAT_PET_CHOSE"
+export const OTHER_PET_CHOSE: string = "OTHER_PET_CHOSE"
+export const ERROR_PET_CHOSE: string = "ERROR_PET_CHOSE"

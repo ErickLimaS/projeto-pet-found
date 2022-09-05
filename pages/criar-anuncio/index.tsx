@@ -9,12 +9,52 @@ import StepsCreatePost from '../../components/StepsCreatePost'
 import LostPageStyles from '../../styles/Index_perdi_meu_pet.module.css'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
 import * as SVG from '../../public/imgs/svg'
+import { useRouter } from 'next/router'
+import Step1 from './step1'
 
 const CriarAnuncio: NextPage = () => {
 
     const stepsFromPost = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
     const { currentStep }: any = stepsFromPost
+
+    const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
+    const { animal }: any = choseAnimal
+
     const dispatch: any = useDispatch()
+
+    const router = useRouter()
+
+    // indicates which route the user will be redirected after animal is chose
+    const routeToTheChoseAnimal = () => {
+
+        switch (animal) {
+            case 'CAT':
+                if (currentStep === 2) {
+                    return 'cat/step2'
+                }
+                if (currentStep === 3) { //condition of step 2 fields filled
+                    return 'cat/step3'
+                }
+            case 'DOG':
+                if (currentStep === 2) {
+                    return 'dog/step2'
+                }
+                if (currentStep === 3) {//condition of step 2 fields filled
+                    return 'dog/step3'
+                }
+                return 'dog/step3'
+            case 'OTHER':
+                if (currentStep === 2) {
+                    return 'other/step2'
+                }
+                if (currentStep === 3) { //condition of step 2 fields filled
+                    return 'other/step3'
+                }
+            default:
+                return '/'
+        }
+
+    }
 
     return (
         <div className={LostPageStyles.page_content}>
@@ -32,52 +72,26 @@ const CriarAnuncio: NextPage = () => {
 
             <div className={LostPageStyles.pet_posters}>
 
-                <nav>
-                    <ul>
-
-                        <li>
-
-                            <Link href='/' >
-                                <a className={LostPageStyles.center_img}>
-                                    <Image src='/imgs/lost-pets/lost-cat.jpg' alt='Gato em Cartaz de Desaparecido' width={260} height={260} layout='intrinsic' />
-                                </a>
-                            </Link>
-
-                            <h2><Link href='/' >Anúncio para Gato Perdido</Link></h2>
-
-                        </li>
-
-                        <li>
-
-                            <Link href='/' >
-                                <a className={LostPageStyles.center_img}>
-                                    <Image src='/imgs/lost-pets/lost-dog.jpg' alt='Cachorro em Cartaz de Desaparecido' width={260} height={260} layout='intrinsic' />
-                                </a>
-                            </Link>
-
-                            <h2><Link href='/' >Anúncio para Cachorro Perdido</Link></h2>
-
-                        </li>
-
-                        <li>
-
-                            <Link href='/' >
-                                <a className={LostPageStyles.center_img}>
-                                    <Image src='/imgs/lost-pets/lost-template.jpg' alt='Template de Anúncio de animal desaparecido.' width={260} height={260} layout='intrinsic' />
-                                </a>
-                            </Link>
-
-                            <h2><Link href='/' >Anúncio para Outro Animal Perdido</Link></h2>
-
-                        </li>
-
-                    </ul>
-                </nav>
+                <Step1 />
 
                 <div className={LostPageStyles.next_page}>
 
-                    <button type='button' onClick={() => dispatch(changeCreateLostPetPostSteps(currentStep))}>
-                        Próximo Passo <SVG.ChevronRight /> 
+                    <button type='button'
+                        disabled={currentStep === 1}
+                        onClick={() =>
+                            dispatch(changeCreateLostPetPostSteps(currentStep - 2)) &&
+                            router.push(`/criar-anuncio/${routeToTheChoseAnimal()} `)}
+                    >
+                        <SVG.ChevronRight /> Voltar
+                    </button>
+
+                    <button type='button'
+                        disabled={animal == null || undefined}
+                        onClick={() =>
+                            dispatch(changeCreateLostPetPostSteps(currentStep)) &&
+                            router.push(`/criar-anuncio/${routeToTheChoseAnimal()} `)}
+                    >
+                        Próximo Passo <SVG.ChevronRight />
                     </button>
 
                 </div>
