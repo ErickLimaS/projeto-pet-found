@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 
           <div className={homeStyles.text_section}>
 
-            <Image src='/imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido' height={400} width={400} layout='intrinsic'/>;
+            <Image src='/imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido' height={400} width={400} layout='intrinsic'/>
 
             <div className={homeStyles.text}>
 

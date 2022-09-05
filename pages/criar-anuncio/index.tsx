@@ -30,36 +30,36 @@ const CriarAnuncio: NextPage = () => {
                         <li>
 
                             <Link href='/' >
-                                <Image src='/imgs/lost-pets/lost-cat.jpg' alt='Gato em Cartaz de Desaparecido' width={260} height={260} layout='intrinsic' />
+                                <a className={LostPageStyles.center_img}>
+                                    <Image src='/imgs/lost-pets/lost-cat.jpg' alt='Gato em Cartaz de Desaparecido' width={260} height={260} layout='intrinsic' />
+                                </a>
                             </Link>
 
-                            <Link href='/' >
-                                <h2>Anúncio para Gato Perdido</h2>
-                            </Link>
-                            
-                        </li>
-
-                        <li>
-
-                            <Link href='/' >
-                                <Image src='/imgs/lost-pets/lost-dog.jpg' alt='Cachorro em Cartaz de Desaparecido' width={260} height={260} layout='intrinsic' />
-                            </Link>
-
-                            <Link href='/' >
-                                <h2>Anúncio para Cachorro Perdido</h2>
-                            </Link>
+                            <h2><Link href='/' >Anúncio para Gato Perdido</Link></h2>
 
                         </li>
 
                         <li>
 
                             <Link href='/' >
-                                <Image src='/imgs/lost-pets/lost-template.jpg' alt='Template de Anúncio de animal desaparecido.' width={260} height={260} layout='intrinsic' />
+                                <a className={LostPageStyles.center_img}>
+                                    <Image src='/imgs/lost-pets/lost-dog.jpg' alt='Cachorro em Cartaz de Desaparecido' width={260} height={260} layout='intrinsic' />
+                                </a>
                             </Link>
 
+                            <h2><Link href='/' >Anúncio para Cachorro Perdido</Link></h2>
+
+                        </li>
+
+                        <li>
+
                             <Link href='/' >
-                                <h2>Anúncio para Outro Animal Perdido</h2>
+                                <a className={LostPageStyles.center_img}>
+                                    <Image src='/imgs/lost-pets/lost-template.jpg' alt='Template de Anúncio de animal desaparecido.' width={260} height={260} layout='intrinsic' />
+                                </a>
                             </Link>
+
+                            <h2><Link href='/' >Anúncio para Outro Animal Perdido</Link></h2>
 
                         </li>
 

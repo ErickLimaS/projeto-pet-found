@@ -87,9 +87,11 @@ div.pet_posters {
 
 }
 
-.pet_posters ul li a {
+.pet_posters ul li a.center_img {
 
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     height: 100%;
     width: 100%;
