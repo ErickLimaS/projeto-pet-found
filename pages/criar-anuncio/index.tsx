@@ -2,11 +2,19 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../../store'
 import Meta from '../../components/Meta'
 import StepsCreatePost from '../../components/StepsCreatePost'
 import LostPageStyles from '../../styles/Index_perdi_meu_pet.module.css'
+import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
+import * as SVG from '../../public/imgs/svg'
 
 const CriarAnuncio: NextPage = () => {
+
+    const stepsFromPost = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
+    const { currentStep }: any = stepsFromPost
+    const dispatch: any = useDispatch()
 
     return (
         <div className={LostPageStyles.page_content}>
@@ -65,6 +73,14 @@ const CriarAnuncio: NextPage = () => {
 
                     </ul>
                 </nav>
+
+                <div className={LostPageStyles.next_page}>
+
+                    <button type='button' onClick={() => dispatch(changeCreateLostPetPostSteps(currentStep))}>
+                        Próximo Passo <SVG.ChevronRight /> 
+                    </button>
+
+                </div>
 
             </div>
 

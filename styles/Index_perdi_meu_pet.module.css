@@ -27,6 +27,8 @@
 @media(max-width: 620px){
 
     .heading_and_creating_post_progress {
+        margin-top: 4rem;
+
         flex-direction: column;
     }
 }
@@ -129,5 +131,52 @@ div.pet_posters {
 
     font-size: 2rem;
     font-weight: 400;
+
+}
+
+div.next_page{
+
+    width: 80%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+div.next_page button{
+
+    transition: all ease-in-out 100ms;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2rem;
+    margin-top: 4rem;
+
+    border: 2px solid var(--brand-color);
+    border-radius: 8px;
+
+    background-color: rgb(255, 255, 255);
+
+    color: var(--brand-color3);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+div.next_page button svg{
+
+    transform: scale(1.4);
+
+    margin-left: 1rem;
+
+}
+
+
+div.next_page button:hover{
+
+    color: var(--white);
+    background-color: var(--brand-color3);
 
 }
