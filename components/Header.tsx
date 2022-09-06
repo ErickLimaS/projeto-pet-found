@@ -35,7 +35,7 @@ function Header() {
                     </li>
 
                     <li>
-                        <Link href='/criar-anuncio'>Criar Anúncio</Link>
+                        <Link href='/criar-anuncio/step1'>Criar Anúncio</Link>
                     </li>
 
                     <li>
@@ -88,7 +88,7 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/criar-anuncio'>Criar Anúncio</Link>
+                            <Link href='/criar-anuncio/step1'>Criar Anúncio</Link>
                         </li>
 
                         <li>

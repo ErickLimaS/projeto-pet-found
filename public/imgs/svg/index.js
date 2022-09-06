@@ -1,7 +1,13 @@
 export { default as Binoculars } from "./Binoculars";
+export { default as Cat } from "./Cat";
+export { default as ChevronLeft } from "./ChevronLeft";
 export { default as ChevronRight } from "./ChevronRight";
+export { default as Dog } from "./Dog";
+export { default as FemaleSymbol } from "./FemaleSymbol";
 export { default as List } from "./List";
 export { default as Logo } from "./Logo";
+export { default as MaleSymbol } from "./MaleSymbol";
+export { default as MaleSymbol2 } from "./MaleSymbol2";
 export { default as PersonFill } from "./PersonFill";
 export { default as Rocket } from "./Rocket";
 export { default as Rocket2 } from "./Rocket2";

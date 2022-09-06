@@ -3,7 +3,7 @@ import { changeCreateLostPetPostStepsReducer, chooseWhichAnimalReducer } from '.
 
 const initialState: any = {
     changeCreateLostPetPostSteps: {
-        currentStep: 1
+        currentStep: 0
     }
 }
 

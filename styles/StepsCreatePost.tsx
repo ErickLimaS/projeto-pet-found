@@ -8,6 +8,11 @@ interface Props {
 
 export const Container = styled.div<Props>`
 
+    @media(max-width: 1024px){
+        margin: 1rem 0;
+        width: 100%;
+    }
+
     ol {
 
         display: flex;

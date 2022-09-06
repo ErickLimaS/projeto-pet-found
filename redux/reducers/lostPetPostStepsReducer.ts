@@ -5,6 +5,8 @@ export const changeCreateLostPetPostStepsReducer = (state = {}, action: any) => 
 
     switch (action.type) {
 
+        case STEP_1_CREATING_POST:
+            return { ...state, currentStep: action.payload }
         case STEP_2_CREATING_POST:
             return { ...state, currentStep: action.payload }
         case STEP_3_CREATING_POST:

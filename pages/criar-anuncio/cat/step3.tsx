@@ -1,9 +1,36 @@
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import CriarAnuncio from '../index'
+import { RootState } from '../../../store'
 
-function step3() {
+function Step3() {
+
+  const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
+  const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
+  const { currentStep }: any = stepsProgress
+  const { animal }: any = choseAnimal
+
+  const router = useRouter()
+
+  useEffect(() => {
+
+    // if the first step is not completed, return to that page
+    if ((animal == null || undefined) || (currentStep !== 3)) {
+
+      router.push('/criar-anuncio/step1')
+
+    }
+
+  }, [animal, currentStep])
+
   return (
-    <div>step3</div>
+    <CriarAnuncio>
+      <div>
+        step3
+      </div>
+    </CriarAnuncio>
   )
 }
 
-export default step3
+export default Step3
