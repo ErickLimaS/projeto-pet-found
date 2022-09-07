@@ -6,7 +6,7 @@ import { RootState } from '../../../store'
 import Step2FormStyles from '../../../styles/Step2Form.module.css'
 import API from '../../api/animalsInfo'
 import * as SVG from '../../../public/imgs/svg'
-import PetCaracteristicas from '../../../components/criar-anuncio-page/petCaracteristicas'
+import PetCaracteristicas from '../../../components/criar-anuncio-page/PetCaracteristicas'
 import { setPetGenre, setPetMoreInfo, setPetName, setPetRace } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step2() {
