@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { changeCreateLostPetPostStepsReducer, chooseWhichAnimalReducer } from './redux/reducers/lostPetPostStepsReducer'
+import { changeCreateLostPetPostStepsReducer, chooseWhichAnimalReducer, setCaracteristicasPetReducer, setPetGenreReducer, setPetMoreInfoReducer, setPetNameReducer, setPetRaceReducer } from './redux/reducers/lostPetPostStepsReducer'
 
 const initialState: any = {
     changeCreateLostPetPostSteps: {
@@ -11,7 +11,12 @@ export const store = configureStore({
     reducer: {
 
         changeCreateLostPetPostSteps: changeCreateLostPetPostStepsReducer,
-        chooseWhichAnimal: chooseWhichAnimalReducer
+        chooseWhichAnimal: chooseWhichAnimalReducer,
+        setPetName: setPetNameReducer,
+        setPetGenre: setPetGenreReducer,
+        setPetRace: setPetRaceReducer,
+        setCaracteristicasPet: setCaracteristicasPetReducer,
+        setPetMoreInfo: setPetMoreInfoReducer,
 
     },
     preloadedState: initialState

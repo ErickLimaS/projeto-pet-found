@@ -31,15 +31,15 @@ function Footer() {
                 </div>
 
                 <div>
-                    <h1>Placeholder</h1>
+                    <h1>APIs Usadas</h1>
 
                     <ul className={footerStyles.list}>
                         <li>
-                            <Link href='/'>Placeholder</Link>
+                            <Link href='https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro'>The Cat API</Link>
                         </li>
 
                         <li>
-                            <Link href='/about'>Placeholder</Link>
+                            <Link href='https://documenter.getpostman.com/view/4016432/the-dog-api/RW81vZ4Z#intro'>The Dog API</Link>
                         </li>
 
                     </ul>

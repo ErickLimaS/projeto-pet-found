@@ -18,6 +18,7 @@ div.cat_form::before {
     background-repeat: no-repeat;
     background-size: 60%;
 }
+
 div.dog_form::before {
     top: 25%;
     left: 0;
@@ -37,6 +38,7 @@ div.dog_form::before {
     background-repeat: no-repeat;
     background-size: 50%;
 }
+
 div.other_form::before {
     top: 25%;
     left: 0;
@@ -75,12 +77,14 @@ form.step2_form>div {
     width: 40%;
 
 }
+
 @media(max-width: 1024px) {
 
     form.step2_form>div {
         width: 80%;
     }
 }
+
 @media(max-width: 768px) {
 
     form.step2_form>div {
@@ -144,6 +148,16 @@ form.step2_form>div label {
 
 }
 
+form.step2_form>div>label>small {
+
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+
+    font-size: 1.4rem;
+    font-weight: 400;
+
+}
+
 form.step2_form>div.pet_photo label, form.step2_form>div.more_info {
 
     display: flex;
@@ -174,6 +188,129 @@ form.step2_form input, form.step2_form select {
 
     font-size: 1.6rem;
     font-weight: 400;
+
+}
+
+form.step2_form div.caracteristicas_input_button {
+
+    width: 100%;
+
+    margin-top: 0.5rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+@media(max-width: 620px) {
+
+    form.step2_form div.caracteristicas_input_button {
+        flex-direction: column;
+    }
+}
+
+div.caracteristicas_input_button input {
+
+    width: 80%;
+    margin-top: 0;
+
+}
+@media(max-width: 620px) {
+
+    div.caracteristicas_input_button input{
+        width: 100%;
+    }
+}
+
+div.caracteristicas_input_button button {
+
+    cursor: pointer;
+
+    width: 15%;
+
+    padding: 1.3rem 0rem;
+
+    box-shadow: 2px 2px 5px 1px rgb(155, 155, 155);
+
+    border: 2px solid var(--brand-color);
+    border-radius: 8px;
+
+    background-color: var(--brand-color);
+
+    color: var(--white);
+    font-size: 1.4rem;
+    font-weight: 500;
+
+}
+@media(max-width: 620px) {
+
+    div.caracteristicas_input_button button{
+
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+
+        width: 100%;
+    }
+}
+
+div.caracteristicas_input_button button:hover {
+
+    transition: all ease-in-out 200ms;
+
+    box-shadow: 5px 5px 5px 1px rgb(155, 155, 155);
+
+}
+
+form.step2_form ul.grid_list_caracteristicas {
+
+    width: 100%;
+
+    margin: 1.5rem 0;
+
+    padding: 1rem 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+
+    background-color: var(--grey4);
+
+    border-radius: 6px;
+
+}
+
+form.step2_form ul.grid_list_caracteristicas li {
+
+    margin: 0.5rem 0;
+
+    font-size: 1.6rem;
+    font-weight: 600;
+
+}
+
+form.step2_form button.reset_button {
+
+    cursor: pointer;
+
+    border: 0;
+    background-color: transparent;
+
+    text-decoration: underline;
+
+    display: inline;
+    align-self: flex-end;
+
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--grey);
+
+}
+
+form.step2_form button.reset_button:hover {
+
+    color: var(--black2);
 
 }
 

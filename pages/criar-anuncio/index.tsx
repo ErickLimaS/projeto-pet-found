@@ -39,6 +39,28 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
     // indicates which route the user will be redirected after animal is chose
     const nextStep = async () => {
 
+        switch (currentStep) {
+
+            case 1:
+                if (animal) {
+
+                    dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
+
+                    router.push(`/criar-anuncio/${animal.toLowerCase()}/step${currentStep + 1}`)
+
+                }
+                break
+            case 2:
+
+                break
+            case 3:
+
+                break
+            default:
+                router.push(`/criar-anuncio/step1`)
+
+        }
+
         if (animal) {
 
             dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
@@ -46,39 +68,6 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
             router.push(`/criar-anuncio/${animal.toLowerCase()}/step${currentStep + 1}`)
 
         }
-
-        // switch (animal) {
-        //     case 'CAT':
-        //         if (currentStep === 1) {
-        //             dispatch(changeCreateLostPetPostSteps(currentStep, 2))
-        //             return router.push('/criar-anuncio/cat/step2')
-        //         }
-        //         if (currentStep === 2) { //condition of step 2 fields filled
-        //             dispatch(changeCreateLostPetPostSteps(currentStep, 3))
-        //             return router.push('/criar-anuncio/cat/step3')
-        //         }
-        //     case 'DOG':
-        //         if (currentStep === 1) {
-
-        //             dispatch(changeCreateLostPetPostSteps(currentStep, 2))
-        //             return router.push('/criar-anuncio/dog/step2')
-        //         }
-        //         if (currentStep === 2) {//condition of step 2 fields filled
-        //             dispatch(changeCreateLostPetPostSteps(currentStep, 3))
-        //             return router.push('/criar-anuncio/dog/step3')
-        //         }
-        //     case 'OTHER':
-        //         if (currentStep === 1) {
-        //             dispatch(changeCreateLostPetPostSteps(currentStep, 2))
-        //             return router.push('/criar-anuncio/other/step2')
-        //         }
-        //         if (currentStep === 2) { //condition of step 2 fields filled
-        //             dispatch(changeCreateLostPetPostSteps(currentStep, 3))
-        //             return router.push('/criar-anuncio/other/step3')
-        //         }
-        //     default:
-        //         return '/'
-        // }
 
     }
 
@@ -103,7 +92,6 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
             </div>
 
             <div className={LostPageStyles.pet_posters}>
-
 
                 <div className={LostPageStyles.next_page}>
 
