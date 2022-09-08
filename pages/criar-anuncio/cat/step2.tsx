@@ -12,8 +12,7 @@ import { setPetGenre, setPetMoreInfo, setPetName, setPetRace } from '../../../re
 function Step2() {
 
   const [catsBreed, setCatsBreed] = useState([])
-  const inputCaracteristics = React.createRef<HTMLInputElement>()
-  const [caracteristicsArray, setCaracteristicsArray] = useState<SetStateAction<any>>([])
+  
   const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
   const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
   const { currentStep }: any = stepsProgress

@@ -1,25 +1,35 @@
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setCaracteristicasPet } from '../../redux/actions/lostPetPostStepsActions'
 import Step2FormStyles from '../../styles/Step2Form.module.css'
 
 function PetCaracteristicas() {
 
-    const inputCaracteristics = React.createRef<HTMLInputElement>()
-    const [caracteristicsArray, setCaracteristicsArray] = useState<SetStateAction<any>>([])
+    const inputCaracteristicas = React.createRef<HTMLInputElement>()
+    const [caracteristicasArray, setCaracteristicsArray] = useState<SetStateAction<any>>([])
 
     const dispatch: any = useDispatch()
 
     // store data to Redux store and useState each time user hits the add button
-    const addCaracteristicasListToStore = () => {
+    const addCaracteristicasArray = () => {
 
         setCaracteristicsArray((oldArray: any) =>
-            [...oldArray, inputCaracteristics?.current?.value]
-        )
-        
-        dispatch(setCaracteristicasPet(caracteristicsArray))
+            [...oldArray, inputCaracteristicas?.current?.value])
 
     }
+    const removeItemFromCaracteristicasArray = () => {
+
+        setCaracteristicsArray((oldArray: any) =>
+            [...oldArray.slice(0, oldArray.length - 1)]
+        )
+
+    }
+
+    useEffect(() => {
+
+        dispatch(setCaracteristicasPet(caracteristicasArray))
+
+    }, [caracteristicasArray])
 
     return (
         <div>
@@ -30,20 +40,20 @@ function PetCaracteristicas() {
 
                 <div className={Step2FormStyles.caracteristicas_input_button}>
 
-                    <input type='text' id='caracteristicas' name='adicionar_caracteristicas_do_pet' ref={inputCaracteristics} placeholder='Brincalhão, late muito...'></input>
+                    <input type='text' id='caracteristicas' name='adicionar_caracteristicas_do_pet' ref={inputCaracteristicas} placeholder='Brincalhão, late muito...'></input>
 
                     <button type='button' name='enviar_atual_caracteristica'
-                        onClick={() => addCaracteristicasListToStore()}>
+                        onClick={() => addCaracteristicasArray()}>
                         Adicionar
                     </button>
 
                 </div>
 
-                {(caracteristicsArray.length > 0) && (
+                {(caracteristicasArray?.length > 0) && (
                     <>
 
                         <ul className={Step2FormStyles.grid_list_caracteristicas}>
-                            {caracteristicsArray.map((item: any) => (
+                            {caracteristicasArray.map((item: any) => (
 
                                 <li key={item}>
                                     {item?.slice(0, 1).toUpperCase()}{item?.slice(1, item.length)}
@@ -53,8 +63,7 @@ function PetCaracteristicas() {
                         </ul>
 
                         <button type='button' className={Step2FormStyles.reset_button}
-                            onClick={() => setCaracteristicsArray((oldArray: any) =>
-                                [oldArray.pop()])}>
+                            onClick={() => removeItemFromCaracteristicasArray()}>
                             Apagar Última Característica
                         </button>
 

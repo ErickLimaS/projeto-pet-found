@@ -12,9 +12,6 @@ import { setPetGenre, setPetMoreInfo, setPetName, setPetRace } from '../../../re
 function Step2() {
 
   const [dogsBreed, setDogsBreed] = useState<any>([])
-  const inputCaracteristics = React.createRef<HTMLInputElement>()
-  const [caracteristicsArray, setCaracteristicsArray] = useState<SetStateAction<any>>([])
-  const [breedChose, setBreedChose] = useState()
 
   const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
   const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
@@ -38,7 +35,7 @@ function Step2() {
     // if the first step is not completed, return to that page
     if ((animal == null || undefined) || (currentStep !== 2)) {
 
-      router.push('/criar-anuncio/step1')
+      // router.push('/criar-anuncio/step1')
 
     }
 
