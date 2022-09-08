@@ -106,7 +106,7 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
                         disabled={animal == null || undefined}
                         onClick={() => nextStep()}
                     >
-                        Próximo Passo <SVG.ChevronRight />
+                        {currentStep === 3 ? 'Finalizar' : 'Próximo Passo'} <SVG.ChevronRight />
                     </button>
 
                 </div>

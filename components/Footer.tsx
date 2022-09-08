@@ -42,12 +42,16 @@ function Footer() {
                             <Link href='https://documenter.getpostman.com/view/4016432/the-dog-api/RW81vZ4Z#intro'>The Dog API</Link>
                         </li>
 
+                        <li>
+                            <Link href='https://servicodados.ibge.gov.br/api/docs/localidades'>IBGE - Localidades</Link>
+                        </li>
+
                     </ul>
                 </div>
 
                 <div>
                     <h1>Placeholder</h1>
-                    
+
                     <ul className={footerStyles.list}>
                         <li>
                             <Link href='/'>Placeholder</Link>
@@ -56,7 +60,7 @@ function Footer() {
                         <li>
                             <Link href='/about'>Placeholder</Link>
                         </li>
-                        
+
                         <li>
                             <Link href='/about'>Placeholder</Link>
                         </li>

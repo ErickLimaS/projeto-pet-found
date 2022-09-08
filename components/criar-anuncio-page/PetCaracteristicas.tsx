@@ -6,20 +6,20 @@ import Step2FormStyles from '../../styles/Step2Form.module.css'
 function PetCaracteristicas() {
 
     const inputCaracteristicas = React.createRef<HTMLInputElement>()
-    const [caracteristicasArray, setCaracteristicsArray] = useState<SetStateAction<any>>([])
+    const [caracteristicasArray, setCaracteristicasArray] = useState<SetStateAction<any>>([])
 
     const dispatch: any = useDispatch()
 
     // store data to Redux store and useState each time user hits the add button
     const addCaracteristicasArray = () => {
 
-        setCaracteristicsArray((oldArray: any) =>
+        setCaracteristicasArray((oldArray: any) =>
             [...oldArray, inputCaracteristicas?.current?.value])
 
     }
     const removeItemFromCaracteristicasArray = () => {
 
-        setCaracteristicsArray((oldArray: any) =>
+        setCaracteristicasArray((oldArray: any) =>
             [...oldArray.slice(0, oldArray.length - 1)]
         )
 
