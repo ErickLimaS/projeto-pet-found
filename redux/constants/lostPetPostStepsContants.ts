@@ -16,3 +16,10 @@ export const SET_MORE_INFO_PET: string = "SET_MORE_INFO_PET"
 
 export const SET_CARACTERISTICAS_PET: string = "SET_CARACTERISTICAS_PET"
 
+export const SET_PET_INFO_REQUEST: string = "SET_PET_INFO_REQUEST"
+export const SET_PET_INFO_SUCCESS: string = "SET_PET_INFO_SUCCESS"
+export const SET_PET_INFO_ERROR: string = "SET_PET_INFO_ERROR"
+
+export const SET_OWNER_INFO_REQUEST: string = "SET_OWNER_INFO_REQUEST"
+export const SET_OWNER_INFO_SUCCESS: string = "SET_OWNER_INFO_SUCCESS"
+export const SET_OWNER_INFO_ERROR: string = "SET_OWNER_INFO_ERROR"

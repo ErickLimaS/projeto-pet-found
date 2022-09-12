@@ -1,5 +1,5 @@
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
-import { CAT_PET_CHOSE, COMPLETE_CREATING_POST, DOG_PET_CHOSE, ERROR_PET_CHOSE, OTHER_PET_CHOSE, REINICIATE_CREATING_POST, SET_CARACTERISTICAS_PET, SET_GENRE_PET, SET_MORE_INFO_PET, SET_NAME_PET, SET_RACE_PET, STEP_1_CREATING_POST, STEP_2_CREATING_POST, STEP_3_CREATING_POST } from "../constants/lostPetPostStepsContants";
+import { CAT_PET_CHOSE, COMPLETE_CREATING_POST, DOG_PET_CHOSE, ERROR_PET_CHOSE, OTHER_PET_CHOSE, REINICIATE_CREATING_POST, SET_CARACTERISTICAS_PET, SET_GENRE_PET, SET_MORE_INFO_PET, SET_NAME_PET, SET_OWNER_INFO_ERROR, SET_OWNER_INFO_REQUEST, SET_OWNER_INFO_SUCCESS, SET_PET_INFO_ERROR, SET_PET_INFO_REQUEST, SET_PET_INFO_SUCCESS, SET_RACE_PET, STEP_1_CREATING_POST, STEP_2_CREATING_POST, STEP_3_CREATING_POST } from "../constants/lostPetPostStepsContants";
 
 export const changeCreateLostPetPostSteps = (currentStep: number, nextStep: number) => async (dispatch: Dispatch<AnyAction>) => {
 
@@ -119,3 +119,56 @@ export const setPetMoreInfo = (info: string) => async (dispatch: Dispatch<AnyAct
 
 }
 
+export const setPetInfo = (info: any) => async (dispatch: Dispatch<AnyAction>) => {
+
+    try {
+
+        dispatch({
+            type: SET_PET_INFO_REQUEST,
+            payload: info
+        })
+
+        dispatch({
+            type: SET_PET_INFO_SUCCESS,
+            payload: info
+        })
+
+    }
+    catch(error: any){
+
+        dispatch({
+            type: SET_PET_INFO_ERROR,
+            payload: info
+        })
+
+        console.log(error)
+
+    }
+}
+
+export const setOwnerAndPetInfoTogether = (info: any) => async (dispatch: Dispatch<AnyAction>) => {
+
+    try {
+
+        dispatch({
+            type: SET_OWNER_INFO_REQUEST,
+            payload: info
+        })
+
+        dispatch({
+            type: SET_OWNER_INFO_SUCCESS,
+            payload: info
+        })
+
+    }
+    catch(error: any){
+
+        dispatch({
+            type: SET_OWNER_INFO_ERROR,
+            payload: info
+        })
+
+        console.log(error)
+
+    }
+}

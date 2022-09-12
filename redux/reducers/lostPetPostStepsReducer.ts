@@ -1,5 +1,5 @@
 import React from "react";
-import { CAT_PET_CHOSE, COMPLETE_CREATING_POST, DOG_PET_CHOSE, ERROR_PET_CHOSE, OTHER_PET_CHOSE, REINICIATE_CREATING_POST, SET_CARACTERISTICAS_PET, SET_GENRE_PET, SET_MORE_INFO_PET, SET_NAME_PET, SET_RACE_PET, STEP_1_CREATING_POST, STEP_2_CREATING_POST, STEP_3_CREATING_POST } from "../constants/lostPetPostStepsContants";
+import { CAT_PET_CHOSE, COMPLETE_CREATING_POST, DOG_PET_CHOSE, ERROR_PET_CHOSE, OTHER_PET_CHOSE, REINICIATE_CREATING_POST, SET_CARACTERISTICAS_PET, SET_GENRE_PET, SET_MORE_INFO_PET, SET_NAME_PET, SET_OWNER_INFO_ERROR, SET_OWNER_INFO_REQUEST, SET_OWNER_INFO_SUCCESS, SET_PET_INFO_ERROR, SET_PET_INFO_REQUEST, SET_PET_INFO_SUCCESS, SET_RACE_PET, STEP_1_CREATING_POST, STEP_2_CREATING_POST, STEP_3_CREATING_POST } from "../constants/lostPetPostStepsContants";
 
 export const changeCreateLostPetPostStepsReducer = (state = {}, action: any) => {
 
@@ -99,7 +99,41 @@ export const setPetMoreInfoReducer = (state = {}, action: any) => {
             return { ...state, info: action.payload }
         default:
             return state
-            
+
+    }
+
+}
+
+export const setPetInfoReducer = (state = {}, action: any) => {
+
+    switch (action.type) {
+
+        case SET_PET_INFO_REQUEST:
+            return { ...state, loading: true }
+        case SET_PET_INFO_SUCCESS:
+            return { ...state, loading: false, success: true, info: action.payload }
+        case SET_PET_INFO_ERROR:
+            return { ...state, loading: false, error: true, info: action.payload }
+        default:
+            return state
+
+    }
+
+}
+
+export const setOwnerAndPetInfoTogetherReducer = (state = {}, action: any) => {
+
+    switch (action.type) {
+
+        case SET_OWNER_INFO_REQUEST:
+            return { ...state, loading: true }
+        case SET_OWNER_INFO_SUCCESS:
+            return { ...state, loading: false, success: true, info: action.payload }
+        case SET_OWNER_INFO_ERROR:
+            return { ...state, loading: false, error: true, info: action.payload }
+        default:
+            return state
+
     }
 
 }

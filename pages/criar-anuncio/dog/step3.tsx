@@ -1,16 +1,22 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, InputHTMLAttributes, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CriarAnuncio from '../index'
 import { RootState } from '../../../store'
 import Step3FormStyles from '../../../styles/Step3Form.module.css'
+import ButtonsStyles from '../../../styles/Index_perdi_meu_pet.module.css'
 import API from '../../api/localidadesEndereco'
 import * as SVG from '../../../public/imgs/svg'
+import Buttons from '../../../components/criar-anuncio-page/buttons'
+import { changeCreateLostPetPostSteps, setOwnerAndPetInfoTogether } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step3() {
 
   const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
   const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
+  const petInfo = useSelector((state: RootState) => state.setPetInfo)
+
+  const { info }: any = petInfo
   const { currentStep }: any = stepsProgress
   const { animal }: any = choseAnimal
 
@@ -19,6 +25,22 @@ function Step3() {
   const [choseMunicipie, setChoseMunicipie] = useState<string>()
   const [lostOnSameLocation, setLostOnSameLocation] = useState<boolean>(false)
   const [reward, setReward] = useState<boolean>(false)
+
+  const ownerName = React.useRef<HTMLInputElement>(null)
+  const ownerEmail = React.useRef<HTMLInputElement>(null)
+  const ownerPassword = React.useRef<HTMLInputElement>(null)
+  const ownerContactDdd = React.useRef<HTMLInputElement>(null)
+  const ownerContactFull = React.useRef<HTMLInputElement>(null)
+  const ownerState = React.useRef<HTMLSelectElement>(null)
+  const ownerMunicipie = React.useRef<HTMLSelectElement>(null)
+  const ownerBirthDate = React.useRef<HTMLInputElement>(null)
+  const ownerPostMoreDetails = React.useRef<HTMLTextAreaElement>(null)
+
+  const ownerRewardWhenPetFound = React.useRef<HTMLInputElement>(null)
+
+  const petLostLocationState = React.useRef<HTMLSelectElement>(null)
+  const petLostLocationMunicipie = React.useRef<HTMLSelectElement>(null)
+  const petLostLocationStreet = React.useRef<HTMLInputElement>(null)
 
   const router = useRouter()
 
@@ -37,6 +59,62 @@ function Step3() {
     const data = await API.getBrazilianMunicipies(choseState)
 
     setMunicipies(data)
+
+  }
+
+  const returnStep = () => {
+
+    router.push(`/criar-anuncio/${animal.toLowerCase()}/step2`)
+
+  }
+
+  const submitForm = (e: FormEvent) => {
+
+    e.preventDefault()
+
+    if (ownerName.current?.value) {
+
+      dispatch(setOwnerAndPetInfoTogether(
+        {
+          id: 123,
+          name: ownerName.current?.value,
+          email: ownerEmail.current?.value,
+          password: ownerPassword.current?.value,
+          birthDate: ownerBirthDate.current?.value,
+          contact_ddd: ownerContactDdd.current?.value,
+          contact_full: ownerContactFull.current?.value,
+          more_info: ownerPostMoreDetails.current?.value,
+          location: {
+            state: ownerState.current?.value,
+            municipie: ownerMunicipie.current?.value,
+          },
+          pet: [
+            {
+              ownerId: 123,
+              id: 999,
+              stillLost: true,
+              lastSeen: [
+                {
+                  seenByOwner: true,
+                  state: lostOnSameLocation ? ownerState.current?.value : petLostLocationState.current?.value,
+                  municipie: lostOnSameLocation ? ownerMunicipie.current?.value : petLostLocationMunicipie.current?.value,
+                  street: petLostLocationStreet.current?.value
+                }
+              ],
+              rewardWhenFound: reward,
+              rewardAmountOffered: ownerRewardWhenPetFound.current?.value ? ownerRewardWhenPetFound.current?.value : null,
+              info
+            }
+          ]
+        }
+      ))
+
+      dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
+
+      router.push(`/criar-anuncio/post-done`)
+
+    }
+
 
   }
 
@@ -59,10 +137,10 @@ function Step3() {
 
 
       <div className={Step3FormStyles.dog_form}>
-        <form className={Step3FormStyles.step3_form}>
+        <form className={Step3FormStyles.step3_form} onSubmit={(e) => submitForm(e)}>
 
           <h2>Informações do Dono</h2>
-          
+
           <div className={Step3FormStyles.pet_photo}>
             <label htmlFor='owner_photo'>
               <span className={Step3FormStyles.img_placeholder}></span>
@@ -73,7 +151,7 @@ function Step3() {
           <div>
             <label htmlFor='name'>
               Seu Nome
-              <input type='text' id='name' name='nome' placeholder='' required
+              <input type='text' ref={ownerName} id='name' name='nome' placeholder='' required
                 onBlur={(e) => console.log('test')}
               ></input>
             </label>
@@ -82,8 +160,7 @@ function Step3() {
           <div>
             <label htmlFor='date_birth'>
               Data de Nascimento
-              <input type='date' id='date_birth' name='data_nascimento' required
-                onBlur={(e) => console.log('test')}
+              <input type='date' ref={ownerBirthDate} id='date_birth' name='data_nascimento' required
               ></input>
             </label>
           </div>
@@ -91,8 +168,7 @@ function Step3() {
           <div>
             <label htmlFor='email'>
               Email
-              <input type='email' id='email' name='email' required
-                onBlur={(e) => console.log(e.target.value)}
+              <input type='email' ref={ownerEmail} id='email' name='email' required
               ></input>
             </label>
           </div>
@@ -101,8 +177,7 @@ function Step3() {
             <div>
               <label htmlFor='ddd-number'>
                 DDD
-                <input type='text' id='ddd-number' name='ddd-numero_contato' placeholder='11' required
-                  onBlur={(e) => console.log('test')}
+                <input type='text' ref={ownerContactDdd} id='ddd-number' name='ddd-numero_contato' placeholder='11' required
                 ></input>
 
               </label>
@@ -110,8 +185,7 @@ function Step3() {
             <div>
               <label htmlFor='number'>
                 Número Para Contato
-                <input type='text' id='number' name='numero_contato' placeholder='912341234' required
-                  onBlur={(e) => console.log('test')}
+                <input type='text' ref={ownerContactFull} id='number' name='numero_contato' placeholder='912341234' required
                 ></input>
               </label>
             </div>
@@ -121,8 +195,7 @@ function Step3() {
             <label htmlFor='password'>
               Senha
               <small>Necessária para Criar Conta na Pet Found</small>
-              <input type='password' autoComplete='on' id='password' name='password' required
-                onBlur={(e) => console.log('test')}
+              <input type='password' ref={ownerPassword} autoComplete='on' id='password' name='password' required
               ></input>
             </label>
           </div>
@@ -134,7 +207,7 @@ function Step3() {
               <label htmlFor='estado'>
                 Estado de Residência
 
-                <select id='estado' name='estado' required
+                <select id='estado' ref={ownerState} name='estado' required
                   onChange={(e) => getStateMunicipies(e.target.value)}
                 >
 
@@ -196,7 +269,7 @@ function Step3() {
                 <label htmlFor='estado-lost-pet'>
                   Estado onde Aconteceu
 
-                  <select id='estado-lost-pet' name='estado_onde_perdi_meu_pet'
+                  <select ref={petLostLocationState} id='estado-lost-pet' name='estado_onde_perdi_meu_pet'
                     onChange={(e) => getStateMunicipies(e.target.value)}
                   >
 
@@ -217,7 +290,7 @@ function Step3() {
                     <label htmlFor='municipio-lost-pet'>
                       Município
 
-                      <select id='municipio-lost-pet' name='municipio_onde_perdi_meu_pet' required
+                      <select ref={petLostLocationMunicipie} id='municipio-lost-pet' name='municipio_onde_perdi_meu_pet' required
                         onChange={(e) => setChoseMunicipie(e.target.value)}
                       >
 
@@ -236,7 +309,7 @@ function Step3() {
                     <label htmlFor='rua-lost-pet'>
                       Rua onde aconteceu
 
-                      <input type='text' id='rua-lost-pet' name='rua_onde_perdi_meu_pet' required
+                      <input type='text' ref={petLostLocationStreet} id='rua-lost-pet' name='rua_onde_perdi_meu_pet' required
                         onChange={(e) => setChoseMunicipie(e.target.value)}
                       >
                       </input>
@@ -279,7 +352,7 @@ function Step3() {
 
                 <small>Insira o valor que deseja oferecer abaixo</small>
 
-                <input type='number' id='valor-recompensa' name='valor_recompensa' required
+                <input type='number' ref={ownerRewardWhenPetFound} id='valor-recompensa' name='valor_recompensa' required
                   onChange={(e) => setChoseMunicipie(e.target.value)}
                 >
                 </input>
@@ -291,10 +364,24 @@ function Step3() {
           <div className={Step3FormStyles.more_info}>
             <label htmlFor='mais_informacoes2'>
               Algo mais que queira dizer nesse post?
-              <textarea cols={40} rows={5} id='mais_informacoes2' name='mais_informacoes_dono' placeholder='Ex: "Não posso atender chamadas no final de semana." ou "Se acharem, me liguem a qualquer momento!"' onBlur={(e) => console.log(e.target.value)}
+              <textarea ref={ownerPostMoreDetails} cols={40} rows={5} id='mais_informacoes2' name='mais_informacoes_dono' placeholder='Ex: "Não posso atender chamadas no final de semana." ou "Se acharem, me liguem a qualquer momento!"'
               >
               </textarea>
             </label>
+          </div>
+
+          <div className={ButtonsStyles.next_page}>
+
+            <button type='button'
+              onClick={() => returnStep()}
+            >
+              <SVG.ChevronLeft /> Voltar
+            </button>
+
+            <button type='submit' >
+              Finalizar <SVG.ChevronRight />
+            </button>
+
           </div>
 
         </form>

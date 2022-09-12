@@ -57,6 +57,7 @@ div.pet_posters {
 
 div.next_page {
 
+    width: 100%!important;
     margin-bottom: 2rem;
 
     position: relative;
