@@ -8,8 +8,6 @@ import Step2FormStyles from '../../../styles/Step2Form.module.css'
 import API from '../../api/animalsInfo'
 import * as SVG from '../../../public/imgs/svg'
 import PetCaracteristicas from '../../../components/criar-anuncio-page/PetCaracteristicas'
-import Buttons from '../../../components/criar-anuncio-page/buttons'
-import { current } from '@reduxjs/toolkit'
 import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step2() {
@@ -56,6 +54,7 @@ function Step2() {
       dispatch(setPetInfo(
         {
           name: petName.current?.value,
+          pet: animal,
           genre: petGenre.current?.value,
           race: petRace.current?.value,
           caracteristicas: caracteristicas,
@@ -140,7 +139,7 @@ function Step2() {
           <div className={Step2FormStyles.more_info}>
             <label htmlFor='mais_informacoes'>
               Mais Informações
-              <textarea ref={petMoreInfo} cols={40} rows={5} id='mais_informacoes' name='mais_informacoes' placeholder='Ex: "Ele tem o rabo cortado!" ou "A patinha da esquerda da parte de trás dele tem uma mancha branca."' required
+              <textarea ref={petMoreInfo} cols={40} rows={5} id='mais_informacoes' name='mais_informacoes' placeholder='Ex: "Ele tem o rabo cortado!" ou "A patinha da esquerda da parte de trás dele tem uma mancha branca."'
               >
               </textarea>
             </label>

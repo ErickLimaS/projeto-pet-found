@@ -67,6 +67,21 @@
 
         width: 100%;
 
+        margin: 1rem 0;
+
+    }
+
+    .footer nav div h1{
+
+        font-size: 2rem!important;
+
+    }
+
+    .footer nav div li{
+
+        font-size: 1.6rem!important;
+        margin: 0.5rem 0;
+
     }
 
     .footer nav div ul {
@@ -92,7 +107,7 @@
 
     font-size: 1.6rem;
     font-weight: 500;
-    color: var(--white2);
+    color: var(--white);
 
     border-bottom: 2px solid var(--white2);
 
@@ -113,7 +128,7 @@
 .list li {
 
     margin: 0.3rem 1rem;
-
+    color: var(--white2);
 
 }
 

@@ -145,13 +145,8 @@ div.drawer_sidebar_mobile {
     div.drawer_sidebar_mobile button svg{
 
         fill: var(--white);
-        
-
-    }
-    .drawer_sidebar_mobile ul{
-
-        display: none;
-
+        transform: scale(1.2);
+    
     }
     .drawer_sidebar_mobile li{
 

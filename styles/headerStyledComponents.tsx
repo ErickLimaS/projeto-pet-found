@@ -10,22 +10,51 @@ export const MobileList  = styled.ul<Props>`
 
     z-index: 10;
 
-    display: ${props => props.mobileMenu === true ? 'flex!important' : 'none!important'};
-    flex-direction: column;
+    transition: all ease-in-out 100ms;
 
-    right: 0;
-    top: 12vh;
+    top: 0vh;
     position: absolute;
 
-    padding: 2rem 0;
+    left: ${props => props.mobileMenu === true ? '0vw!important' : '-100vw!important'};
+    flex-direction: column;
+
+    padding-top: 3rem;
+    padding-bottom: 1rem;
     width: 100%;
 
     background-color: var(--brand-color);
-    box-shadow: 0px 0px 10px 0px #8080809e;
+
+    >div{
+
+        height: inherit;
+
+        display: flex;
+        justify-content: flex-end;
+
+    }
+
+    svg{
+        transform: scale(1);
+        width: 2.4rem;
+        height: 2.4rem;
+
+    }
 
     li{
-        margin: 0.5rem 1rem;
+        margin: 1rem 1rem;
         padding: 0.5rem 0;
+    }
+
+    a{
+
+        display: flex;
+
+        :hover{
+
+            border-bottom: none!important;
+
+        }
+
     }
 
 
