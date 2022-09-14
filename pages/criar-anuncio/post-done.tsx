@@ -15,7 +15,6 @@ const PostDone: NextPage = () => {
     const { currentStep }: any = steps
 
     const router = useRouter()
-    const dispatch: any = useDispatch()
 
     useEffect(() => {
 
@@ -34,50 +33,52 @@ const PostDone: NextPage = () => {
                 <h1>Anúncio Criado</h1>
 
                 <p>lorem loremloremloremloremlorem loremlorem vvlorem vloremloremv vloremloremv</p>
-          
-                <div className={PostCompleteStyles.post_info}>
+                
+                {postInfo == null && (
+                    <div className={PostCompleteStyles.post_info}>
 
-                    <div>
-                        <h2 className={PostCompleteStyles.pet_name}>
-                            {postInfo.info.pet[0].info.name}
-                            {postInfo.info.pet[0].info.genre === 'femea' ?
-                                <SVG.FemaleSymbol /> : <SVG.MaleSymbol />}
-                        </h2>
+                        <div>
+                            <h2 className={PostCompleteStyles.pet_name}>
+                                {postInfo.info.pet[0].info.name}
+                                {postInfo.info.pet[0].info.genre === 'femea' ?
+                                    <SVG.FemaleSymbol /> : <SVG.MaleSymbol />}
+                            </h2>
 
-                        <p>{postInfo.info.pet[0].info.race}</p>
+                            <p>{postInfo.info.pet[0].info.race}</p>
 
-                        <h3>Ultima Vez Visto Em:</h3>
+                            <h3>Ultima Vez Visto Em:</h3>
 
-                        <p>{postInfo.info.pet[0].lastSeen[0].street}, {postInfo.info.pet[0].lastSeen[0].municipie} - <b>{postInfo.info.pet[0].lastSeen[0].state}</b></p>
+                            <p>{postInfo.info.pet[0].lastSeen[0].street}, {postInfo.info.pet[0].lastSeen[0].municipie} - <b>{postInfo.info.pet[0].lastSeen[0].state}</b></p>
 
-                        {postInfo.info.pet[0].info.caracteristicas.length > 0 && (
-                            <>
-                                <h3>{postInfo.info.pet[0].info.genre === 'femea' ? 'Ela é...' : 'Ele é...'}</h3>
+                            {postInfo.info.pet[0].info.caracteristicas.length > 0 && (
+                                <>
+                                    <h3>{postInfo.info.pet[0].info.genre === 'femea' ? 'Ela é...' : 'Ele é...'}</h3>
 
-                                <ul>
-                                    {postInfo.info.pet[0].info.caracteristicas.slice(0, 4).map((item: any) => (
-                                        <li key={item}>{item}</li>
-                                    ))}
+                                    <ul>
+                                        {postInfo.info.pet[0].info.caracteristicas.slice(0, 4).map((item: any) => (
+                                            <li key={item}>{item}</li>
+                                        ))}
 
-                                    {postInfo.info.pet[0].info.caracteristicas.length > 4 && (
-                                        <li>e mais</li>
-                                    )}
-                                </ul>
-                            </>
-                        )}
+                                        {postInfo.info.pet[0].info.caracteristicas.length > 4 && (
+                                            <li>e mais</li>
+                                        )}
+                                    </ul>
+                                </>
+                            )}
 
+                        </div>
+
+                        <div>
+                            <h2>{postInfo.info.name}</h2>
+
+                            <h3>Contato</h3>
+                            <p>({postInfo.info.contact_ddd}) {postInfo.info.contact_full}</p>
+
+                            <h3>Mora Em</h3>
+                            <p>{postInfo.info.location.street}, {postInfo.info.location.municipie} - <b>{postInfo.info.location.state}</b></p>
+                        </div>
                     </div>
-
-                    <div>
-                        <h2>{postInfo.info.name}</h2>
-
-                        <h3>Contato</h3>
-                        <p>({postInfo.info.contact_ddd}) {postInfo.info.contact_full}</p>
-
-                        <h3>Mora Em</h3>
-                        <p>{postInfo.info.location.street}, {postInfo.info.location.municipie} - <b>{postInfo.info.location.state}</b></p>
-                    </div>
-                </div>
+                )}
 
                 <div>
 
