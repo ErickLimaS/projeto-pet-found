@@ -7,7 +7,6 @@ import Step3FormStyles from '../../../styles/Step3Form.module.css'
 import ButtonsStyles from '../../../styles/Index_perdi_meu_pet.module.css'
 import API from '../../api/localidadesEndereco'
 import * as SVG from '../../../public/imgs/svg'
-import Buttons from '../../../components/criar-anuncio-page/buttons'
 import { changeCreateLostPetPostSteps, setOwnerAndPetInfoTogether } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step3() {

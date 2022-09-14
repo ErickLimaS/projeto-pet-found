@@ -20,9 +20,9 @@ const PostDone: NextPage = () => {
     useEffect(() => {
 
         // iniciate the steps process
-        // if (currentStep !== 4) {
-        //     router.push('/criar-anuncio/step1')
-        // }
+        if (currentStep !== 4) {
+            router.push('/criar-anuncio/step1')
+        }
 
     }, [])
 
@@ -34,7 +34,7 @@ const PostDone: NextPage = () => {
                 <h1>Anúncio Criado</h1>
 
                 <p>lorem loremloremloremloremlorem loremlorem vvlorem vloremloremv vloremloremv</p>
-                <button onClick={() => console.log(postInfo.info.pet)}>cons</button>
+          
                 <div className={PostCompleteStyles.post_info}>
 
                     <div>
@@ -51,11 +51,19 @@ const PostDone: NextPage = () => {
                         <p>{postInfo.info.pet[0].lastSeen[0].street}, {postInfo.info.pet[0].lastSeen[0].municipie} - <b>{postInfo.info.pet[0].lastSeen[0].state}</b></p>
 
                         {postInfo.info.pet[0].info.caracteristicas.length > 0 && (
-                            <ul>
-                                {postInfo.info.pet[0].info.caracteristicas.map((item: any) => (
-                                    <li key={item}>{item}</li>
-                                ))}
-                            </ul>
+                            <>
+                                <h3>{postInfo.info.pet[0].info.genre === 'femea' ? 'Ela é...' : 'Ele é...'}</h3>
+
+                                <ul>
+                                    {postInfo.info.pet[0].info.caracteristicas.slice(0, 4).map((item: any) => (
+                                        <li key={item}>{item}</li>
+                                    ))}
+
+                                    {postInfo.info.pet[0].info.caracteristicas.length > 4 && (
+                                        <li>e mais</li>
+                                    )}
+                                </ul>
+                            </>
                         )}
 
                     </div>

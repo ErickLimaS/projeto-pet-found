@@ -10,7 +10,6 @@ import LostPageStyles from '../../styles/Index_perdi_meu_pet.module.css'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
 import * as SVG from '../../public/imgs/svg'
 import { useRouter } from 'next/router'
-import Buttons from '../../components/criar-anuncio-page/buttons'
 
 interface Props {
     children: any;
