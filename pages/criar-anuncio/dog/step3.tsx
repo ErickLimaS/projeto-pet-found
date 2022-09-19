@@ -114,7 +114,6 @@ function Step3() {
 
     }
 
-
   }
 
   useEffect(() => {
@@ -122,7 +121,7 @@ function Step3() {
     // if the first step is not completed, return to that page
     if ((animal == null || undefined) || (currentStep !== 3)) {
 
-      // router.push('/criar-anuncio/step1')
+      router.push('/criar-anuncio/step1')
 
     }
 

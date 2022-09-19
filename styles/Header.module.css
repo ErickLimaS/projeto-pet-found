@@ -15,11 +15,14 @@
 
 .header {
 
+    z-index: 9999;
+    position: relative;
+
     height: 12vh;
 
     padding: 1.8rem 0;
 
-    background-color: var(--brand-color);
+    background-color: var(--orange);
 
     justify-content: center;
     width: 100%;

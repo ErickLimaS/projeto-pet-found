@@ -40,7 +40,7 @@ function Header() {
                     </li>
 
                     <li>
-                        <Link href='/achei-um-pet'>Achei Um Pet</Link>
+                        <Link href='/found'>Achei Um Pet</Link>
                     </li>
 
                     <li>
@@ -99,7 +99,7 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/achei-um-pet'>Achei Um Pet</Link>
+                            <Link href='/found'>Achei Um Pet</Link>
                         </li>
 
                         <li>

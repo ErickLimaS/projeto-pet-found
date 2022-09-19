@@ -22,7 +22,7 @@ export const MobileList  = styled.ul<Props>`
     padding-bottom: 1rem;
     width: 100%;
 
-    background-color: var(--brand-color);
+    background-color: var(--orange);
 
     >div{
 

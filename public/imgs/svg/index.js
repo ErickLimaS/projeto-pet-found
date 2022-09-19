@@ -13,5 +13,6 @@ export { default as PersonFill } from "./PersonFill";
 export { default as Rocket } from "./Rocket";
 export { default as Rocket2 } from "./Rocket2";
 export { default as SackMoney } from "./SackMoney";
+export { default as Search } from "./Search";
 export { default as Target } from "./Target";
 export { default as X } from "./X";
