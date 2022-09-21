@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '../components/Meta'
 import IbgeApi from './api/localidadesEndereco'
-import FoundStyles from '../styles/AcheiUmPet.module.css'
+import FoundStyles from '../styles/Found.module.css'
 import { useRouter } from 'next/router'
 import * as SVG from '../public/imgs/svg'
 import { data } from './api/templateData'
@@ -176,7 +176,7 @@ const Found: NextPage = () => {
                       <div className={FoundStyles.reward}>
 
                         <h2>
-                          {item.rewardWhenFound ? item.rewardAmountOffered : 'Sem Recompensa'}
+                          {item.rewardWhenFound ? `R$ ${item.rewardAmountOffered}` : 'Sem Recompensa'}
                         </h2>
 
                       </div>

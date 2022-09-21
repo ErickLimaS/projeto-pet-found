@@ -187,6 +187,11 @@ div.form_div>form {
     }
 
 }
+div.form_div>form div label{
+
+    margin-bottom: 0.5rem;
+
+}
 
 div.form_div>form div select {
 
