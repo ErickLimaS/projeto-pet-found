@@ -339,3 +339,189 @@ section.suggestions>ul>li:hover {
     transform: scale(1.1);
 
 }
+
+/*  */
+
+div.confirm_pet_found {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    width: 100%;
+
+    background-color: rgba(0, 0, 0, 0.7);
+
+    z-index: 9999;
+
+}
+
+div.confirm_pet_found h1 {
+
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: var(--orange);
+
+    margin-bottom: 2rem;
+
+}
+
+
+div.confirm_pet_found>button {
+
+    cursor: pointer;
+
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+
+    padding: 1rem 1.7rem;
+
+    display: flex;
+    align-self: flex-end;
+
+    background-color: transparent;
+    border: 1px solid var(--white);
+    border-radius: 50%;
+
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--white);
+
+}
+
+@media(max-width: 1024px) {
+        
+    div.confirm_pet_found>button {
+
+        padding: 1rem 1.5rem;
+
+        font-size: 2rem;
+
+    }
+    
+}
+
+div.confirm_pet_found>button:hover {
+
+    transition: all ease-in-out 150ms;
+    background-color: var(--lighter-orange);
+
+    color: var(--orange);
+}
+
+div.confirm_pet_found form {
+
+    min-height: 60vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--lighter-orange);
+
+    border: 2px solid var(--light-orange);
+    border-radius: 4px;
+
+    padding: 1.5rem;
+
+}
+
+@media(max-width: 1024px) {
+
+
+    div.confirm_pet_found form {
+
+        width: 80%;
+
+    }
+
+}
+
+@media(max-width: 375px) {
+
+
+    div.confirm_pet_found form {}
+
+}
+
+div.confirm_pet_found form>div {
+
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+
+}
+
+div.confirm_pet_found form>div label {
+
+    font-size: 1.8rem;
+
+}
+
+div.confirm_pet_found form>div.img_input label {
+
+    font-size: 2rem;
+
+}
+
+div.confirm_pet_found form>div.img_input input {
+
+    width: inherit;
+
+    margin-top: 10%;
+    font-size: 1.6rem;
+
+}
+
+div.confirm_pet_found form>div.reverse {
+
+    flex-direction: row-reverse;
+
+}
+
+
+div.confirm_pet_found form>div.reverse input {
+
+    margin-right: 1rem;
+
+    height: 25px;
+    width: 25px;
+
+}
+
+div.confirm_pet_found form button {
+    cursor: pointer;
+    width: 80%;
+
+    padding: 1rem 2rem;
+
+    background-color: var(--light-orange);
+
+    border-radius: 4px;
+    border: 0;
+
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--white);
+
+}
+
+
+div.confirm_pet_found form button:hover {
+
+    transition: all ease-in-out 150ms;
+    background-color: var(--orange);
+
+}

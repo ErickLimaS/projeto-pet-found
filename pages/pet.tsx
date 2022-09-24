@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { data } from './api/templateData'
@@ -7,13 +7,16 @@ import Meta from '../components/Meta'
 import PageLoading from '../components/PageLoading'
 import Image from 'next/image'
 import * as SVG from '../public/imgs/svg'
-import Link from 'next/link'
 
 const Pet: NextPage = () => {
 
     const [loading, setLoading] = useState<boolean>(true)
     const [petInfo, setPetInfo] = useState<any>(null)
     const [petDataNotFound, setPetDataNotFound] = useState<boolean>(false)
+    const [expanded, setExpanded] = useState<boolean>(false)
+
+    const petImg = React.useRef<HTMLInputElement>(null)
+    const checkboxConfirmPetFound = React.useRef<HTMLInputElement>(null)
 
     const router = useRouter()
 
@@ -29,6 +32,25 @@ const Pet: NextPage = () => {
         })
 
         setLoading(false)
+
+    }
+
+    const openPetFoundPanel = () => {
+
+        setExpanded(true)
+
+    }
+
+    const confirmPetFound = (e: any) => {
+
+        // Send to user 'A' account whose pet is lost a notification about user 'B' found their pet. Then user 'A' will be able to contact with user 'B'.
+
+        // Server will receave a img from user B and his info contact. After that, user A will get a notification about his pet lost, and will be able to contact with user B.
+
+        e.preventDefault()
+
+        // const img = petImg.current.value
+        // const confirm = checkboxConfirmPetFound.current.value
 
     }
 
@@ -121,7 +143,7 @@ const Pet: NextPage = () => {
                                     <button
                                         type='button'
                                         name={`achei_seu_${petInfo?.petTranslated}`}
-                                        onClick={() => console.log('')}
+                                        onClick={() => openPetFoundPanel()}
                                     >
                                         {petInfo?.petTranslated === 'Cachorro' && <SVG.Dog2 />}
                                         {petInfo?.petTranslated === 'Gato' && <SVG.Cat2 />}
@@ -134,49 +156,83 @@ const Pet: NextPage = () => {
 
                         </section>
 
-                        {petInfo?.moreInfo && (
+                        {expanded === true && (
 
-                            < section className={PetPageStyles.more_info}>
+                            <div className={PetPageStyles.confirm_pet_found} >
 
-                                <h2>Informações dadas pelo dono</h2>
+                                {/* <h1>Mande uma foto do Pet para o dono reconhecer !</h1> */}
+                                <button type='button' onClick={() => setExpanded(false)} name='fechar painel'>X</button>
 
-                                <p>{petInfo?.moreInfo}</p>
+                                <form
+                                    method='post'
+                                    encType="multipart/form-data"
+                                    onSubmit={(e) => confirmPetFound(e)}>
 
-                            </section>
+                                    <div className={PetPageStyles.img_input}>
+                                        <label htmlFor='pet_found_img'>Mande uma foto do pet que você achou</label>
+                                        <input ref={petImg} type='file' id='pet_found_img' name='Foto do Pet Achado' required></input>
+                                    </div>
 
-                        )}
+                                    <div className={PetPageStyles.reverse}>
+                                        <label htmlFor='confirm_contact'>Sim, acredito que achei o pet informado nesse post e aceito entrar em contato com o dono.</label>
+                                        <input ref={checkboxConfirmPetFound} id='confirm_contact' name='Confirmo que achei o pet' type='checkbox' required></input>
+                                    </div>
 
-                        {petInfo?.sugestionsTest && (
-                            <section className={PetPageStyles.suggestions}>
+                                    <button type='submit'>Enviar para o Dono</button>
 
-                                <h2>Por acaso, você viu alguns desses ?</h2>
+                                </form>
 
-                                <ul>
+                            </div>
 
-                                    {petInfo?.sugestionsTest.map((item: any) => (
+                        )
+                        }
 
-                                        <li key={item.id}>
+                        {
+                            petInfo?.moreInfo && (
 
-                                            <a href={`/pet?id=${item.id}`}>
-                                                <Image
+                                < section className={PetPageStyles.more_info}>
 
-                                                    src='/imgs/home/missing-dog-1.jpg'
-                                                    width={220} height={240}
-                                                    alt={'Foto do/da ' + item.name}
-                                                    layout='fixed'
-                                                />
-                                                <h3>{item.name}</h3>
-                                            </a>
-                                        </li>
+                                    <h2>Informações dadas pelo dono</h2>
 
-                                    ))}
+                                    <p>{petInfo?.moreInfo}</p>
 
-                                </ul>
+                                </section>
 
+                            )
+                        }
 
-                            </section>
-                        )}
-                    </div>
+                        {
+                            petInfo?.sugestionsTest && (
+                                <section className={PetPageStyles.suggestions}>
+
+                                    <h2>Por acaso, você viu alguns desses ?</h2>
+
+                                    <ul>
+
+                                        {petInfo?.sugestionsTest.map((item: any) => (
+
+                                            <li key={item.id}>
+
+                                                <a href={`/pet?id=${item.id}`}>
+                                                    <Image
+
+                                                        src='/imgs/home/missing-dog-1.jpg'
+                                                        width={220} height={240}
+                                                        alt={'Foto do/da ' + item.name}
+                                                        layout='fixed'
+                                                    />
+                                                    <h3>{item.name}</h3>
+                                                </a>
+                                            </li>
+
+                                        ))}
+
+                                    </ul>
+
+                                </section>
+                            )
+                        }
+                    </div >
                 </>
             )
             }
