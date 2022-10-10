@@ -1,4 +1,5 @@
 export { default as Binoculars } from "./Binoculars";
+export { default as Brand } from "./Brand";
 export { default as Cat } from "./Cat";
 export { default as Cat2 } from "./Cat2";
 export { default as ChevronLeft } from "./ChevronLeft";
@@ -15,10 +16,12 @@ export { default as MaleSymbol } from "./MaleSymbol";
 export { default as MaleSymbol2 } from "./MaleSymbol2";
 export { default as NoMoney } from "./NoMoney";
 export { default as PersonFill } from "./PersonFill";
+export { default as ProfilePerson } from "./ProfilePerson";
 export { default as Rocket } from "./Rocket";
 export { default as Rocket2 } from "./Rocket2";
 export { default as SackMoney } from "./SackMoney";
 export { default as Search } from "./Search";
 export { default as Target } from "./Target";
+export { default as Twitter } from "./Twitter";
 export { default as Whatsapp } from "./Whatsapp";
 export { default as X } from "./X";

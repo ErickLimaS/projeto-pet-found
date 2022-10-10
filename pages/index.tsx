@@ -10,40 +10,49 @@ const Home: NextPage = () => {
       <Meta title='Início' />
 
       <div className={homeStyles.first_content}>
-        <div className={homeStyles.text}>
 
-          <span>SEJA BEM VINDO</span>
+        <div className={homeStyles.hero}>
 
-          <h1>VOCÊ VIU O MEU DONO ?</h1>
+          <div className={homeStyles.text}>
+            <h1>VOCÊ VIU O MEU DONO ?</h1>
 
-          <p>
-            Nossa <span>ONG</span> ajuda com o reencontro de <span>ANIMAIS</span> com seus <span>DONOS</span>
-          </p>
+            <p>
+              Nossa <span>ONG</span> ajuda com o reencontro de <span>ANIMAIS</span> com seus <span>DONOS</span>
+            </p>
+          </div>
+
+          <div className={homeStyles.img}>
+
+            {/* <img src='/imgs/home/dog.png' alt='Cachorro' height={565} width={565}></img> */}
+
+          </div>
 
         </div>
 
       </div>
 
-      <div className={homeStyles.content}>
+      <div className={homeStyles.sections}>
 
         <section className={homeStyles.about_us_section} id='about'>
 
-          <h2>Sobre Nós</h2>
+          <h2>Sobre nós</h2>
 
-          <div className={homeStyles.text_section}>
+          <div className={homeStyles.content}>
 
-            <Image src='/imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido' height={400} width={400} layout='intrinsic'/>
+            <div className={homeStyles.owner_and_pet_img}>
+
+              <Image src='/imgs/home/cat-owner.jpg' alt='Reecontro da Thais e sua gata Mia' height={3400} width={5100} layout='intrinsic' />
+
+              <p>Reecontro da Thais e sua gata Mia</p>
+
+            </div>
 
             <div className={homeStyles.text}>
 
-              <h3>Lorem Lorem Lorem</h3>
-
-              <small>Lorem Lorem</small>
-
-              <span></span>
+              <h3>Juntando quem está perdido a achar quem procura</h3>
 
               <p>
-                Lorem Lorem LoremLorem Lorem Lorem Lorem Lorem LoremLorem Lorem LoremvLorem Lorem LoremLorem Lorem Lorem
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ornare blandit sapien et ultricies. Quisque ut nisl nec dui congue luctus. Pellentesque pellentesque blandit mauris quis iaculis. Sed id leo mattis, dictum dolor rhoncus, tincidunt lacus.
               </p>
 
             </div>
@@ -56,9 +65,9 @@ const Home: NextPage = () => {
 
           <h2>Nossa Missão</h2>
 
-          <div className={homeStyles.our_standarts}>
+          <div className={homeStyles.grid}>
 
-            <div className={homeStyles.standart}>
+            <div className={homeStyles.grid_item}>
 
               <div className={homeStyles.img_container}>
 
@@ -70,13 +79,15 @@ const Home: NextPage = () => {
 
                 <h3>Visão</h3>
 
-                <p>Lorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremlorem Lorem lorem loremloremLorem lorem loremloremLorem lorem loremloremLorem lorem loremlorem</p>
+                <p>
+                  Aenean id ultricies est. Donec vestibulum, augue malesuada fermentum pharetra, tortor sapien tincidunt risus, semper luctus justo leo sed nunc. Etiam eu ultrices est. In posuere risus ut tortor laoreet, et consectetur eros convallis.
+                </p>
 
               </div>
 
             </div>
 
-            <div className={homeStyles.standart}>
+            <div className={homeStyles.grid_item}>
 
               <div className={homeStyles.img_container}>
 
@@ -94,7 +105,7 @@ const Home: NextPage = () => {
 
             </div>
 
-            <div className={homeStyles.standart}>
+            <div className={homeStyles.grid_item}>
 
               <div className={homeStyles.img_container}>
 
@@ -147,120 +158,89 @@ const Home: NextPage = () => {
 
           <h2>Nosso Time</h2>
 
-          <p>
-            Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-            Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-            Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-            Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-          </p>
+          <ul className={homeStyles.grid}>
 
-          <div className={homeStyles.team}>
+            <li className={homeStyles.grid_item}>
 
-            <ul className={homeStyles.team_list}>
+              <img></img>
 
-              <li className={homeStyles.team_member}>
+              <h3>Nome</h3>
 
-                <img></img>
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
 
-                <h3>Nome</h3>
+            </li>
 
-                <h4>Função</h4>
+            <li className={homeStyles.grid_item}>
 
-                <p>
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                </p>
+              <img></img>
 
-              </li>
+              <h3>Nome</h3>
 
-              <li className={homeStyles.team_member}>
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
 
-                <img></img>
+            </li>
 
-                <h3>Nome</h3>
+            <li className={homeStyles.grid_item}>
 
-                <h4>Função</h4>
+              <img></img>
 
-                <p>
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                </p>
+              <h3>Nome</h3>
 
-              </li>
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
 
-              <li className={homeStyles.team_member}>
+            </li>
 
-                <img></img>
+            <li className={homeStyles.grid_item}>
 
-                <h3>Nome</h3>
+              <img></img>
 
-                <h4>Função</h4>
+              <h3>Nome</h3>
 
-                <p>
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                </p>
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
 
-              </li>
+            </li>
 
-              <li className={homeStyles.team_member}>
-
-                <img></img>
-
-                <h3>Nome</h3>
-
-                <h4>Função</h4>
-
-                <p>
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                  Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem
-                </p>
-
-              </li>
-
-            </ul>
-
-          </div>
+          </ul>
 
         </section>
 
         <section className={homeStyles.newsletter_section} id='newsletter'>
 
-          <div className={homeStyles.text_section}>
+          <div className={homeStyles.text}>
 
-            <div className={homeStyles.form}>
+            <h2>Registre-se Em Nossa Newsletter</h2>
 
-              <h3>Registre-se Em Nossa Newsletter</h3>
-
-              <p>
-                Fique informado com todas as novidades que nossa ONG anda fazendo para melhorar a vida de nossos animais
-              </p>
-
-              <form onSubmit={() => console.log('submit')}>
-
-                <label htmlFor='name'>
-                  <input type='text' id='name' placeholder='Seu nome'></input>
-                </label>
-
-                <label htmlFor='email'>
-                  <input type='email' id='email' placeholder='Email'></input>
-                </label>
-
-                <button type='submit'>Se Inscrever</button>
-
-              </form>
-            </div>
+            <p>
+              Fique informado com todas as novidades que nossa ONG anda fazendo para melhorar a vida de nossos animais
+            </p>
 
           </div>
 
+          <div className={homeStyles.form_container}>
+
+            <form onSubmit={(e) => console.log(e)}>
+
+              <label htmlFor='name'>
+                <input type='text' id='name' placeholder='Seu nome'></input>
+              </label>
+
+              <label htmlFor='email'>
+                <input type='email' id='email' placeholder='Email'></input>
+              </label>
+
+              <button type='submit'>Inscrever-se</button>
+
+            </form>
+
+          </div>
         </section>
 
       </div>

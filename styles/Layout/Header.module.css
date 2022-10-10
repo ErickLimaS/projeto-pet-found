@@ -1,0 +1,220 @@
+.header {
+
+    background-color: var(--primary);
+    z-index: 9999;
+    position: relative;
+
+}
+
+.header * {
+    color: var(--white);
+}
+
+div.logo svg {
+
+    cursor: pointer;
+
+    transform: scale(1.4);
+
+}
+
+.header>nav {
+
+    margin-left: 85px;
+    margin-right: 85px;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px;
+
+}
+
+
+.header>nav .links, .header>nav .links ul.list {
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.header>nav .links>* {
+
+    margin: 0 16px;
+
+}
+
+.header>nav .links ul.list li {
+
+    margin: 0 16px;
+
+}
+
+
+.header>nav .links ul.list li a {
+
+    font-size: 0.9rem;
+    font-weight: bold;
+
+}
+
+.header span.line {
+
+    height: 30px;
+    width: 1px;
+
+    border-left: 1px solid var(--white-50);
+
+}
+
+.header .login_desktop {
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+
+    background-image: var(--brand-gradient);
+
+    border-radius: 24px;
+
+}
+
+.header .login_desktop:hover {
+
+    transition: all ease-in 100ms;
+    filter: saturate(90%);
+
+}
+
+.header .login_desktop a{
+
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+
+    border-radius: 24px;
+}
+
+.header .login_desktop svg {
+
+    margin-right: 8px;
+
+}
+
+@media(max-width: 768px) {
+
+    div.logo svg {
+        transform: scale(1.2);
+    }
+}
+
+@media(max-width: 768px) {
+
+    .header nav {
+
+        width: 95%;
+        justify-content: space-between;
+
+    }
+
+}
+
+@media(max-width: 768px) {
+
+    .list {
+
+        display: none;
+
+    }
+
+}
+
+.list li:hover a, .drawer_sidebar_mobile ul li:hover a {
+    transition: all ease-in-out 60ms;
+
+    color: var(--white);
+    border-bottom: 2px solid var(--white);
+
+}
+
+
+.header span.login {
+
+    cursor: pointer;
+
+    /* color: var(--white); */
+
+}
+
+.header .login_desktop a:hover span {
+
+    border-bottom: 2px solid wheat;
+
+}
+
+.header span.login svg {
+
+    margin-right: 0.5rem;
+    fill: var(--white);
+
+}
+
+div.drawer_sidebar_mobile {
+
+    display: none;
+
+}
+
+/*  MOBILE CSS */
+@media(max-width: 768px) {
+    div.login_desktop {
+
+        display: none;
+
+    }
+
+    div.drawer_sidebar_mobile {
+
+        display: flex;
+
+
+    }
+
+    div.drawer_sidebar_mobile button {
+
+        margin-right: 0.5rem;
+        transform: scale(1.2);
+
+        background-color: transparent;
+
+        border: none;
+
+    }
+
+    div.drawer_sidebar_mobile button svg {
+
+        fill: var(--white);
+        transform: scale(1.2);
+
+    }
+
+    .drawer_sidebar_mobile li {
+
+        border-bottom: 1px solid #dddddd8a;
+
+    }
+
+    .drawer_sidebar_mobile li:last-child {
+
+        border-bottom: 0;
+
+    }
+}
