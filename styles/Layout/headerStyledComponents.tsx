@@ -18,11 +18,9 @@ export const MobileList  = styled.ul<Props>`
     left: ${props => props.mobileMenu === true ? '0vw!important' : '-100vw!important'};
     flex-direction: column;
 
-    padding-top: 3rem;
-    padding-bottom: 1rem;
     width: 100%;
 
-    background-color: var(--orange);
+    background-color: var(--primary);
 
     >div{
 
@@ -33,21 +31,43 @@ export const MobileList  = styled.ul<Props>`
 
     }
 
-    svg{
-        transform: scale(1);
-        width: 2.4rem;
-        height: 2.4rem;
+    div.button-container{
+
+        padding: 16px;
+
+    }
+    
+    div.button-container button{
+            
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    li.login {
+
+        padding: 0 8px;
+
+        font-size: 1.1rem;
+
+        svg{
+            margin-right: 16px;
+            transform: scale(1.6);
+            width: 16px;
+            height: 16px;
+        }
 
     }
 
     li{
-        margin: 1rem 1rem;
-        padding: 0.5rem 0;
+        margin: 16px;
     }
 
     a{
 
         display: flex;
+        align-items: center;
 
         :hover{
 

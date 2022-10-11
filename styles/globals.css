@@ -65,6 +65,18 @@ h1 {
 
 }
 
+
+@media(max-width: 425px) {
+
+  h1 {
+
+    font-size: 3.157rem;
+    line-height: 88px;
+
+  }
+
+}
+
 h2 {
 
   font-size: 3.157rem;
@@ -73,6 +85,16 @@ h2 {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
   line-height: 72px;
+
+}
+
+@media(max-width: 425px) {
+
+  h2 {
+
+    font-size: 2.369rem;
+
+  }
 
 }
 
@@ -88,6 +110,17 @@ h3 {
 
 }
 
+
+@media(max-width: 425px) {
+
+  h3 {
+
+    font-size: 1.777rem;
+
+  }
+
+}
+
 h4 {
 
   font-size: 1.777rem;
@@ -98,6 +131,17 @@ h4 {
   line-height: 40px;
 
 }
+
+@media(max-width: 425px) {
+
+  h4 {
+
+    font-size: 1.333rem;
+
+  }
+
+}
+
 
 h5 {
 
@@ -110,6 +154,17 @@ h5 {
 
 }
 
+@media(max-width: 425px) {
+
+  h5 {
+
+    font-size: 1rem;
+
+  }
+
+}
+
+
 h6 {
 
   font-size: 1rem;
@@ -121,6 +176,16 @@ h6 {
 
 }
 
+@media(max-width: 425px) {
+
+  h6 {
+
+    font-size: 0.9rem;
+
+  }
+
+}
+
 p {
 
   font-size: 1rem;
@@ -129,6 +194,16 @@ p {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
   line-height: 30px;
+
+}
+
+@media(max-width: 425px) {
+
+  p {
+
+    font-size: 0.9rem;
+
+  }
 
 }
 

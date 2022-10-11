@@ -26,6 +26,16 @@ function Footer() {
                     <Link href='/'><a><SVG.Twitter /></a></Link>
 
                 </div>
+                
+                <div className={footerStyles.mobile_brand_text}>
+
+                    <SVG.Brand />
+
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam placerat laoreet arcu, sed viverra dui rutrum nec.
+                    </p>
+
+                </div>
 
                 <div className={footerStyles.links}>
                     <div>

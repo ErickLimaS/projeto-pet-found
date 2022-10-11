@@ -3,8 +3,13 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Meta from '../components/Meta'
 import * as SVG from '../public/imgs/svg'
+import { useState } from 'react'
+import { MemberCardsSection } from '../styles/Home/teamMembersCards'
 
 const Home: NextPage = () => {
+
+  const [teamCardIndex, setTeamCardIndex] = useState<string>('0')
+
   return (
     <>
       <Meta title='Início' />
@@ -160,7 +165,7 @@ const Home: NextPage = () => {
 
           <ul className={homeStyles.grid}>
 
-            <li className={homeStyles.grid_item}>
+            <li className={homeStyles.grid_item} data-member-index='0'>
 
               <img></img>
 
@@ -172,7 +177,7 @@ const Home: NextPage = () => {
 
             </li>
 
-            <li className={homeStyles.grid_item}>
+            <li className={homeStyles.grid_item} data-member-index='1'>
 
               <img></img>
 
@@ -184,7 +189,7 @@ const Home: NextPage = () => {
 
             </li>
 
-            <li className={homeStyles.grid_item}>
+            <li className={homeStyles.grid_item} data-member-index='2'>
 
               <img></img>
 
@@ -196,7 +201,7 @@ const Home: NextPage = () => {
 
             </li>
 
-            <li className={homeStyles.grid_item}>
+            <li className={homeStyles.grid_item} data-member-index='3'>
 
               <img></img>
 
@@ -211,6 +216,73 @@ const Home: NextPage = () => {
           </ul>
 
         </section>
+
+        <MemberCardsSection showingMemberIndex={teamCardIndex}>
+
+          <h2>Nosso Time</h2>
+
+          <ul className='grid'>
+
+            <li className='grid_item' data-member-index='0'>
+
+              <img></img>
+
+              <h3>Sara</h3>
+
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
+
+            </li>
+
+            <li className='grid_item' data-member-index='1'>
+
+              <img></img>
+
+              <h3>John</h3>
+
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
+
+            </li>
+
+            <li className='grid_item' data-member-index='2'>
+
+              <img></img>
+
+              <h3>Amanda</h3>
+
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
+
+            </li>
+
+            <li className='grid_item' data-member-index='3'>
+
+              <img></img>
+
+              <h3>Arnold</h3>
+
+              <p>
+                Vivamus quis nisl ac sapien luctus tincidunt. Sed placerat imperdiet purus eu mattis. Aenean iaculis odio sed mi congue iaculis.
+              </p>
+
+            </li>
+
+          </ul>
+
+          <div className='progress_dots'>
+
+            <span data-card-index='0' onClick={() => setTeamCardIndex('0')}></span>
+            <span data-card-index='1'  onClick={() => setTeamCardIndex('1')}></span>
+            <span data-card-index='2'  onClick={() => setTeamCardIndex('2')}></span>
+            <span data-card-index='3'  onClick={() => setTeamCardIndex('3')}></span>
+
+          </div>
+
+        </MemberCardsSection>
 
         <section className={homeStyles.newsletter_section} id='newsletter'>
 
