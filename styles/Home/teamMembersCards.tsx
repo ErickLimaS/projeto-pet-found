@@ -20,7 +20,7 @@ export const MemberCardsSection = styled.section<Props>`
 
     display: flex;
 
-    @media(min-width: 426px){
+    @media(min-width: 620px){
 
         display: none;
 

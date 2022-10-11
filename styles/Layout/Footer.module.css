@@ -61,12 +61,13 @@
 
     .list {
 
-        margin: 0 2rem !important;
+        margin: 0 20px !important;
+
     }
 
 }
 
-@media(max-width: 425px) {
+@media(max-width: 760px) {
 
     .footer nav {
 
@@ -232,6 +233,7 @@
     align-items: flex-start;
 
 }
+
 @media(max-width: 768px) {
 
     .footer .links>div {

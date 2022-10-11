@@ -132,33 +132,6 @@ const Home: NextPage = () => {
 
         </section>
 
-        {/* SECTION - SHOWING PEOPLE WHO ALREADY HAVE BEEN USING THE WEBSITE BEFORE */}
-        {/* <section className={homeStyles.who_approves_section} id='who-approves'>
-
-          <h2>Sobre Nós</h2>
-
-          <div className={homeStyles.text_section}>
-
-            <img src='./imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido'></img>
-
-            <div className={homeStyles.text}>
-
-              <h3>Lorem Lorem Lorem</h3>
-
-              <small>Lorem Lorem</small>
-
-              <span></span>
-
-              <p>
-                Lorem Lorem LoremLorem Lorem Lorem Lorem Lorem LoremLorem Lorem LoremvLorem Lorem LoremLorem Lorem Lorem
-              </p>
-
-            </div>
-
-          </div>
-
-        </section> */}
-
         <section className={homeStyles.our_team_section} id='our-team'>
 
           <h2>Nosso Time</h2>
@@ -217,6 +190,7 @@ const Home: NextPage = () => {
 
         </section>
 
+        {/* Shows only on mobile display */}
         <MemberCardsSection showingMemberIndex={teamCardIndex}>
 
           <h2>Nosso Time</h2>
@@ -276,9 +250,9 @@ const Home: NextPage = () => {
           <div className='progress_dots'>
 
             <span data-card-index='0' onClick={() => setTeamCardIndex('0')}></span>
-            <span data-card-index='1'  onClick={() => setTeamCardIndex('1')}></span>
-            <span data-card-index='2'  onClick={() => setTeamCardIndex('2')}></span>
-            <span data-card-index='3'  onClick={() => setTeamCardIndex('3')}></span>
+            <span data-card-index='1' onClick={() => setTeamCardIndex('1')}></span>
+            <span data-card-index='2' onClick={() => setTeamCardIndex('2')}></span>
+            <span data-card-index='3' onClick={() => setTeamCardIndex('3')}></span>
 
           </div>
 
