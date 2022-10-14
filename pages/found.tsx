@@ -2,19 +2,20 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '../components/Meta'
 import IbgeApi from './api/localidadesEndereco'
-import FoundStyles from '../styles/Found.module.css'
+import FoundStyles from '../styles/FoundPage.module.css'
 import { useRouter } from 'next/router'
 import * as SVG from '../public/imgs/svg'
 import { data } from './api/templateData'
 import Link from 'next/link'
 import Image from 'next/image'
+import ResultItem from '../components/found-page/ResultItem'
 
 const Found: NextPage = () => {
 
   const [states, setStates] = useState([])
   const [county, setCounty] = useState([])
 
-  // gets all brazilian states 
+  // gets all states 
   const getBrazilianStates = async () => {
 
     const data = await IbgeApi.getBrazilianStates()
@@ -22,7 +23,7 @@ const Found: NextPage = () => {
     setStates(data)
 
   }
-  const getStateMunicipies = async (choseState: string) => {
+  const getStateCounties = async (choseState: string) => {
 
     const data = await IbgeApi.getBrazilianMunicipies(choseState)
 
@@ -50,7 +51,7 @@ const Found: NextPage = () => {
   useEffect(() => {
 
     getBrazilianStates()
-    getStateMunicipies('AC')
+    getStateCounties('AC')
 
   }, [])
 
@@ -60,140 +61,153 @@ const Found: NextPage = () => {
 
       <div className={FoundStyles.container}>
 
-        <div className={FoundStyles.heading}>
-          <h1>Achei Um Pet!</h1>
+        <section className={FoundStyles.first_content}>
 
-          {/* <p>
-            Aqui você encontrara o dono do pet que você encontrou.
-          </p> */}
+          <div className={FoundStyles.form_container}>
 
-          <p>
-            Certamente fizeram um anúncio do pet perdido aqui. Então, procure pelo anúncio do Pet aqui e entre em contato com o dono. Quem sabe não tem uma recompensa...
-          </p>
-        </div>
+            <form onSubmit={(e: FormEvent) => submitForm(e)}>
 
-        <div className={FoundStyles.form_div}>
+              <div>
+                <label htmlFor='pet'>
+                  <select id='pet' name='pet'>
 
-          <form onSubmit={(e: FormEvent) => submitForm(e)}>
+                    <option value='DOG'>Teste</option>
+                    <option value='CAT'>Teste</option>
+                    <option value='OTHER'>Teste</option>
 
-            <div>
-              <label htmlFor='pet'>Pet</label>
+                  </select>
 
-              <select id='pet' name='pet'>
+                </label>
 
-                <option value='DOG'>Cachorro</option>
-                <option value='CAT'>Gato</option>
-                <option value='OTHER'>example</option>
+              </div>
 
-              </select>
+              <div>
+                <label htmlFor='state'>
 
-            </div>
+                  <input id='state' type='text' name='estado' list='states'
+                    onChange={(e: any) => getStateCounties(e.target.value)}
+                    placeholder="Estado"
+                  />
 
-            <div>
-              <label htmlFor='state'>Estado</label>
+                  <datalist id='states'>
 
-              <select id='state' name='estado'
-                onChange={(e: any) => getStateMunicipies(e.target.value)}
-              >
+                    {states.map((item: any) => (
+                      <option value={item.sigla} key={item.id}>{item.nome}</option>
+                    ))}
 
-                {states.map((item: any) => (
-                  <option value={item.sigla} key={item.id}>{item.nome}</option>
-                ))}
-              </select>
+                  </datalist>
+                </label>
 
-            </div>
+                <label htmlFor='county'>
 
-            <div>
-              <label htmlFor='county'>Município</label>
+                  <input id='county' type="text" name='Municipio' list="countys" placeholder='Município' />
 
-              <select id='county' name='Municipio'>
-                {county.map((item: any) => (
-                  <option value={item.sigla} key={item.id}>{item.nome}</option>
-                ))}
-              </select>
+                  <datalist id='countys'>
 
-            </div>
+                    {county.map((item: any) => (
+                      <option value={item.sigla} key={item.id}>{item.nome}</option>
+                    ))}
 
-            <div>
-              <button type='submit' name='procurar'><SVG.Search /></button>
-            </div>
+                  </datalist>
 
-          </form>
+                </label>
+              </div>
 
-        </div>
+              <div>
+                <button type='submit' name='procurar'><SVG.Search /></button>
+              </div>
 
-        <h2>Resultados mais recentes para <span>todo Brasil</span></h2>
-
-        <section className={FoundStyles.results_section_grid}>
-
-          <div className={FoundStyles.explaining_current_section}>
-
-            <div>
-
-              <h2>Como Usar?</h2>
-
-              <p>
-
-                Procure o anúncio do Pet perdido no nosso banco de dados, usando o filtro de estado e município no topo da página.
-
-              </p>
-
-              <h2>Não achei o anúncio, e agora?</h2>
-
-              <p>
-
-                Se não achar, crie um você mesmo! Assim, caso o dono procure pelo próprio Pet perdido, ele consiga facilmente entrar em contato com você.
-
-              </p>
-
-              <Link href='/found-a-pet'>Criar Anúncio para Pet perdido que achei!</Link>
-
-            </div>
+            </form>
 
           </div>
 
-          <div className={FoundStyles.grid_results}>
+          <div className={FoundStyles.text_container}>
 
-            <ul>
+            <h1>Bla blblal lblasl</h1>
 
-              {data?.map((item: any) => (
-
-                <li key={item.id} className={FoundStyles.grid_item}>
-                  <a href={`/pet?id=${item.id}`}>
-                    <>
-                      <Image src='/imgs/home/missing-dog-1.jpg' alt='Cartaz de Cachorro Perdido' height={240} width={240} layout='intrinsic' />
-
-                      <h1>{item.name} <span>({item.race})</span></h1>
-
-                      {/* <p>{item.race}</p> */}
-
-                      <h2>Perdido em</h2>
-
-                      <p>
-                        {item.lastSeen[0].street}, {item.lastSeen[0].municipie} - {item.lastSeen[0].state}
-                      </p>
-
-                      <div className={FoundStyles.reward}>
-
-                        <h2>
-                          {item.rewardWhenFound ? `R$ ${item.rewardAmountOffered}` : 'Sem Recompensa'}
-                        </h2>
-
-                      </div>
-
-                      <p>Click para ver mais</p>
-
-                    </>
-                  </a>
-
-                </li>
-
-              ))}
-
-            </ul>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque orci sem, volutpat ut diam posuere, volutpat gravida felis. Nullam justo enim, faucibus et nisi in, finibus laoreet augue.
+            </p>
 
           </div>
 
+        </section>
+
+        <section className={FoundStyles.results_container}>
+
+          <aside className={FoundStyles.search_params}>
+
+            <form onChange={(e: any) => console.log(e.target.name, e.target.value)}>
+
+              <label>
+                Nas Últimas 6 horas
+                <input type="checkbox" name='last_6_hours' value="true"></input>
+                <span className={FoundStyles.checkmark}></span>
+              </label>
+
+              <label>
+                Nas Últimas 12 horas
+                <input type="checkbox" name='last_12_hours' value="true"></input>
+                <span className={FoundStyles.checkmark}></span>
+              </label>
+
+
+              <label>
+                Nas Últimas 24 horas
+                <input type="checkbox" name='last_24_hours' value="true"></input>
+                <span className={FoundStyles.checkmark}></span>
+              </label>
+
+              <label>
+                Não Possui Deficiência
+                <input type="checkbox" name='has_no_disability' value="true"></input>
+                <span className={FoundStyles.checkmark}></span>
+              </label>
+
+              <label>
+                Possui Deficiência
+                <input type="checkbox" name='has_disability' value="true"></input>
+                <span className={FoundStyles.checkmark}></span>
+              </label>
+
+            </form>
+
+          </aside>
+
+          <div className={FoundStyles.results}>
+
+            <h2>Resultados em Lugar Pesquisado</h2>
+
+            <div className={FoundStyles.list}>
+
+              <ResultItem />
+              <ResultItem />
+              <ResultItem />
+              <ResultItem />
+              <ResultItem />
+              <ResultItem />
+
+            </div>
+
+            <nav className={FoundStyles.pagination}>
+
+              <Link href={`/pag=1`}>
+                <a>
+                  <SVG.ChevronLeft />
+                </a>
+              </Link>
+
+              <p>Página 1 de 6</p>
+
+              <Link href={`/pag=2`}>
+                <a>
+                  <SVG.ChevronRight />
+                </a>
+              </Link>
+
+            </nav>
+
+          </div>
         </section>
 
       </div>
