@@ -37,14 +37,18 @@ const Found: NextPage = () => {
 
     e.preventDefault()
 
-    const pet = document.getElementById('pet') as HTMLSelectElement
+    const pet = document.querySelectorAll('input[type=checkbox]:checked') as NodeList
     const state = document.getElementById('state') as HTMLSelectElement
     const county = document.getElementById('county') as HTMLSelectElement
 
     // submit query to server through URL and gets data from chose location
     // router.push(`/found?pet=${pet.value}&state=${state.value}&county=${county.value}`)
 
-    console.log(pet.value, state.value, county.value)
+    pet.forEach((item: any) => {
+      return console.log(item.value)
+    })
+
+    console.log(state.value, county.value)
 
   }
 
@@ -67,32 +71,65 @@ const Found: NextPage = () => {
 
             <form onSubmit={(e: FormEvent) => submitForm(e)}>
 
-              <div>
-                <label htmlFor='pet'>
-                  <select id='pet' name='pet'>
+              <div className={FoundStyles.pet_checkbox}>
+                <div>
+                  <input type='checkbox' id='cachorro' name='pet1' value='DOG'></input>
 
-                    <option value='DOG'>Teste</option>
-                    <option value='CAT'>Teste</option>
-                    <option value='OTHER'>Teste</option>
+                  <label htmlFor='cachorro'>
+                    <Image
+                      src='/imgs/svg/dog2.svg'
+                      alt='Cachorro Cartoonizado'
+                      layout='intrinsic'
+                      width={40}
+                      height={40}>
+                    </Image>
+                    <p>Cachorro</p>
+                  </label>
+                </div>
 
-                  </select>
+                <div>
+                  <input type='checkbox' id='cat' name='pet2' value='CAT'></input>
 
-                </label>
+                  <label htmlFor='cat'>
+                    <Image
+                      src='/imgs/svg/cat2.svg'
+                      alt='Gato Cartoonizado'
+                      layout='intrinsic'
+                      width={40}
+                      height={40}>
+                    </Image>
+                    <p>Gato</p>
+                  </label>
+                </div>
 
+                <div>
+                  <input type='checkbox' id='other' name='pet3' value='OTHER'></input>
+
+                  <label htmlFor='other'>
+                    <Image
+                      src='/imgs/svg/dog2.svg'
+                      alt='Outro Animal'
+                      layout='intrinsic'
+                      width={40}
+                      height={40}>
+                    </Image>
+                    <p>Outro</p>
+                  </label>
+                </div>
               </div>
 
               <div>
                 <label htmlFor='state'>
 
                   <input id='state' type='text' name='estado' list='states'
-                    onChange={(e: any) => getStateCounties(e.target.value)}
+                    onChange={(e: any) => getStateCounties(e.target.value.slice(1, 3))}
                     placeholder="Estado"
                   />
 
                   <datalist id='states'>
 
                     {states.map((item: any) => (
-                      <option value={item.sigla} key={item.id}>{item.nome}</option>
+                      <option value={`(${item.sigla}) ${item.nome}`} key={item.id}></option>
                     ))}
 
                   </datalist>
@@ -210,7 +247,7 @@ const Found: NextPage = () => {
           </div>
         </section>
 
-      </div>
+      </div >
     </>
   )
 
