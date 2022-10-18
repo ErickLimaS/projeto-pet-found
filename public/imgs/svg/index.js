@@ -8,6 +8,7 @@ export { default as Coin } from "./Coin";
 export { default as Dog } from "./Dog";
 export { default as Dog2 } from "./Dog2";
 export { default as Envelope } from "./Envelope";
+export { default as Exclamation } from "./Exclamation";
 export { default as Facebook } from "./Facebook";
 export { default as FemaleSymbol } from "./FemaleSymbol";
 export { default as Instagram } from "./Instagram";

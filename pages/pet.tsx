@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { data } from './api/templateData'
-import PetPageStyles from '../styles/PetPage.module.css'
+import PetPageStyles from '../styles/PetPage/PetPage.module.css'
 import Meta from '../components/Meta'
 import PageLoading from '../components/PageLoading'
 import Image from 'next/image'
@@ -27,9 +27,11 @@ const Pet: NextPage = () => {
 
         data.find((item) => {
             if (String(item.id) == router.query.id) {
+                console.log(item)
                 return setPetInfo(item)
             }
         })
+        console.log(petInfo)
 
         setLoading(false)
 
@@ -78,160 +80,109 @@ const Pet: NextPage = () => {
                 <>
                     <div className={PetPageStyles.container}>
 
-                        <section className={PetPageStyles.img_and_first_details}>
+                        <section id={PetPageStyles["first-content"]}>
 
-                            <div className={PetPageStyles.pet_img}>
+                            <div className={PetPageStyles.img_container}>
+
+                                <SVG.ChevronLeft />
 
                                 <Image
-                                    src='/imgs/home/missing-dog-1.jpg'
-                                    width={440} height={460}
-                                    alt={'Foto do/da ' + petInfo?.name}
+                                    src={petInfo?.img}
+                                    alt={petInfo?.name}
+                                    width={720} height={405}
                                     layout='intrinsic'
-                                    onClick={() => console.log('')}
                                 />
+
+                                <SVG.ChevronRight />
 
                             </div>
 
-                            <div className={PetPageStyles.pet_first_info}>
+                            <div className={PetPageStyles.pet_info}>
 
-                                <div className={PetPageStyles.info}>
-                                    <h1>{petInfo?.name}</h1>
+                                <h1>{petInfo?.name}</h1>
 
-                                    <p>Raça <span>{petInfo?.race}</span></p>
-                                    <p><span>{petInfo?.age} anos de idade</span></p>
-                                    <p>Última Vez Visto em
-                                        <span>{petInfo?.lastSeen[0].street}
-                                            , {petInfo?.lastSeen[0].municipie}
-                                            - {petInfo?.lastSeen[0].state}</span>
+                                <div className={PetPageStyles.details}>
+
+                                    <p>
+                                        Raça: <b>{petInfo?.race}</b>
                                     </p>
-                                </div>
-
-                                <div className={PetPageStyles.contacts}>
-
-                                    <h2>Você Encontrou esse(a) {petInfo?.petTranslated}?</h2>
-
-                                    <p>Entre em contato com o dono atraves desses meios</p>
-
-                                    <ul>
-
-                                        <li>
-                                            <a href={petInfo?.ownerContacts.email}>
-                                                <SVG.Envelope fill='#c71610' />
-                                            </a>
-                                        </li>
-                                        <li>
-
-                                            <a href={petInfo?.ownerContacts.whatsapp}>
-                                                <SVG.Whatsapp fill='#25D366' />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href={petInfo?.ownerContacts.facebook}>
-                                                <SVG.Facebook fill='#4267B2' />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href={petInfo?.ownerContacts.instagram}>
-                                                <SVG.Instagram fill='#E1306C' />
-                                            </a>
-                                        </li>
-
-                                    </ul>
-
-                                    <h2>Ou notifique o dono pelo site</h2>
-
-                                    <button
-                                        type='button'
-                                        name={`achei_seu_${petInfo?.petTranslated}`}
-                                        onClick={() => openPetFoundPanel()}
-                                    >
-                                        {petInfo?.petTranslated === 'Cachorro' && <SVG.Dog2 />}
-                                        {petInfo?.petTranslated === 'Gato' && <SVG.Cat2 />}
-                                        {petInfo?.petTranslated === 'Other' && <SVG.Dog2 />}
-                                        Achei seu {petInfo?.petTranslated}!
-                                    </button>
+                                    <p>
+                                        Idade: {petInfo?.age}
+                                    </p>
+                                    <p>
+                                        Mora em: <b>Rua das Lamentações - São Paulo - SP, 01234-000</b>
+                                    </p>
 
                                 </div>
+
+                            </div>
+
+                            <div className={PetPageStyles.singularities}>
+
+                                <ul>
+                                    <li><SVG.Exclamation /> option1</li>
+
+                                    <li><SVG.Exclamation /> option2</li>
+
+                                    <li><SVG.Exclamation /> option3</li>
+
+                                    <li><SVG.Exclamation /> option1</li>
+
+                                    <li><SVG.Exclamation /> option1</li>
+
+                                    <li><SVG.Exclamation /> option1</li>
+
+                                </ul>
+
                             </div>
 
                         </section>
 
-                        {expanded === true && (
+                        <section>
 
-                            <div className={PetPageStyles.confirm_pet_found} >
+                            <div id={PetPageStyles["second-content"]}>
+                                <div className={PetPageStyles.text}>
 
-                                {/* <h1>Mande uma foto do Pet para o dono reconhecer !</h1> */}
-                                <button type='button' onClick={() => setExpanded(false)} name='fechar painel'>X</button>
+                                    <h2>Perdido em</h2>
 
-                                <form
-                                    method='post'
-                                    encType="multipart/form-data"
-                                    onSubmit={(e) => confirmPetFound(e)}>
+                                    <p>
+                                        Sed sodales ultrices lectus at molestie. Duis semper augue in urna eleifend.
+                                    </p>
 
-                                    <div className={PetPageStyles.img_input}>
-                                        <label htmlFor='pet_found_img'>Mande uma foto do pet que você achou</label>
-                                        <input ref={petImg} type='file' id='pet_found_img' name='Foto do Pet Achado' required></input>
-                                    </div>
+                                </div>
 
-                                    <div className={PetPageStyles.reverse}>
-                                        <label htmlFor='confirm_contact'>Sim, acredito que achei o pet informado nesse post e aceito entrar em contato com o dono.</label>
-                                        <input ref={checkboxConfirmPetFound} id='confirm_contact' name='Confirmo que achei o pet' type='checkbox' required></input>
-                                    </div>
+                                <div className={PetPageStyles.text}>
 
-                                    <button type='submit'>Enviar para o Dono</button>
+                                    <h2>Recompença</h2>
 
-                                </form>
+                                    <p>
+                                        R$ {petInfo?.rewardAmountOffered}
+                                    </p>
+
+                                </div>
+
+                                <div className={PetPageStyles.button}>
+
+                                    <button type='button'>
+                                        Achei Seu Pet
+                                    </button>
+
+                                </div>
 
                             </div>
 
-                        )
-                        }
+                            <div id={PetPageStyles["description"]}>
 
-                        {
-                            petInfo?.moreInfo && (
+                                <h2>Descrição do Pet</h2>
 
-                                < section className={PetPageStyles.more_info}>
+                                <p>
+                                    {petInfo?.moreInfo}
+                                </p>
 
-                                    <h2>Informações dadas pelo dono</h2>
+                            </div>
 
-                                    <p>{petInfo?.moreInfo}</p>
+                        </section>
 
-                                </section>
-
-                            )
-                        }
-
-                        {
-                            petInfo?.sugestionsTest && (
-                                <section className={PetPageStyles.suggestions}>
-
-                                    <h2>Por acaso, você viu alguns desses ?</h2>
-
-                                    <ul>
-
-                                        {petInfo?.sugestionsTest.map((item: any) => (
-
-                                            <li key={item.id}>
-
-                                                <a href={`/pet?id=${item.id}`}>
-                                                    <Image
-
-                                                        src='/imgs/home/missing-dog-1.jpg'
-                                                        width={220} height={240}
-                                                        alt={'Foto do/da ' + item.name}
-                                                        layout='fixed'
-                                                    />
-                                                    <h3>{item.name}</h3>
-                                                </a>
-                                            </li>
-
-                                        ))}
-
-                                    </ul>
-
-                                </section>
-                            )
-                        }
                     </div >
                 </>
             )

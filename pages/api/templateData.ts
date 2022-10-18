@@ -7,7 +7,7 @@ export const data = [
         name: 'Rex',
         age: 7,
         race: 'raca',
-        img: '',
+        img: '/imgs/home/cat.jpg',
         lastSeen: [
             {
                 state: 'São Paulo',
@@ -22,14 +22,14 @@ export const data = [
             instagram: 'instagramurl.com'
         },
         rewardWhenFound: true,
-        rewardAmountOffered: 9999,
+        rewardAmountOffered:  123.99,
         moreInfo: 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         sugestionsTest: [
             {
                 id: 11,
                 img: '',
                 name: '',
-                reward: 9999
+                reward: 123.99
             },
             {
                 id: 12,
