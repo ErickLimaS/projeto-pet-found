@@ -12,11 +12,9 @@ const Pet: NextPage = () => {
 
     const [loading, setLoading] = useState<boolean>(true)
     const [petInfo, setPetInfo] = useState<any>(null)
-    const [petDataNotFound, setPetDataNotFound] = useState<boolean>(false)
     const [expanded, setExpanded] = useState<boolean>(false)
 
     const petImg = React.useRef<HTMLInputElement>(null)
-    const checkboxConfirmPetFound = React.useRef<HTMLInputElement>(null)
 
     const router = useRouter()
 
@@ -78,13 +76,15 @@ const Pet: NextPage = () => {
                 </div>
             ) : (
                 <>
-                    <div className={PetPageStyles.container}>
+                    <div className={PetPageStyles.container} data-panel-expanded={expanded ? 'true' : 'false'}>
 
                         <section id={PetPageStyles["first-content"]}>
 
                             <div className={PetPageStyles.img_container}>
 
-                                <SVG.ChevronLeft />
+                                <button type='button' aria-label='Foto Anterior'>
+                                    <SVG.ChevronLeft />
+                                </button>
 
                                 <Image
                                     src={petInfo?.img}
@@ -93,7 +93,9 @@ const Pet: NextPage = () => {
                                     layout='intrinsic'
                                 />
 
-                                <SVG.ChevronRight />
+                                <button type='button' aria-label='Proxima Foto'>
+                                    <SVG.ChevronRight />
+                                </button>
 
                             </div>
 
@@ -109,10 +111,7 @@ const Pet: NextPage = () => {
                                     <p>
                                         Idade: {petInfo?.age}
                                     </p>
-                                    <p>
-                                        Mora em: <b>Rua das Lamentações - São Paulo - SP, 01234-000</b>
-                                    </p>
-
+                                    
                                 </div>
 
                             </div>
@@ -146,7 +145,9 @@ const Pet: NextPage = () => {
                                     <h2>Perdido em</h2>
 
                                     <p>
-                                        Sed sodales ultrices lectus at molestie. Duis semper augue in urna eleifend.
+                                        <b>
+                                            {petInfo?.lastSeen.street}, {petInfo?.lastSeen.county} - {petInfo?.lastSeen.state}
+                                        </b>
                                     </p>
 
                                 </div>
@@ -163,7 +164,7 @@ const Pet: NextPage = () => {
 
                                 <div className={PetPageStyles.button}>
 
-                                    <button type='button'>
+                                    <button type='button' onClick={() => setExpanded(!expanded)}>
                                         Achei Seu Pet
                                     </button>
 
@@ -184,6 +185,81 @@ const Pet: NextPage = () => {
                         </section>
 
                     </div >
+
+                    {/* Panel to be expanded */}
+                    <div
+                        className={expanded ? PetPageStyles.expand_true_found_pet_owner_contact : PetPageStyles.expand_false_found_pet_owner_contact}
+                    >
+
+                        <h1>Você viu mesmo!!!</h1>
+
+                        <p>Preencha algumas informações para o dono saber se é ele mesmo!</p>
+
+                        <form
+                            encType="multipart/form-data"
+                        >
+
+                            <div>
+                                <label>
+
+                                    Foto do Pet
+                                    <input type='file' name='photo' />
+
+                                </label>
+                            </div>
+                            <div>
+                                <p>
+                                    Está com coleira?
+                                </p>
+                                <div className={PetPageStyles.radio_inputs}>
+                                    <label>
+                                        Sim
+                                        <input type='radio' value='true' name='hasCollar' />
+
+                                    </label>
+
+                                    <label>
+
+                                        Não
+                                        <input type='radio' value='false' name='hasCollar' />
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label>
+
+                                    O que está escrito nela?
+                                    <input type='text' name='nameOnCollar' />
+
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+
+                                    Onde Encontrou o Pet?
+                                    <input type='text' placeholder='Endereço Completo' name='addressWhenFound' />
+
+                                </label>
+                            </div>
+                            <div className={PetPageStyles.confirmValues}>
+                                <label>
+
+                                    Você confirma que o dados acima são reais?
+                                    <input type='checkbox' value='true' name='confirmedDataOnForm' required />
+
+                                </label>
+                            </div>
+
+                            <div className={PetPageStyles.submitButton}>
+                                <button type='submit'>Informar Dono</button>
+                                <button type='button' onClick={() => setExpanded(false)}>Voltar</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
                 </>
             )
             }

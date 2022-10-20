@@ -217,12 +217,11 @@ const Found: NextPage = () => {
 
             <div className={FoundStyles.list}>
 
-              <ResultItem />
-              <ResultItem />
-              <ResultItem />
-              <ResultItem />
-              <ResultItem />
-              <ResultItem />
+              {data.map((petInfo) => (
+
+                <ResultItem key={petInfo.id} data={petInfo}/>
+
+              ))}
 
             </div>
 

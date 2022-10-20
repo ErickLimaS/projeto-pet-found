@@ -7,7 +7,7 @@ function ResultItem({ data }: any) {
 
 
     return (
-        <C.Container href='test'>
+        <C.Container href={`pet?id=${data.id}`}>
 
             <div className='image_container'>
                 <Image
@@ -22,10 +22,10 @@ function ResultItem({ data }: any) {
 
                 <div className='pet_details'>
 
-                    <h3>Nome Pet</h3>
+                    <h3>{data.name}</h3>
 
-                    <p>Raca</p>
-                    <p>Endereco</p>
+                    <p>{data.race}</p>
+                    <p>Ultima vez visto em <b>{data.lastSeen.street}, {data.lastSeen.county} - {data.lastSeen.state}</b></p>
 
                 </div>
 

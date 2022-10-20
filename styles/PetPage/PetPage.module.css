@@ -11,6 +11,12 @@ div.container {
 
 }
 
+div.container[data-panel-expanded='true'] {
+
+    filter: blur(1.2px);
+
+}
+
 @media(max-width: 1366px) {
 
     div.container {
@@ -75,10 +81,28 @@ div.container {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    align-self: center;
 
     position: relative;
 
+    max-width: 720px;
+
     top: 0;
+
+}
+
+.container section#first-content .img_container button {
+
+    cursor: pointer;
+
+    height: 100%;
+    width: 10%;
+
+    position: absolute;
+
+    z-index: 1;
+
+    background-color: var(--black-50);
 
 }
 
@@ -86,54 +110,44 @@ div.container {
 
     transform: scale(1.4);
 
-    color: var(--brand-gradient);
-
-    position: absolute;
-
-    z-index: 1;
+    fill: var(--white);
 
 }
 
-.container section#first-content .img_container svg:first-child {
+.container section#first-content .img_container button:hover svg {
 
-    top: 45%;
-    left: 2%;
-
-}
-
-@media((min-width: 832px) and (max-width: 1020px)) {
-
-    .container section#first-content .img_container svg:first-child {
-
-        top: 45%;
-        left: calc(4% - 5vw);
-
-    }
+    fill: var(--secondary) !important;
 
 }
 
-.container section#first-content .img_container svg:last-child {
+.container section#first-content .img_container button:first-child {
 
-    top: 45%;
-    right: 2%;
+    left: 0%;
+
+    background: linear-gradient(to right, var(--black-75), transparent);
+
+    border: none;
+    border-radius: 16px 0px 0px 16px;
+
+    outline: none;
 
 }
 
-@media((min-width: 832px) and (max-width: 1020px)) {
+.container section#first-content .img_container button:last-child {
 
-    .container section#first-content .img_container svg:last-child {
+    right: 0%;
 
-        top: 45%;
-        right: calc(4% - 5vw);
+    background: linear-gradient(to left, var(--black-75), transparent);
 
-    }
+    border: none;
+    border-radius: 0px 16px 16px 0px;
 
 }
 
 .container section#first-content .img_container img {
 
     width: max-content;
-    background-color: aqua;
+    background-color: rgb(165, 165, 165);
     border-radius: 16px;
 
 }
@@ -322,6 +336,242 @@ div.container {
     transition: all ease 100ms;
     transform: scale(1.05);
     background: var(--secondary);
+
+}
+
+/* EXPANDED PANEL */
+
+.expand_false_found_pet_owner_contact {
+
+    display: none;
+
+}
+
+.expand_true_found_pet_owner_contact {
+
+    position: fixed;
+    z-index: 9999;
+
+    top: 10%;
+    bottom: 10%;
+    left: 25%;
+    right: 25%;
+
+    display: flex;
+    justify-content: space-between;
+
+    background: var(--brand-gradient);
+    background-color: rgb(255, 255, 255);
+
+    border-radius: 16px;
+
+    box-shadow: 6px 6px 0px 0px var(--black-50);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px;
+
+}
+
+@media(max-width: 1024px) {
+
+    .expand_true_found_pet_owner_contact {
+
+        left: 15%;
+        right: 15%;
+
+    }
+
+}
+
+@media(max-width: 425px) {
+
+    .expand_true_found_pet_owner_contact {
+
+        left: 5%;
+        right: 5%;
+
+    }
+
+}
+
+.expand_true_found_pet_owner_contact h1 {
+
+    font-size: calc(1.233rem + 3vw);
+    margin-bottom: 24px;
+    text-align: center;
+
+}
+
+.expand_true_found_pet_owner_contact>p {
+
+    font-size: calc(1rem + 0.1vw);
+    margin-bottom: 32px;
+
+}
+
+.expand_true_found_pet_owner_contact form {
+
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-items: center;
+    gap: 16px;
+
+}
+
+
+.expand_true_found_pet_owner_contact form::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+.expand_true_found_pet_owner_contact form::-webkit-scrollbar-track {
+
+    background: var(--black-25);
+
+}
+
+.expand_true_found_pet_owner_contact form::-webkit-scrollbar-thumb {
+
+    background: var(--black-50);
+
+}
+
+.expand_true_found_pet_owner_contact form>div {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+}
+
+.expand_true_found_pet_owner_contact form>div label {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+
+    width: 90%;
+
+}
+
+.expand_true_found_pet_owner_contact form div.radio_inputs {
+
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+
+}
+
+
+.expand_true_found_pet_owner_contact form div.radio_inputs label {
+
+    align-items: center;
+
+}
+
+
+.expand_true_found_pet_owner_contact form div.radio_inputs label input {
+
+    accent-color: var(--secondary);
+
+    height: 16px;
+    border-radius: 0;
+
+}
+
+.expand_true_found_pet_owner_contact form>div label input {
+
+    width: 100%;
+    margin-top: 8px;
+
+    padding: 8px;
+
+    border: 1px solid var(--black-25);
+    outline: none;
+    border-radius: 4px;
+
+}
+
+
+.expand_true_found_pet_owner_contact form .confirmValues label {
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.expand_true_found_pet_owner_contact form .confirmValues label input {
+
+    width: 24px;
+    height: 24px;
+
+    accent-color: var(--secondary);
+
+}
+
+
+.expand_true_found_pet_owner_contact form .submitButton button:first-child {
+
+    cursor: pointer;
+
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    width: 80%;
+
+    padding: 16px 32px;
+
+    border: none;
+    outline: none;
+    border-radius: 16px;
+
+    background-color: var(--secondary);
+
+    color: var(--white);
+    font-size: 1rem;
+
+}
+
+.expand_true_found_pet_owner_contact form .submitButton button:first-child:hover {
+
+    transition: all ease-in 150ms;
+
+    transform: scale(1.02);
+    box-shadow: 3px 3px 0px 0px var(--black-50);
+
+}
+
+.expand_true_found_pet_owner_contact form .submitButton button:last-child {
+
+    cursor: pointer;
+
+    width: 50%;
+
+    text-decoration: underline;
+
+    font-size: 1rem;
+
+    background-color: transparent;
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+
+}
+
+.expand_true_found_pet_owner_contact form .submitButton button:last-child:hover {
+
+    background-color: var(--black-10);
 
 }
 

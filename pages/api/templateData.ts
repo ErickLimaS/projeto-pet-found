@@ -8,13 +8,12 @@ export const data = [
         age: 7,
         race: 'raca',
         img: '/imgs/home/cat.jpg',
-        lastSeen: [
-            {
-                state: 'São Paulo',
-                municipie: 'Taboão',
-                street: 'Rua 2'
-            }
-        ],
+        lastSeen: {
+            state: 'São Paulo',
+            county: 'Taboão',
+            street: 'Rua 2'
+        }
+        ,
         ownerContacts: {
             email: 'email@email.com',
             whatsapp: 2112341234,
@@ -22,7 +21,7 @@ export const data = [
             instagram: 'instagramurl.com'
         },
         rewardWhenFound: true,
-        rewardAmountOffered:  123.99,
+        rewardAmountOffered: 123.99,
         moreInfo: 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         sugestionsTest: [
             {
@@ -54,13 +53,13 @@ export const data = [
         age: 7,
         race: 'raca',
         img: '',
-        lastSeen: [
+        lastSeen: 
             {
                 state: 'São Paulo',
-                municipie: 'test',
+                county: 'test',
                 street: 'test'
             }
-        ],
+        ,
         ownerContacts: {
             email: 'email@email.com',
             whatsapp: 2112341234,
@@ -80,13 +79,13 @@ export const data = [
         age: 7,
         race: 'raca',
         img: '',
-        lastSeen: [
+        lastSeen: 
             {
                 state: 'test',
-                municipie: 'test',
+                county: 'test',
                 street: 'test'
             }
-        ],
+        ,
         ownerContacts: {
             email: 'email@email.com',
             whatsapp: 2112341234,
@@ -106,13 +105,13 @@ export const data = [
         age: 7,
         race: 'raca',
         img: '',
-        lastSeen: [
+        lastSeen: 
             {
                 state: 'Piaui',
-                municipie: 'test',
+                county: 'test',
                 street: 'R saaa'
             }
-        ],
+        ,
         ownerContacts: {
             email: 'email@email.com',
             whatsapp: 2112341234,
@@ -132,13 +131,13 @@ export const data = [
         age: 7,
         race: 'raca',
         img: '',
-        lastSeen: [
+        lastSeen: 
             {
                 state: 'São Paulo',
-                municipie: '12312sss',
+                county: '12312sss',
                 street: 'xxczx'
             }
-        ],
+        ,
         ownerContacts: {
             email: 'email@email.com',
             whatsapp: 2112341234,
