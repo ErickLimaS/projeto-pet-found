@@ -1,0 +1,22 @@
+GET http://localhost:5000/pets/all?state=TEST&county=TEST
+
+###
+POST http://localhost:9123/pets/register
+Content-Type: application/json
+
+{
+        "ownerId": 1234,
+        "type": "TEST11",
+        "typeTranslated": "res",
+        "name": "oi",
+        "age": 11,
+        "breed": "TEST",
+        "lastSeen": {
+            "state": "TEST",
+            "county": "TEST",
+            "street": "TEST"
+        },
+        "hasReward": true,
+        "rewardAmount": 123,
+        "moreInfo": "TEST"
+}

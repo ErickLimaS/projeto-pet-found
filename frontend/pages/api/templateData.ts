@@ -1,7 +1,7 @@
 export const data = [
     {
         id: 1,
-        ownerId: 12,
+        ownerId: 11,
         pet: 'DOG',
         petTranslated: 'Cachorro',
         name: 'Rex',
@@ -11,7 +11,7 @@ export const data = [
         lastSeen: {
             state: 'São Paulo',
             county: 'Taboão',
-            street: 'Rua 2'
+            street: 'Rua Sete de Setembro'
         }
         ,
         ownerContacts: {
@@ -23,26 +23,6 @@ export const data = [
         rewardWhenFound: true,
         rewardAmountOffered: 123.99,
         moreInfo: 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        sugestionsTest: [
-            {
-                id: 11,
-                img: '',
-                name: '',
-                reward: 123.99
-            },
-            {
-                id: 12,
-                img: '',
-                name: '',
-                reward: 9999
-            },
-            {
-                id: 13,
-                img: '',
-                name: '',
-                reward: 9999
-            }
-        ],
     },
     {
         id: 2,
@@ -72,7 +52,7 @@ export const data = [
     },
     {
         id: 3,
-        ownerId: 12,
+        ownerId: 13,
         pet: 'DOG',
         petTranslated: 'Cachorro',
         name: 'Shrek',
@@ -98,7 +78,7 @@ export const data = [
     },
     {
         id: 4,
-        ownerId: 12,
+        ownerId: 14,
         pet: 'CAT',
         petTranslated: 'Gato',
         name: 'Alice',
@@ -108,8 +88,8 @@ export const data = [
         lastSeen: 
             {
                 state: 'Piaui',
-                county: 'test',
-                street: 'R saaa'
+                county: 'Santana',
+                street: 'Rua Jaringua'
             }
         ,
         ownerContacts: {
@@ -124,7 +104,7 @@ export const data = [
     },
     {
         id: 5,
-        ownerId: 12,
+        ownerId: 14,
         pet: 'DOG',
         petTranslated: 'Cachorro',
         name: 'Pinoquio',
@@ -134,8 +114,8 @@ export const data = [
         lastSeen: 
             {
                 state: 'São Paulo',
-                county: '12312sss',
-                street: 'xxczx'
+                county: 'Jardim Peri',
+                street: 'Rua 12'
             }
         ,
         ownerContacts: {
