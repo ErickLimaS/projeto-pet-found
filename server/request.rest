@@ -1,14 +1,14 @@
 GET http://localhost:5000/pets/all?state=TEST&county=TEST
 
 ###
-POST http://localhost:9123/pets/register
+POST http://localhost:5000/pets/register
 Content-Type: application/json
 
 {
         "ownerId": 1234,
         "type": "TEST11",
         "typeTranslated": "res",
-        "name": "oi",
+        "name": "Erick",
         "age": 11,
         "breed": "TEST",
         "lastSeen": {
@@ -19,4 +19,39 @@ Content-Type: application/json
         "hasReward": true,
         "rewardAmount": 123,
         "moreInfo": "TEST"
+}
+
+### 
+GET http://localhost:5000/pets/pet?id=63569e299baa12a87bb2eb8a
+
+###
+
+POST http://localhost:5000/user/register
+Content-Type: application/json
+
+{
+        "name" : "erick",
+        "email": "test@test.com",
+        "password": "test@test.com",
+        "address": {
+            "state": "TEST",
+            "county": "TEST",
+            "street": "TEST"
+        },
+        "contact": {
+            "tel1": "TEST",
+            "tel2": "TEST",
+            "email": "TEST",
+            "instagram": "TEST",
+            "facebook": "TEST"
+        }
+}
+
+###
+POST http://localhost:5000/user/login
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "test@test.com"
 }

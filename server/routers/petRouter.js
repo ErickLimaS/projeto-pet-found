@@ -1,9 +1,12 @@
 import Pet from "../models/petModel.js";
+import User from '../models/userModel.js'
 import express from "express";
 import expressAsyncHandler from 'express-async-handler';
+import { isAuth } from '../utils.js'
 
 const petRouters = express.Router()
 
+// all data related
 petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
     // stores querys
@@ -21,8 +24,8 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
                     {
                         type: petType,
                         lastSeen: {
-                            state: "TEST",
-                            county: "TEST"
+                            state: state,
+                            county: county
                         }
 
                     }
@@ -103,16 +106,20 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
 }))
 
-petRouters.post('/register', expressAsyncHandler(async (req, res) => {
+// register a pet
+petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.userInfo._id);
 
     try {
 
         const pet = new Pet({
-            ownerId: req.body.ownerId,
+            ownerId: user._id,
+            ownerName: user.name,
             type: req.body.type,
             typeTranslated: req.body.typeTranslated,
             name: req.body.name,
-            age: 11,
+            age: req.body.age,
             breed: req.body.breed,
             photoUrl: [
                 req.body.name //fix it
@@ -129,14 +136,43 @@ petRouters.post('/register', expressAsyncHandler(async (req, res) => {
 
         await pet.save();
 
+        // populates User model with this Pet schema currently saved
+        user.petsRegistered.push(pet)
+
+        await user.save();
+
         return res.status(201).send(pet)
 
     }
     catch (error) {
-        return res.status(500).send(error)
+        return res.status(500).json({ message: error })
     }
 
 }))
 
+// get info from a pet through a query ID
+petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
+
+    try {
+        const chosePet = await Pet.findById(req.query.id)
+
+        if (chosePet) {
+
+            return res.status(200).send(chosePet)
+
+        }
+        else {
+
+            return res.status(404).send('Not Found')
+
+        }
+    }
+    catch (error) {
+
+        return res.status(500).json({ message: error })
+
+    }
+
+}))
 
 export default petRouters;

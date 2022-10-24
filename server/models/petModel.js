@@ -1,10 +1,11 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const petSchema = new mongoose.Schema(
 
     {
         createdAt: { type: Date, default: Date.now() },
-        ownerId: { type: Number, required: true },
+        ownerId: { type: mongoose.ObjectId, required: true },
+        ownerName: { type: String, required: true },
         type: { type: String, required: true },
         typeTranslated: { type: String },
         name: { type: String, required: true },
