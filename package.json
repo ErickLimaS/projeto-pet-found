@@ -1,0 +1,13 @@
+{
+  "name": "projeto-pet-found",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@svgr/cli": "^6.3.1",
+    "@types/node": "18.7.13",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5"
+  }
+}
