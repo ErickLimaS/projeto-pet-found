@@ -7,7 +7,7 @@ import { generateToken } from '../utils.js'
 const userRouter = express.Router();
 
 // bcrypt salt
-const passwordSalt = process.env.PASSWORD_BCRYPT_SALT;
+const passwordSalt = 10;
 
 // register user
 userRouter.post('/register', expressAsyncHandler(async (req, res) => {
