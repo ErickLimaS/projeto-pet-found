@@ -2,12 +2,12 @@ import express from 'express'
 import expressAsyncHandler from "express-async-handler";
 import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
-import { generateToken, isAuth } from '../utils.js'
+import { generateToken } from '../utils.js'
 
 const userRouter = express.Router();
 
 // bcrypt salt
-const passwordSalt = 10;
+const passwordSalt = process.env.PASSWORD_BCRYPT_SALT;
 
 // register user
 userRouter.post('/register', expressAsyncHandler(async (req, res) => {

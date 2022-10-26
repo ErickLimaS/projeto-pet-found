@@ -8,8 +8,8 @@ import cors from 'cors'
 
 dotenv.config();
 
-const port = 5000 //testes
-// const port = process.env.PORT
+// const port = 5000 //testes
+const port = process.env.PORT
 
 const app = express();
 
@@ -26,6 +26,6 @@ app.use('/user', userRouter)
 
 app.listen(port, () => {
 
-    console.log('Connected on: http://localhost:' + port)
+    console.log(`Connected on port: ${port} - http://localhost:${port}`)
 
 })
