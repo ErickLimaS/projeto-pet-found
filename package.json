@@ -1,13 +1,26 @@
 {
   "name": "projeto-pet-found",
+  "type": "module",
+  "author": "Erick Lima",
+  "description": "Project of a pet website about helping people who have lost their pet somewhere to post on this site to someone who have found be in contact with.",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErickLimaS/anime-website.git"
+  },
   "scripts": {},
-  "dependencies": {},
   "devDependencies": {
-    "@svgr/cli": "^6.3.1",
-    "@types/node": "18.7.13",
-    "eslint": "8.23.0",
-    "eslint-config-next": "12.2.5"
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.6.7"
   }
 }
