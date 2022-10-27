@@ -13,10 +13,9 @@ const userSchema = new mongoose.Schema(
             county: { type: String, required: true },
             street: { type: String }
         },
-        contact: {
+        contacts: {
             tel1: { type: String },
             tel2: { type: String },
-            email: { type: String },
             instagram: { type: String },
             facebook: { type: String }
         },

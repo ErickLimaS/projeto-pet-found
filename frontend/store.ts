@@ -1,7 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { changeCreateLostPetPostStepsReducer, chooseWhichAnimalReducer, setCaracteristicasPetReducer, setOwnerAndPetInfoTogetherReducer, setPetGenreReducer, setPetInfoReducer, setPetMoreInfoReducer, setPetNameReducer, setPetRaceReducer } from './redux/reducers/lostPetPostStepsReducer'
+import { currentUserReducer } from './redux/reducers/userReducer'
 
 const initialState: any = {
+    currentUser: {
+        name: typeof window !== "undefined" &&
+            localStorage.getItem('name') ? localStorage.getItem('name') : null,
+        token: typeof window !== "undefined" &&
+            localStorage.getItem('token') ? localStorage.getItem('token') : null
+    },
     changeCreateLostPetPostSteps: {
         currentStep: 0
     }
@@ -10,6 +17,10 @@ const initialState: any = {
 export const store = configureStore({
     reducer: {
 
+        //user related
+        currentUser: currentUserReducer,
+
+        // pets related
         changeCreateLostPetPostSteps: changeCreateLostPetPostStepsReducer,
         chooseWhichAnimal: chooseWhichAnimalReducer,
         setPetName: setPetNameReducer,

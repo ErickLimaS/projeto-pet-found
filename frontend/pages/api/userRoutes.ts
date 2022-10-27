@@ -1,11 +1,16 @@
 import Axios from 'axios'
+import { currentUser } from '../../redux/actions/userActions'
+import {store } from '../../store'
 
 const DB_URL = 'https://pet-found.herokuapp.com/user'
 
-const config = (route: string, userInfo: {
+// testes
+// const DB_URL = 'http://localhost:5000/user'
+
+interface userInfoTypes {
     email: string,
     password: string,
-    name: string | null,
+    name: string | null, // null is intended for the use of Login Route
     address: {
         state: string | null,
         county: string | null,
@@ -17,33 +22,94 @@ const config = (route: string, userInfo: {
         facebook: string | null,
         instagram: string | null
     }
-}) => {
+}
+
+// gets token of the user already logged in
+const reduxState = store.getState()
+const userStoredData: any = reduxState.currentUser
+
+// sets the route and config used for the intended page purpose 
+const config = (route: string, userInfo: userInfoTypes) => {
+
+    // gets the needed headers configs for each route
+    let headersToThisRoute;
+    switch (route) {
+        // case 'CHANGE_USER_PASSWORD':
+        //     headersToThisRoute = {
+
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${userStoredData.token}`
+
+        //     }
+        case 'REGISTER' || 'LOGIN':
+            headersToThisRoute = {
+
+                'Content-Type': 'application/json'
+
+            }
+    }
 
     return {
+
         method: 'POST',
         url: `${DB_URL}${route}`,
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Authorization': `Bearer ${}`
-        },
+        headers: headersToThisRoute,
         data: userInfo
 
     }
 
 }
 
-export const registerUser = async (info: any) => {
+export const registerUser = async (info: userInfoTypes) => {
 
-    console.log(info)
+    try {
 
-    const { data } = await Axios(
-        config('/register', info)
-    )
+        const data = await Axios(
 
-    return data;
+            config('/register', info)
 
+        ).then(response => {
+
+            if (response.status == 201) {
+
+                store.dispatch(currentUser('ADD_USER', response.data))
+
+            }
+
+        })
+
+        return { data };
+
+    }
+    catch (error) {
+
+        return { message: 'Error with front fetch.' };
+
+    }
 }
 
-export const loginUser = () => {
+export const loginUser = async (info: userInfoTypes) => {
+    try {
+
+        const data = await Axios(
+            config('/login', info)
+        ).then(response => {
+
+            if (response.status == 200) {
+
+                store.dispatch(currentUser('ADD_USER', response.data))
+
+            }
+
+        })
+
+        return { data };
+
+    }
+    catch (error) {
+
+        return { message: 'Error with front fetch.' };
+
+    }
 
 }

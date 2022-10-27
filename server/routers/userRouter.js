@@ -35,12 +35,11 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
                 county: req.body.address.county,
                 street: req.body.address.street,
             },
-            contact: {
-                tel1: req.body.contact.tel1,
-                tel2: req.body.contact.tel2,
-                email: req.body.contact.email,
-                instagram: req.body.contact.instagram,
-                facebook: req.body.contact.facebook
+            contacts: {
+                tel1: req.body.contacts.tel1,
+                tel2: req.body.contacts.tel2,
+                instagram: req.body.contacts.instagram,
+                facebook: req.body.contacts.facebook
             },
         })
 
@@ -54,7 +53,10 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
     }
     catch (err) {
 
-        return res.status(500).json({ message: err })
+        return res.status(500).json({
+            status: 500,
+            message: `Internal Error: ${err}`
+        })
 
     }
 

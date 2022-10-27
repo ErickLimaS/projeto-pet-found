@@ -3,6 +3,7 @@ import React, { FormEvent } from 'react'
 import Meta from '../../components/Meta'
 import { registerUser } from '../api/userRoutes'
 import RegisterPageStyles from '../../styles/userPage/registerPage.module.css'
+import { store } from '../../store'
 
 const register: NextPage = () => {
 
@@ -34,7 +35,7 @@ const register: NextPage = () => {
             }
         }
 
-        registerUser(JSON.stringify(info))
+        registerUser(info)
 
     }
 
@@ -121,7 +122,7 @@ const register: NextPage = () => {
                             <p>Preencher agora informações de meio de contato?</p>
 
                             <div>
-                                
+
                                 <label>
                                     Sim
                                     <input type='radio' id='fill_later_true' name='fill_later' value='true' />
