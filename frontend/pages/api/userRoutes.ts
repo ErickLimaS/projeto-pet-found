@@ -64,7 +64,7 @@ export const registerUser = async (info: userInfoTypes) => {
 
     try {
 
-        const data = await Axios(
+        const data: any = await Axios(
 
             config('/register', info)
 
@@ -72,13 +72,14 @@ export const registerUser = async (info: userInfoTypes) => {
 
             if (response.status == 201) {
 
+                // redux dispatch
                 store.dispatch(currentUser('ADD_USER', response.data))
 
             }
 
         })
 
-        return { data };
+        return data.message;
 
     }
     catch (error) {
@@ -89,7 +90,7 @@ export const registerUser = async (info: userInfoTypes) => {
 }
 
 export const loginUser = async (info: userInfoTypes) => {
-    
+
     try {
 
         const data = await Axios(
@@ -98,6 +99,7 @@ export const loginUser = async (info: userInfoTypes) => {
 
             if (response.status == 200) {
 
+                // redux dispatch
                 store.dispatch(currentUser('ADD_USER', response.data))
 
             }
@@ -117,6 +119,7 @@ export const loginUser = async (info: userInfoTypes) => {
 
 export const logoutUser = async () => {
 
+    // redux dispatch
     store.dispatch(currentUser("REMOVE_USER"))
 
 } 

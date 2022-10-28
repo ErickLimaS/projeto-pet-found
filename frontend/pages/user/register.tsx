@@ -1,15 +1,46 @@
 import { NextPage } from 'next/types'
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import Meta from '../../components/Meta'
 import { registerUser } from '../api/userRoutes'
 import RegisterPageStyles from '../../styles/userPage/registerPage.module.css'
-import { store } from '../../store'
+import { RootState, store } from '../../store'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import Link from 'next/link'
 
-const register: NextPage = () => {
+const Register: NextPage = () => {
+
+    const [loading, setLoading] = useState<Boolean>(false)
+
+    const router = useRouter()
+
+    const user: any = useSelector((state: RootState) => state.currentUser)
+
+    useEffect(() => {
+
+        // if user name is already stored, returns to home
+        if (user.name != null && user.token != null) {
+
+            router.push('/')
+
+        }
+
+        // if successful, returns to home 
+        if (user.success === true) {
+
+            setLoading(false)
+            setTimeout(() => router.push('/'), 4000)
+
+        }
+
+    }, [loading, user])
+
 
     const submitForm = (e: FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
+
+        setLoading(true)
 
         const password = document.getElementById('password') as HTMLInputElement
         const confirmPassword = document.getElementById('confirm-password') as HTMLInputElement
@@ -18,7 +49,7 @@ const register: NextPage = () => {
             return console.log('diffent')
         }
 
-        const info = {
+        const formValues = {
             name: (document.getElementById('name') as HTMLInputElement).value,
             email: (document.getElementById('email') as HTMLInputElement).value,
             password: (document.getElementById('password') as HTMLInputElement).value,
@@ -35,13 +66,33 @@ const register: NextPage = () => {
             }
         }
 
-        registerUser(info)
+        registerUser(formValues)
 
     }
 
     return (
         <>
             <Meta title='Criar Conta' description='Crie sua conta e tenha acesso ao site por completo.' />
+
+            {loading && (
+                <div data-active={loading ? "true" : "false"} className={RegisterPageStyles.loading_container}>
+                    <p>loading...</p>
+                </div>)
+            }
+
+            {user?.success === true && (
+
+                <div data-active={user?.success === true ? "true" : "false"} className={RegisterPageStyles.warning_absolute}>
+
+                    <h1>Conta Criada!</h1>
+
+                    <p>Voltar para a página inicial?</p>
+
+                    <Link href='/' >Voltar</Link>
+
+                </div>
+
+            )}
 
             <div className={RegisterPageStyles.container}>
 
@@ -182,4 +233,4 @@ const register: NextPage = () => {
 
 }
 
-export default register
+export default Register

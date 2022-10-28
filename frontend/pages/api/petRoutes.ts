@@ -4,7 +4,7 @@ import { store } from "../../store"
 const DB_URL = 'https://pet-found.herokuapp.com/pets'
 
 const state: any = store.getState()
-const userToken: string = state.currentUser.token
+const userToken: string = state.currentUser.token ? state.currentUser.token : ''
 
 interface petDataTypes {
     type: string,

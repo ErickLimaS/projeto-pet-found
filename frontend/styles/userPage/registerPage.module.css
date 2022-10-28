@@ -19,6 +19,143 @@
 
 }
 
+div.loading_container[data-active="true"] {
+
+    opacity: 1;
+
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+
+    width: 50%;
+    min-height: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--white);
+    border-radius: 16px;
+
+    border: 2px solid var(--secondary);
+
+    padding: 24px;
+
+}
+
+div.loading_container[data-active="true"]>p {
+
+    font-size: 3rem;
+    color: var(--secondary);
+
+}
+
+div.loading_container[data-active="false"], div.warning_absolute[data-active="false"] {
+
+    opacity: 0;
+
+}
+
+div.loading_container[data-active="true"], div.warning_absolute[data-active="true"] {
+
+    z-index: 2000;
+
+}
+
+
+div.loading_container[data-active="true"]~.container,
+div.warning_absolute[data-active="true"]~.container {
+
+    filter: blur(2px);
+    filter: contrast(50%);
+
+}
+
+div.warning_absolute[data-active="true"] {
+
+    opacity: 1;
+
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 50%;
+    min-height: 50%;
+    background-color: var(--secondary);
+    border-radius: 16px;
+
+    color: var(--white);
+
+    border: 2px solid var(--secondary);
+
+    padding: 24px;
+
+}
+
+div.warning_absolute[data-active="true"]>* {
+
+    color: var(--white);
+
+}
+
+div.warning_absolute[data-active="true"]>h1 {
+
+    font-size: 3rem;
+
+}
+
+@media(max-width: 780px) {
+
+    div.warning_absolute[data-active="true"]>h1 {
+
+        font-size: 2rem;
+
+    }
+}
+
+div.warning_absolute[data-active="true"]>a {
+
+    padding: 16px 32px;
+
+    border: 2px solid var(--white-25);
+    border-radius: 8px;
+    background: var(--brand-gradient);
+
+}
+
+div.warning_absolute[data-active="true"]>a:hover {
+
+    transition: all ease-in 100ms;
+
+    transform: scale(1.05);
+
+
+}
+
+@media(max-width: 780px) {
+
+    div.warning_absolute[data-active="true"],
+    div.loading_container[data-active="true"] {
+
+        left: 0%;
+        right: 0%;
+        width: 100%;
+
+        border-radius: 0px;
+        border: none;
+
+    }
+
+}
+
 .container>* {
 
     min-height: 100%;
