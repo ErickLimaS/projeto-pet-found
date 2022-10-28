@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
-import {store } from '../../store'
+import { store } from '../../store'
 
 const DB_URL = 'https://pet-found.herokuapp.com/user'
 
@@ -34,14 +34,14 @@ const config = (route: string, userInfo: userInfoTypes) => {
     // gets the needed headers configs for each route
     let headersToThisRoute;
     switch (route) {
-        // case 'CHANGE_USER_PASSWORD':
+        // case '/change-password':
         //     headersToThisRoute = {
 
         //         'Content-Type': 'application/json',
         //         'Authorization': `Bearer ${userStoredData.token}`
 
         //     }
-        case 'REGISTER' || 'LOGIN':
+        case '/register' || '/login':
             headersToThisRoute = {
 
                 'Content-Type': 'application/json'
@@ -89,6 +89,7 @@ export const registerUser = async (info: userInfoTypes) => {
 }
 
 export const loginUser = async (info: userInfoTypes) => {
+    
     try {
 
         const data = await Axios(
@@ -113,3 +114,9 @@ export const loginUser = async (info: userInfoTypes) => {
     }
 
 }
+
+export const logoutUser = async () => {
+
+    store.dispatch(currentUser("REMOVE_USER"))
+
+} 

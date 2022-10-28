@@ -29,15 +29,15 @@ POST http://localhost:5000/user/register
 Content-Type: application/json
 
 {
-        "name" : "erick",
-        "email": "test@test.com",
-        "password": "test@test.com",
+        "name" : "Erick",
+        "email": "test@gmail.com",
+        "password": "test@gmail.com",
         "address": {
             "state": "TEST",
             "county": "TEST",
             "street": "TEST"
         },
-        "contact": {
+        "contacts": {
             "tel1": "TEST",
             "tel2": "TEST",
             "email": "TEST",
@@ -51,6 +51,7 @@ POST http://localhost:5000/user/login
 Content-Type: application/json
 
 {
-    "email": "test@test.com",
-    "password": "test@test.com"
+    "email": "test@gmail.com",
+    "password": "test@gmail.com"
 }
+

@@ -6,7 +6,7 @@ import { isAuth } from '../utils.js'
 
 const petRouters = express.Router()
 
-// all data related
+// all data related, filterd by query
 petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
     // stores querys
@@ -106,7 +106,32 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
 }))
 
-// register a pet
+// get info from a pet through a query ID
+petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
+
+    try {
+        const chosePet = await Pet.findById(req.query.id)
+
+        if (chosePet) {
+
+            return res.status(200).send(chosePet)
+
+        }
+        else {
+
+            return res.status(404).send('Not Found')
+
+        }
+    }
+    catch (error) {
+
+        return res.status(500).json({ message: error })
+
+    }
+
+}))
+
+// register a pet (user logged in)
 petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
     const user = await User.findById(req.user.userInfo._id);
@@ -150,26 +175,72 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
 }))
 
-// get info from a pet through a query ID
-petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
+// gets all pets registered by user
+petRouters.get("/my-pets", isAuth, expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.userInfo._id)
+
+    if (!user) {
+
+        return res.status(404).json({ message: "Usuário não encontrado." })
+
+    }
 
     try {
-        const chosePet = await Pet.findById(req.query.id)
+        const petsRegistered = await user.populate("petsRegistered")
+            .then((result) => { return result })
 
-        if (chosePet) {
+        return res.status(200).json({ pets: petsRegistered.petsRegistered })
 
-            return res.status(200).send(chosePet)
-
-        }
-        else {
-
-            return res.status(404).send('Not Found')
-
-        }
     }
-    catch (error) {
+    catch (err) {
 
-        return res.status(500).json({ message: error })
+        return res.status(500).json({ message: `Internal Error: ${err}` })
+
+    }
+}))
+
+// when pet is found by someone and its confirmed by the owner, sets field wasFound = true
+petRouters.put("/update-pet-status", isAuth, expressAsyncHandler(async (req, res) => {
+
+    const pet = await Pet.findById(req.body.pet._id)
+
+    if (!pet) {
+
+        return res.status(404).json({ message: "Pet não encontrado." })
+
+    }
+
+    try {
+
+        pet.wasFound = true;
+
+        await pet.save()
+
+        return res.status(200).send(pet)
+
+    }
+    catch (err) {
+
+        return res.status(500).json({ message: `Internal Error: ${err}` })
+
+    }
+
+}))
+
+// delete a pet post 
+petRouters.delete("/remove-pet", isAuth, expressAsyncHandler(async (req, res) => {
+
+    try {
+
+        await Pet.findByIdAndDelete(req.body.pet._id)
+
+        return res.status(202).json({message: "Success"})
+
+    }
+    catch (err) {
+
+        return res.status(404).json({ message: "Pet não encontrado." })
 
     }
 

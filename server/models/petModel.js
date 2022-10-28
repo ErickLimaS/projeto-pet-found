@@ -4,6 +4,7 @@ const petSchema = new mongoose.Schema(
 
     {
         createdAt: { type: Date, default: Date.now() },
+        wasFound: {type: Boolean, default: false},
         ownerId: { type: mongoose.ObjectId, required: true },
         ownerName: { type: String, required: true },
         type: { type: String, required: true },
@@ -21,7 +22,7 @@ const petSchema = new mongoose.Schema(
         },
         hasReward: { type: Boolean, required: true },
         rewardAmount: { type: Number },
-        moreInfo: { type: String, required: true },
+        moreInfo: { type: String, required: true }
     }
 
 )

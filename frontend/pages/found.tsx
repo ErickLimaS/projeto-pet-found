@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '../components/Meta'
-import IbgeApi from './api/localidadesEndereco'
+import IbgeApi from './api/enderecosApi'
 import FoundStyles from '../styles/FoundPage.module.css'
 import { useRouter } from 'next/router'
 import * as SVG from '../public/imgs/svg'

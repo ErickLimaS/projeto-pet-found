@@ -1,4 +1,4 @@
-import { ADD_USER } from "../constants/userConstants";
+import { ADD_USER, REMOVE_USER } from "../constants/userConstants";
 
 export const currentUserReducer = (state = {}, action: any) => {
 
@@ -12,13 +12,16 @@ export const currentUserReducer = (state = {}, action: any) => {
                 ...state,
                 name: action.payload.name,
                 token: action.payload.token
-
             }
+
+        case REMOVE_USER:
+
+            localStorage.removeItem("name")
+            localStorage.removeItem("token")
 
         default:
             return state;
 
     }
-
 
 }

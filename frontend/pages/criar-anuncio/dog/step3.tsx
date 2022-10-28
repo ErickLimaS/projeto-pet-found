@@ -5,7 +5,7 @@ import CriarAnuncio from '../index'
 import { RootState } from '../../../store'
 import Step3FormStyles from '../../../styles/Step3Form.module.css'
 import ButtonsStyles from '../../../styles/Index_perdi_meu_pet.module.css'
-import API from '../../api/localidadesEndereco'
+import API from '../../api/enderecosApi'
 import * as SVG from '../../../public/imgs/svg'
 import { changeCreateLostPetPostSteps, setOwnerAndPetInfoTogether } from '../../../redux/actions/lostPetPostStepsActions'
 
