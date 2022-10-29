@@ -157,7 +157,12 @@ const Register: NextPage = () => {
                         <div>
                             <label>
                                 Senha
-                                <input type='password' name='password' id='password' required></input>
+                                <input type='password'
+                                    name='password' id='password'
+                                    required
+                                    pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+                                    title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                ></input>
                             </label>
                             <small>Deve conter 8 ou mais caracteres.</small>
                         </div>
@@ -165,7 +170,11 @@ const Register: NextPage = () => {
                         <div>
                             <label>
                                 Confirmar Senha
-                                <input type='password' name='confirm-password' id='confirm-password' ></input>
+                                <input type='password'
+                                    name='confirm-password' id='confirm-password'
+                                    pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+                                    title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                ></input>
                             </label>
                         </div>
 

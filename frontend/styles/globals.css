@@ -1,6 +1,7 @@
 :root {
 
   --primary: #FD9600;
+  --primary-75: #ff9900ce;
   --secondary: #FE590D;
   --brand-gradient: linear-gradient(to bottom right, rgba(253, 150, 0, 72%), rgba(254, 89, 13, 63%));
 

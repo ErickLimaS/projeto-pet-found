@@ -35,7 +35,7 @@ div.logo svg {
 
 @media((min-width: 200px) and (max-width: 425px)) {
 
-    .header> nav {
+    .header>nav {
 
         width: 100%;
 
@@ -79,7 +79,7 @@ div.logo svg {
 
 }
 
-@media(max-width: 784px) {
+@media(max-width: 850px) {
 
     .header>nav .links {
 
@@ -102,7 +102,7 @@ div.logo svg {
         margin: 0 8px;
 
     }
-    
+
 }
 
 .header>nav .links>*:last-child {
@@ -167,6 +167,29 @@ div.logo svg {
 
 }
 
+.header .login_desktop button {
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+
+    gap: 0 8px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+
+    background: var(--primary);
+
+    border-radius: 24px;
+    border: 1px solid var(--white-50);
+
+    font-size: 0.8rem;
+
+}
+
 .header .login_desktop a {
 
     display: flex;
@@ -176,7 +199,7 @@ div.logo svg {
     border-radius: 24px;
 }
 
-.header .login_desktop svg {
+.header .login_desktop a svg {
 
     margin-right: 8px;
 
@@ -204,13 +227,36 @@ div.logo svg {
 
 }
 
+.header .login button {
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+
+    gap: 0 8px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+
+    background: var(--primary);
+
+    border-radius: 24px;
+    border: 1px solid var(--white-50);
+
+    font-size: 0.8rem;
+
+}
+
 .header .login_desktop a:hover span {
 
     border-bottom: 2px solid var(--white);
 
 }
 
-.header span.login svg {
+.header span.login a svg {
 
     margin-right: 5px;
     fill: var(--white);
@@ -224,7 +270,7 @@ div.drawer_sidebar_mobile {
 }
 
 /*  MOBILE CSS */
-@media(max-width: 784px) {
+@media(max-width: 850px) {
 
     div.drawer_sidebar_mobile {
 
@@ -234,14 +280,15 @@ div.drawer_sidebar_mobile {
 
 }
 
-@media(max-width: 784px) {
+@media(max-width: 850px) {
     div.login_desktop {
 
         display: none;
 
     }
 
-    div.drawer_sidebar_mobile button {
+    div.drawer_sidebar_mobile>button,
+    div.drawer_sidebar_mobile ul div>button {
 
         height: 40px;
         width: 40px;
@@ -258,10 +305,16 @@ div.drawer_sidebar_mobile {
 
     }
 
-    div.drawer_sidebar_mobile button svg {
+    div.drawer_sidebar_mobile>button svg {
 
         fill: var(--white);
         transform: scale(1.4);
+
+    }
+
+    div.drawer_sidebar_mobile ul li.login >button{
+
+        width: 100%;
 
     }
 

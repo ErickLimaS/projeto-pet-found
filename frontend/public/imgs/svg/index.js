@@ -1,10 +1,12 @@
 export { default as Binoculars } from "./Binoculars";
 export { default as Brand } from "./Brand";
+export { default as CaretDownFill } from "./CaretDownFill";
 export { default as Cat } from "./Cat";
 export { default as Cat2 } from "./Cat2";
 export { default as ChevronLeft } from "./ChevronLeft";
 export { default as ChevronRight } from "./ChevronRight";
 export { default as Coin } from "./Coin";
+export { default as DogLowPolyOutline } from "./DogLowPolyOutline";
 export { default as Dog } from "./Dog";
 export { default as Dog2 } from "./Dog2";
 export { default as Envelope } from "./Envelope";

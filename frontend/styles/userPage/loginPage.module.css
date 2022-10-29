@@ -1,0 +1,242 @@
+.container {
+
+    min-height: inherit;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+@media(max-width: 576px) {
+
+    .container {
+
+        flex-direction: column;
+        justify-content: flex-start;
+
+    }
+
+}
+
+.container>* {
+
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+
+}
+
+.container .form_container {
+
+    width: 35%;
+    text-align: center;
+    background-color: var(--white);
+    color: var(--primary);
+
+    box-shadow: -8px 8px 5px 0px var(--black-75);
+
+}
+
+@media((min-width: 577px) and (max-width: 1024px)) {
+
+    .container .form_container {
+
+        width: 40%;
+
+    }
+
+}
+
+@media(max-width: 576px) {
+
+    .container .form_container {
+
+        width: 100%;
+
+        box-shadow: none;
+
+    }
+}
+
+.form_container .form_heading {
+
+    margin-bottom: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+
+}
+
+.form_container form>div {
+
+    width: 100%;
+
+    margin-bottom: 16px;
+
+}
+
+
+.form_container form>div label {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+
+.form_container form>div label input {
+
+    width: 100%;
+    margin-top: 8px;
+
+    align-self: center;
+
+    padding: 12px 16px;
+
+    border-radius: 4px;
+    border: 1px solid var(--black-25);
+
+    outline: 0;
+
+    font-size: 0.9rem;
+
+}
+
+.form_container form>div button {
+
+    cursor: pointer;
+
+    width: 100%;
+
+    margin-top: 16px;
+
+    padding: 16px;
+
+    background-color: var(--primary);
+
+    border-radius: 4px;
+    border: none;
+
+    outline: 0;
+
+    color: var(--white);
+    font-size: 1rem;
+
+}
+
+.form_container form>div button:hover {
+
+    transition: all ease-in 100ms;
+    transform: scale(1.01);
+
+    box-shadow: 5px 5px 3px 0px var(--black-25);
+
+}
+
+.form_container>a {
+
+    display: block;
+    margin-top: 32px;
+
+}
+
+.container .text {
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    width: 65%;
+
+    background-color: var(--primary-75);
+
+}
+
+@media((min-width: 577px) and (max-width: 1024px)) {
+
+    .container .text {
+
+        width: 60%;
+
+    }
+
+}
+
+@media(max-width: 576px) {
+
+    .container .text {
+
+        width: 100%;
+
+    }
+}
+
+.container .text::before {
+
+    position: absolute;
+    content: '';
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: -1;
+
+    background-image: url('/imgs/svg/dog-low-poly-outline.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+
+}
+
+.container .text>* {
+
+    color: var(--white);
+
+}
+
+
+.container .text h1 {
+
+    line-height: auto;
+
+}
+
+.container .text p {
+
+    margin-top: 40px;
+
+    width: 50%;
+
+}
+
+@media((min-width: 577px) and (max-width: 1024px)) {
+    
+    .container .text p {
+        
+        width: 80%;
+
+    }
+
+}
+
+@media(max-width: 576px) {
+
+    .container .text p {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+}

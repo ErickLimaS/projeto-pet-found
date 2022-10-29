@@ -29,9 +29,8 @@ export const currentUser = (action: string, userInfo?: { name: string, token: st
             })
 
         }
-
-
     }
+
     else if (action === 'REMOVE_USER') {
 
         dispatch({
@@ -50,7 +49,6 @@ export const currentUser = (action: string, userInfo?: { name: string, token: st
                 type: REMOVE_USER_FAIL
             })
         }
-        
     }
 
 }

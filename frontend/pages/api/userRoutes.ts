@@ -7,7 +7,7 @@ const DB_URL = 'https://pet-found.herokuapp.com/user'
 // testes
 // const DB_URL = 'http://localhost:5000/user'
 
-interface userInfoTypes {
+interface userRegisterTypes {
     email: string,
     password: string,
     name: string | null, // null is intended for the use of Login Route
@@ -24,12 +24,17 @@ interface userInfoTypes {
     }
 }
 
+interface userLoginTypes {
+    email: string,
+    password: string
+}
+
 // gets token of the user already logged in
 const reduxState = store.getState()
 const userStoredData: any = reduxState.currentUser
 
 // sets the route and config used for the intended page purpose 
-const config = (route: string, userInfo: userInfoTypes) => {
+const config = (route: string, userInfo: userRegisterTypes | userLoginTypes) => {
 
     // gets the needed headers configs for each route
     let headersToThisRoute;
@@ -60,7 +65,7 @@ const config = (route: string, userInfo: userInfoTypes) => {
 
 }
 
-export const registerUser = async (info: userInfoTypes) => {
+export const registerUser = async (info: userRegisterTypes) => {
 
     try {
 
@@ -89,7 +94,7 @@ export const registerUser = async (info: userInfoTypes) => {
     }
 }
 
-export const loginUser = async (info: userInfoTypes) => {
+export const loginUser = async (info: userLoginTypes) => {
 
     try {
 
@@ -97,7 +102,7 @@ export const loginUser = async (info: userInfoTypes) => {
             config('/login', info)
         ).then(response => {
 
-            if (response.status == 200) {
+            if (response.status == 202) {
 
                 // redux dispatch
                 store.dispatch(currentUser('ADD_USER', response.data))
