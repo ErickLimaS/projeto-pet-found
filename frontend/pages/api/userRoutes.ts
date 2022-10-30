@@ -111,12 +111,12 @@ export const loginUser = async (info: userLoginTypes) => {
 
         })
 
-        return { data };
+        return;
 
     }
-    catch (error) {
+    catch (error: any) {
 
-        return { message: 'Error with front fetch.' };
+        return { status: error.response.status, message: error.response.data.message };
 
     }
 
