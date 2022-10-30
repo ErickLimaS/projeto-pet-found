@@ -1,5 +1,3 @@
-
-import Image from 'next/image'
 import Link from 'next/link'
 import { NextPage } from 'next/types'
 import React, { FormEvent, useEffect } from 'react'

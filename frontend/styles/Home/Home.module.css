@@ -264,13 +264,7 @@ div.sections>section {
 
 @media(max-width: 1080px) {
 
-    .about_us_section div.content .owner_and_pet_img {
-
-        margin-right: 24px;
-    }
-
     .about_us_section div.content .owner_and_pet_img img {
-
 
         width: 480px !important;
         height: auto !important;
@@ -603,12 +597,11 @@ section.our_team_section::before {
 
 }
 
-
 section.our_team_section>h2 {
 
     margin-bottom: 96px;
 
-    color: var(--white);
+    color: var(--white)!important;
 
 }
 
@@ -625,6 +618,8 @@ section.our_team_section ul.grid {
 }
 
 @media(max-width: 1280px) {
+
+   
 
     section.our_team_section ul.grid {
 

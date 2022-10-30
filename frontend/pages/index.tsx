@@ -1,4 +1,4 @@
-import homeStyles from '../styles/Home.module.css'
+import homeStyles from '../styles/home/Home.module.css'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import Meta from '../components/Meta'
@@ -274,11 +274,11 @@ const Home: NextPage = () => {
 
             <form onSubmit={(e) => console.log(e)}>
 
-              <label htmlFor='name'>
+              <label htmlFor='name' aria-label='Name'>
                 <input type='text' id='name' placeholder='Seu nome'></input>
               </label>
 
-              <label htmlFor='email'>
+              <label htmlFor='email' aria-label='Email'>
                 <input type='email' id='email' placeholder='Email'></input>
               </label>
 

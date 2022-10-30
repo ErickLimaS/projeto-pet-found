@@ -55,7 +55,7 @@ export const MemberCardsSection = styled.section<Props>`
 
         margin-bottom: 96px;
 
-        color: var(--white);
+        color: var(--white)!important;
 
     }
 
