@@ -11,6 +11,7 @@ import Link from 'next/link'
 const Register: NextPage = () => {
 
     const [loading, setLoading] = useState<Boolean>(false)
+    const [addContactsChecked, setAddContactsChecked] = useState<Boolean>(true)
 
     const router = useRouter()
 
@@ -33,8 +34,15 @@ const Register: NextPage = () => {
 
         }
 
-    }, [loading, user])
+    }, [loading, user, addContactsChecked])
 
+
+    // if value is true, shows the form section of contacts
+    const setAddContactInfo = (value: boolean) => {
+
+        setAddContactsChecked(value)
+
+    }
 
     const submitForm = (e: FormEvent<HTMLFormElement>) => {
 
@@ -59,8 +67,14 @@ const Register: NextPage = () => {
                 street: (document.getElementById('street') as HTMLInputElement).value
             },
             contacts: {
-                tel1: (document.getElementById('tel1') as HTMLInputElement).value,
-                tel2: (document.getElementById('tel2') as HTMLInputElement).value,
+                tel1: {
+                    ddd: (document.getElementById('ddd-tel1') as HTMLInputElement).value,
+                    tel: (document.getElementById('tel1') as HTMLInputElement).value
+                },
+                tel2: {
+                    ddd: (document.getElementById('ddd-tel2') as HTMLInputElement).value,
+                    tel: (document.getElementById('tel2') as HTMLInputElement).value
+                },
                 facebook: (document.getElementById('facebook') as HTMLInputElement).value,
                 instagram: (document.getElementById('instagram') as HTMLInputElement).value
             }
@@ -115,6 +129,8 @@ const Register: NextPage = () => {
                         <li>dsa</li>
                     </ul>
 
+                    <Link href='/user/login'>Já tem uma conta? Faça o login aqui!</Link>
+
                 </div>
 
                 <div className={RegisterPageStyles.form_container}>
@@ -161,7 +177,7 @@ const Register: NextPage = () => {
                                     name='password' id='password'
                                     required
                                     pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
-                                    title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                    title='Precisa conter letras maiúsculas, números (0-9) e caracteres especiais (@, !, $, etc.).'
                                 ></input>
                             </label>
                             <small>Deve conter 8 ou mais caracteres.</small>
@@ -179,18 +195,25 @@ const Register: NextPage = () => {
                         </div>
 
                         <div className={RegisterPageStyles.later_checkbox_container}>
-                            <p>Preencher agora informações de meio de contato?</p>
+                            <p>Preencher agora informações sobre meios de contato?</p>
 
                             <div>
 
                                 <label>
                                     Sim
-                                    <input type='radio' id='fill_later_true' name='fill_later' value='true' />
+                                    <input type='radio'
+                                        id='fill_later_true' name='fill_later'
+                                        value='true'
+                                        onClick={() => setAddContactInfo(true)}
+                                        defaultChecked />
                                 </label>
 
                                 <label>
                                     Não
-                                    <input type='radio' id='fill_later_false' name='fill_later' value='false' />
+                                    <input type='radio'
+                                        id='fill_later_false' name='fill_later'
+                                        onClick={() => setAddContactInfo(false)}
+                                        value='false' />
                                 </label>
 
                             </div>
@@ -198,41 +221,84 @@ const Register: NextPage = () => {
 
                         </div>
 
-                        <div className={RegisterPageStyles.contacts_wrapper}>
-                            <div>
-                                <label>
-                                    Telefone 1 (opcional)
-                                    <input type='tel' name='tel1' id='tel1' ></input>
-                                </label>
-                                <small>Preencha com um telefone para quando alguem precisar entrar em contato com você.</small>
+                        {/* if above radio checked true, shows below div */}
+                        {addContactsChecked && (
+
+                            <div className={RegisterPageStyles.contacts_wrapper}>
+
+                                <div className={RegisterPageStyles.row}>
+                                    <div>
+                                        <label>
+                                            DDD - Telefone 1 <small>opcinal</small>
+                                            <input type='text' name='ddd-tel1' id='ddd-tel1'
+                                                pattern='^\d.{1}$'
+                                            ></input>
+                                        </label>
+                                        <small>DDD do número sem o zero.</small>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            Telefone 1 <small>opcinal</small>
+                                            <input type='text' name='tel1' id='tel1'
+                                                pattern='^\d.{7,8}$'
+                                            ></input>
+                                        </label>
+                                        <small>Apenas números, sem o DDD.</small>
+                                    </div>
+                                </div>
+
+
+                                <div className={RegisterPageStyles.row}>
+                                    <div>
+                                        <label>
+                                            DDD - Telefone 2 <small>opcinal</small>
+                                            <input type='tel' name='ddd-tel2' id='ddd-tel2'
+                                                pattern='^\d.{1}$'
+                                            ></input>
+                                        </label>
+                                        <small>DDD do número sem o zero.</small>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            Telefone 2 <small>opcinal</small>
+                                            <input type='tel' name='tel2' id='tel2'
+                                                pattern='^\d.{7,8}$'
+                                            ></input>
+                                        </label>
+                                        <small>Apenas números, sem o DDD.</small>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        Facebook <small>opcinal</small>
+                                        <input type='text' name='facebook' id='facebook'
+                                            placeholder='Ex: https://pt-br.facebook.com/zuck/'
+                                            pattern='(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)'
+                                            title='Verifique se está nesse formato: https://pt-br.facebook.com/seu-nome-de-usuario'
+                                        ></input>
+                                    </label>
+                                    <small>Copie e cole o link do seu perfil acima.</small>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        Instagram <small>opcinal</small>
+                                        <input type='text' name='instagram' id='instagram' placeholder='Ex: @petfound'
+                                            pattern='^@[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$'
+                                            title='Verifique se está nesse formato: @petfound'
+                                        ></input>
+                                    </label>
+                                    <small>Coloque o @ do seu perfil.</small>
+                                </div>
                             </div>
 
-                            <div>
-                                <label>
-                                    Telefone 2 (opcional)
-                                    <input type='tel' name='tel2' id='tel2' ></input>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    Facebook (opcional)
-                                    <input type='text' name='facebook' id='facebook' ></input>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    Instagram (opcional)
-                                    <input type='text' name='instagram' id='instagram' placeholder='@petfound'></input>
-                                </label>
-                                <small>Coloque o @ do seu perfil.</small>
-                            </div>
-                        </div>
+                        )}
 
                         <div className={RegisterPageStyles.submit_container}>
                             <button type='submit' id='submit'>Concluir</button>
                         </div >
+
                     </form >
 
                 </div>

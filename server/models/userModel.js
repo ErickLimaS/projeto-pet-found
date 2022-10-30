@@ -14,8 +14,14 @@ const userSchema = new mongoose.Schema(
             street: { type: String }
         },
         contacts: {
-            tel1: { type: String },
-            tel2: { type: String },
+            tel1: {
+                ddd: { type: String },
+                tel: { type: String }
+            },
+            tel2: {
+                ddd: { type: String },
+                tel: { type: String }
+            },
             instagram: { type: String },
             facebook: { type: String }
         },

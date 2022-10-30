@@ -182,6 +182,8 @@ div.warning_absolute[data-active="true"]>a:hover {
     background-color: var(--primary);
     color: var(--white);
 
+    border-radius: 0px 0px 0px 8px;
+
 }
 
 @media(max-width: 680px) {
@@ -190,6 +192,8 @@ div.warning_absolute[data-active="true"]>a:hover {
 
         width: initial;
         min-height: auto;
+
+        border-radius: 0;
 
     }
 
@@ -222,6 +226,22 @@ div.warning_absolute[data-active="true"]>a:hover {
 .container .heading_text li {
 
     list-style-type: disc;
+
+}
+
+.container .heading_text a {
+
+    display: block;
+
+    text-decoration: underline;
+
+}
+
+.container .heading_text a:hover {
+
+    transition: all ease 100ms;
+
+    transform: scale(1.02);
 
 }
 
@@ -261,11 +281,37 @@ div.warning_absolute[data-active="true"]>a:hover {
 
 }
 
+.form_container form div.row {
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    flex-wrap: wrap;
+    gap: 16px;
+    flex-direction: row;
+
+}
+
+@media(max-width: 820px) {
+
+    .form_container form div.row {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
 .form_container form label {
 
     display: flex;
     flex-direction: column;
     color: var(--primary);
+
+}
+
+.form_container form label small {
+
+    color: var(--black-50);
 
 }
 
@@ -313,6 +359,12 @@ div.warning_absolute[data-active="true"]>a:hover {
 
 }
 
+.form_container form .later_checkbox_container p {
+
+    color: var(--primary);
+
+}
+
 .form_container form .later_checkbox_container>div {
 
     margin: 8px 0;
@@ -328,13 +380,20 @@ div.warning_absolute[data-active="true"]>a:hover {
 
 .form_container form .later_checkbox_container label {
 
+    cursor: pointer;
+
     color: var(--white);
 
 }
 
 .form_container form .later_checkbox_container input {
 
+    cursor: pointer;
+
     margin-top: 8px;
+    accent-color: var(--secondary);
+
+    transform: scale(1.3);
 
 }
 

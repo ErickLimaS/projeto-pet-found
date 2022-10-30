@@ -36,8 +36,14 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
                 street: req.body.address.street,
             },
             contacts: {
-                tel1: req.body.contacts.tel1,
-                tel2: req.body.contacts.tel2,
+                tel1: {
+                    ddd: req.body.contacts.tel1.ddd,
+                    tel: req.body.contacts.tel1.tel
+                },
+                tel2: {
+                    ddd: req.body.contacts.tel2.ddd,
+                    tel: req.body.contacts.tel2.tel
+                },
                 instagram: req.body.contacts.instagram,
                 facebook: req.body.contacts.facebook
             },

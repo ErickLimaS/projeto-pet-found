@@ -317,6 +317,15 @@ div.error_message_container>button:hover {
 
 }
 
+@media(max-width: 580px) {
+
+    .container .text h1 {
+
+        text-align: center;
+    }
+
+}
+
 .container .text p {
 
     margin-top: 40px;

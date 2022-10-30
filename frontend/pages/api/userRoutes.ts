@@ -10,15 +10,21 @@ const DB_URL = 'https://pet-found.herokuapp.com/user'
 interface userRegisterTypes {
     email: string,
     password: string,
-    name: string | null, // null is intended for the use of Login Route
+    name: string, 
     address: {
-        state: string | null,
-        county: string | null,
-        street: string | null
+        state: string,
+        county: string,
+        street: string | null // null is for the optional inputs
     },
     contacts: {
-        tel1: string | null,
-        tel2: string | null,
+        tel1: {
+            ddd: string | null,
+            tel: string | null
+        },
+        tel2: {
+            ddd: string | null,
+            tel: string | null
+        },
         facebook: string | null,
         instagram: string | null
     }
