@@ -64,19 +64,26 @@ const Register: NextPage = () => {
             address: {
                 state: (document.getElementById('state') as HTMLInputElement).value,
                 county: (document.getElementById('county') as HTMLInputElement).value,
-                street: (document.getElementById('street') as HTMLInputElement).value
+                street: (document.getElementById('street') as HTMLInputElement).value ?
+                    (document.getElementById('street') as HTMLInputElement).value : ''
             },
             contacts: {
                 tel1: {
-                    ddd: (document.getElementById('ddd-tel1') as HTMLInputElement).value,
-                    tel: (document.getElementById('tel1') as HTMLInputElement).value
+                    ddd: (document.getElementById('ddd-tel1') as HTMLInputElement) ?
+                        (document.getElementById('ddd-tel1') as HTMLInputElement).value : '',
+                    tel: (document.getElementById('tel1') as HTMLInputElement) ?
+                        (document.getElementById('tel1') as HTMLInputElement).value : ''
                 },
                 tel2: {
-                    ddd: (document.getElementById('ddd-tel2') as HTMLInputElement).value,
-                    tel: (document.getElementById('tel2') as HTMLInputElement).value
+                    ddd: (document.getElementById('ddd-tel2') as HTMLInputElement) ?
+                        (document.getElementById('ddd-tel2') as HTMLInputElement).value : '',
+                    tel: (document.getElementById('tel2') as HTMLInputElement) ?
+                        (document.getElementById('tel2') as HTMLInputElement).value : ''
                 },
-                facebook: (document.getElementById('facebook') as HTMLInputElement).value,
-                instagram: (document.getElementById('instagram') as HTMLInputElement).value
+                facebook: (document.getElementById('facebook') as HTMLInputElement) ?
+                    (document.getElementById('facebook') as HTMLInputElement).value : '',
+                instagram: (document.getElementById('instagram') as HTMLInputElement) ?
+                    (document.getElementById('instagram') as HTMLInputElement).value : ''
             }
         }
 

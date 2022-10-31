@@ -1,4 +1,4 @@
-import homeStyles from '../styles/home/Home.module.css'
+import homeStyles from '../styles/Home/Home.module.css'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import Meta from '../components/Meta'

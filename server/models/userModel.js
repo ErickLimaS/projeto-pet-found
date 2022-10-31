@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema(
         name: { type: String, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
-        createdAt: { type: Date, default: Date.now() },
+        createdAt: { type: Date, default: () => Date.now(), immutable: true },
+        updatedAt: { type: Date, default: () => Date.now() },
         address: {
             state: { type: String, required: true },
             county: { type: String, required: true },
@@ -28,13 +29,24 @@ const userSchema = new mongoose.Schema(
         petsRegistered: [
             {
                 type: Schema.Types.ObjectId,
-                ref: Pet
+                ref: 'Pet'
             }
         ],
         notifications: []
     }
 
 )
+
+userSchema.pre("save", function (next) {
+
+    try {
+        this.updatedAt = Date.now()
+        next()
+    }
+    catch (error) {
+        return { message: error }
+    }
+})
 
 const User = mongoose.model('User', userSchema)
 
