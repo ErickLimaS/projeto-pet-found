@@ -5,11 +5,13 @@ import * as C from '../styles/Layout/headerStyledComponents'
 import * as SVG from '../public/imgs/svg'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
+import { logoutUser } from '../pages/api/userRoutes'
 
 function Header() {
 
     const [mobileMenu, setMobileMenu] = useState<Boolean>(false)
-    const [user, setUser] = useState<any>()
+    const [user, setUser] = useState<any>(null)
+    const [isUserLoginPanelOpen, setIsUserLoginPanelOpen] = useState<boolean>(false)
 
     const userState: any = useSelector((state: RootState) => state.currentUser)
 
@@ -17,6 +19,9 @@ function Header() {
 
         if (userState.name) {
             setUser(userState)
+        }
+        else {
+            setUser(null)
         }
 
         setMobileMenu(false)
@@ -57,10 +62,50 @@ function Header() {
                     <div className={headerStyles.login_desktop}>
 
                         {user ? (
-                            <button type='button' aria-labelledby={`Acessar menu da conta de ${user.name}`}>
-                                {user.name}
-                                <SVG.CaretDownFill />
-                            </button>
+                            <>
+                                <button type='button'
+                                    aria-labelledby={`Acessar menu da conta de ${user.name}`}
+                                    className={headerStyles.user_login}
+                                    data-clicked={isUserLoginPanelOpen ? 'true' : 'false'}
+                                    onClick={() => setIsUserLoginPanelOpen(!isUserLoginPanelOpen)}
+                                >
+                                    {user.name}
+                                    <SVG.CaretDownFill />
+                                </button>
+
+                                {isUserLoginPanelOpen && (
+
+                                    <div className={headerStyles.user_panel}>
+
+                                        <ul>
+
+                                            <li>
+                                                <Link href='/my-pets'>
+                                                    <a>
+                                                        <SVG.PawIcon /> Meus Pets
+                                                    </a>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link href='/settings'>
+                                                    <a>
+                                                        <SVG.GearFill /> Configurações
+                                                    </a>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <button type='button'
+                                                    onClick={() => logoutUser()}>
+                                                    <SVG.BoxArrowLeft /> Sair da Conta
+                                                </button>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+
+                                )}
+                            </>
                         ) : (
                             <Link href='/user/login'>
                                 <a>
@@ -94,10 +139,49 @@ function Header() {
 
                         <li className={headerStyles.login}>
                             {user ? (
-                                <button type='button' aria-labelledby={`Acessar menu da conta de ${user.name}`}>
-                                    {user.name}
-                                    <SVG.CaretDownFill />
-                                </button>
+                                <>
+                                    <button type='button'
+                                        aria-labelledby={`Acessar menu da conta de ${user.name}`}
+                                        className={headerStyles.user_login}
+                                        data-clicked={isUserLoginPanelOpen ? 'true' : 'false'}
+                                        onClick={() => setIsUserLoginPanelOpen(!isUserLoginPanelOpen)}
+                                    >
+                                        {user.name}
+                                        <SVG.CaretDownFill />
+                                    </button>
+                                    {isUserLoginPanelOpen && (
+
+                                        <div className={headerStyles.user_panel}>
+
+                                            <ul>
+
+                                                <li>
+                                                    <Link href='/my-pets'>
+                                                        <a>
+                                                            <SVG.PawIcon /> Meus Pets
+                                                        </a>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link href='/settings'>
+                                                        <a>
+                                                            <SVG.GearFill /> Configurações
+                                                        </a>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <button type='button'
+                                                        onClick={() => logoutUser()}>
+                                                        <SVG.BoxArrowLeft /> Sair da Conta
+                                                    </button>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    )}
+                                </>
                             ) : (
                                 <Link href='/user/login'>
                                     <a>

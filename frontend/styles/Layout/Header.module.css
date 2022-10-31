@@ -148,6 +148,9 @@ div.logo svg {
 
 .header .login_desktop {
 
+    position: relative;
+    top: 0;
+
     display: flex;
     flex-direction: row;
 
@@ -160,14 +163,14 @@ div.logo svg {
 
 }
 
-.header .login_desktop:hover {
+.header .login_desktop>button:hover, .header .login_desktop>a:hover {
 
     transition: all ease-in 100ms;
     filter: saturate(90%);
 
 }
 
-.header .login_desktop button {
+.header .login_desktop button.user_login {
 
     cursor: pointer;
 
@@ -190,7 +193,159 @@ div.logo svg {
 
 }
 
-.header .login_desktop a {
+.login_desktop button.user_login[data-clicked="true"] svg {
+
+    animation: rotate-180deg 350ms forwards;
+
+}
+
+
+.login_desktop button.user_login[data-clicked="false"] svg {
+
+    animation: initial-deg 350ms forwards;
+
+}
+
+@keyframes rotate-180deg {
+
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+
+}
+
+@keyframes initial-deg {
+
+    0% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(0);
+    }
+
+}
+
+.header .login_desktop div.user_panel {
+
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    background-color: var(--white);
+    border-radius: 4px;
+
+}
+
+
+.header .login_desktop div.user_panel::before {
+
+    position: absolute;
+    top: -10px;
+    left: 43%;
+
+    content: '';
+
+    height: 0px;
+    width: 0px;
+
+    border-color: var(--white) transparent;
+    border-style: solid;
+    border-width: 0px 15px 10px 15px;
+
+}
+
+
+.login_desktop div.user_panel ul, .login_desktop div.user_panel li {
+
+    width: 100%;
+
+}
+
+
+.login_desktop div.user_panel ul {
+
+    padding: 16px 8px;
+
+}
+
+.login_desktop div.user_panel li {
+
+    margin-bottom: 8px;
+
+    background: var(--primary);
+
+    border-radius: 4px;
+
+}
+
+.login_desktop div.user_panel li:last-child {
+
+    margin-bottom: 0;
+
+}
+
+.login_desktop div.user_panel li:hover {
+
+    transition: all ease-in 100ms;
+
+    transform: scale(1.02);
+
+    background: var(--secondary);
+
+}
+
+.login_desktop div.user_panel li a, .login_desktop div.user_panel li button {
+
+    display: flex;
+    text-align: center;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.login_desktop div.user_panel li svg {
+
+    width: 20px;
+
+    position: relative;
+    left: 0;
+
+    fill: var(--white);
+
+}
+
+.login_desktop div.user_panel li a, .login_desktop div.user_panel li button {
+
+    padding: 8px;
+
+    width: inherit;
+    height: 100%;
+
+}
+
+.login_desktop div.user_panel li button {
+
+    padding: 10px 8px;
+    cursor: pointer;
+
+    background: transparent;
+    border: none;
+
+}
+
+.header .login_desktop>a {
 
     display: flex;
     align-items: center;
@@ -212,7 +367,7 @@ div.logo svg {
     }
 }
 
-.list li:hover a, .drawer_sidebar_mobile ul li:hover a {
+.list li:hover a, .drawer_sidebar_mobile ul li:hover>a {
     transition: all ease-in-out 60ms;
 
     color: var(--white);
@@ -312,7 +467,117 @@ div.drawer_sidebar_mobile {
 
     }
 
-    div.drawer_sidebar_mobile ul li.login >button{
+
+    .login button.user_login[data-clicked="true"] svg {
+
+        animation: rotate-180deg 350ms forwards;
+
+    }
+
+
+    .login button.user_login[data-clicked="false"] svg {
+
+        animation: initial-deg 350ms forwards;
+
+    }
+
+    .header .login div.user_panel {
+
+        position: relative;
+        top: 5px;
+        left: 0;
+        right: 0;
+
+        width: 100%;
+
+        background-color: var(--white);
+        border-radius: 4px;
+
+    }
+
+    .login div.user_panel ul, .login div.user_panel li {
+
+        width: 100%;
+
+    }
+
+
+    .login div.user_panel ul {
+
+        padding: 16px 8px;
+
+    }
+
+    .login div.user_panel li {
+
+        margin-bottom: 8px;
+
+        background: var(--primary);
+
+        border-radius: 4px;
+
+    }
+
+    .login div.user_panel li:last-child {
+
+        margin-bottom: 0;
+
+    }
+
+    .login div.user_panel li:hover {
+
+        transition: all ease-in 100ms;
+
+        transform: scale(1.02);
+
+        background: var(--secondary);
+
+    }
+
+    .login div.user_panel li a, .login div.user_panel li button {
+
+        display: flex;
+        text-align: center;
+
+        font-size: 0.95rem;
+        font-weight: 500;
+
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .login div.user_panel li svg {
+
+        width: 20px;
+
+        position: relative;
+        left: 0;
+
+        fill: var(--white);
+
+    }
+
+    .login div.user_panel li a, .login div.user_panel li button {
+
+        padding: 8px;
+
+        width: inherit;
+        height: 100%;
+
+    }
+
+    .login div.user_panel li button {
+
+        padding: 10px 8px;
+        cursor: pointer;
+
+        background: transparent;
+        border: none;
+
+    }
+
+    div.drawer_sidebar_mobile ul li.login>button {
 
         width: 100%;
 

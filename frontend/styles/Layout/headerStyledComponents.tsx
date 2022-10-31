@@ -60,7 +60,7 @@ export const MobileList  = styled.ul<Props>`
 
     }
 
-    li{
+    >li{
         margin: 16px;
     }
 
