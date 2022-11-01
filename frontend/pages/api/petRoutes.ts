@@ -3,6 +3,8 @@ import { store } from "../../store"
 
 const DB_URL = 'https://pet-found.herokuapp.com/pets'
 
+// const DB_URL = 'http://localhost:5000/pets' // test
+
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
 
@@ -20,6 +22,14 @@ interface petDataTypes {
     hasReward: boolean,
     rewardAmount: number,
     moreInfo: string
+}
+
+interface queryTypes {
+
+    type: any[] | null,
+    state: string,
+    county: string
+
 }
 
 const config = (route: string, body?: petDataTypes, query?: string) => {
@@ -108,18 +118,25 @@ export const createPetPost = async (info: petDataTypes) => {
 
 }
 
-export const getAllPetsByQuery = async (query?: { state: string, county?: string }) => {
+export const getAllPetsByQuery = async (query?: queryTypes) => {
 
     let queryOnUrl: string = '';
 
-    // sets how will the query be on the url
-    if (query) {
-        if (query.state !== "" && query.county === "") {
+    const animalTypes = query?.type || null
+    console.log(query)
 
-            queryOnUrl = `?state=${query.state}`
+    // if has query, sets how will the query be on the url
+    if (query) {
+
+        // all inputs filled
+        if (query.type != null && query.state != "" && query.county != "") {
+
+            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state=${query.state}&county=${query.county}`.replace(',', '')
 
         }
-        if (query.state !== "" && query.county !== "") {
+
+        // only state and county
+        else {
 
             queryOnUrl = `?state=${query.state}&county=${query.county}`
 

@@ -5,9 +5,8 @@ import * as SVG from '../../public/imgs/svg'
 
 function ResultItem({ data }: any) {
 
-
     return (
-        <C.Container href={`pet?id=${data.id}`}>
+        <C.Container href={`pet?id=${data._id}`}>
 
             <div className='image_container'>
                 <Image
@@ -24,14 +23,14 @@ function ResultItem({ data }: any) {
 
                     <h3>{data.name}</h3>
 
-                    <p>{data.race}</p>
+                    <p>{data.breed}</p>
                     <p>Ultima vez visto em <b>{data.lastSeen.street}, {data.lastSeen.county} - {data.lastSeen.state}</b></p>
 
                 </div>
 
                 <C.ItemRewardIcon>
 
-                    {data ? <SVG.Coin /> : <SVG.SlashCoin />}
+                    {data.hasReward ? <SVG.Coin /> : <SVG.SlashCoin />}
 
                 </C.ItemRewardIcon>
 

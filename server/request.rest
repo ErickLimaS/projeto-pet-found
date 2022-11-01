@@ -1,4 +1,4 @@
-GET http://localhost:5000/pets/all?state=TEST&county=TEST
+GET http://localhost:5000/pets/all?type=DOG&type=CAT&state=TEST&county=TEST
 
 ###
 POST http://localhost:5000/pets/register

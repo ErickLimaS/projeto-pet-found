@@ -11,94 +11,124 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
     // stores querys
     const petType = req.query.type || null
-    const state = req.query.state || null
-    const county = req.query.county || null
+    const state = req.query.state ? decodeURI(req.query.state) : null
+    const county = req.query.county ? decodeURI(req.query.county) : null
 
     if (petType != null || state != null || county != null) {
 
         try {
-            // with type and state
+            // with type, state and county
             if (petType != null && state != null && county != null) {
 
-                const sortForAllQuery = await Pet.find(
-                    {
-                        type: petType,
-                        lastSeen: {
-                            state: state,
-                            county: county
+                Pet.find({
+
+                    'type': petType,
+                    'lastSeen.state': state,
+                    'lastSeen.county': county
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
                         }
 
                     }
-                )
-
-                if (sortForAllQuery.length > 0) {
-                    return res.status(200).send(sortForAllQuery)
-                }
-                else {
-
-                    return res.status(404).send('Not found')
-
-                }
+                })
             }
 
-            // no type, just state
+            // no type, just state and county
             else if (petType == null && state != null && county != null) {
 
-                const sortForStateAndCounty = await Pet.find({
-                    lastSeen: {
-                        state: state,
-                        county: county
+                Pet.find({
+
+                    'lastSeen.state': state,
+                    'lastSeen.county': county
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
                     }
                 })
 
-                if (sortForStateAndCounty.length > 0) {
-                    return res.status(200).send(sortForStateAndCounty)
-                }
-                else {
-
-                    return res.status(404).send('Not found')
-
-                }
             }
 
             // just type
             else if (petType != null && state == null && county == null) {
 
-                const sortForPetType = await Pet.find({ type: petType })
+                Pet.find({
 
-                if (sortForPetType.length > 0) {
-                    return res.status(200).send(sortForPetType)
-                }
-                else {
+                    'type': petType
 
-                    return res.status(404).send('Not found')
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
 
-                }
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
 
             }
             else {
-                return res.status(404).send('Query Error')
+                return res.status(404).send('Query Method Error. Error on front.')
             }
 
         }
         catch (error) {
-            return res.status(500).send(error)
+            return res.status(500).json({ message: error })
         }
 
     }
     else {
 
         try {
-            Pet.find((err, val) => {
+            Pet.find((err, docs) => {
+
                 if (err) {
-                    return res.status(500).send('Erro Interno')
+                    return res.status(500).json({ message: 'Erro Interno' })
                 }
-                return res.status(200).json(val)
+                return res.status(200).json(docs)
 
             })
         }
         catch (error) {
-            return res.status(404).send(error)
+            return res.status(404).json({ message: error })
         }
 
     }
@@ -235,7 +265,7 @@ petRouters.delete("/remove-pet", isAuth, expressAsyncHandler(async (req, res) =>
 
         await Pet.findByIdAndDelete(req.body.pet._id)
 
-        return res.status(202).json({message: "Success"})
+        return res.status(202).json({ message: "Success" })
 
     }
     catch (err) {

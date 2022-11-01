@@ -9,11 +9,16 @@ import { data } from './api/templateData'
 import Link from 'next/link'
 import Image from 'next/image'
 import ResultItem from '../components/found-page/ResultItem'
+import { getAllPetsByQuery } from './api/petRoutes'
 
 const Found: NextPage = () => {
 
-  const [states, setStates] = useState([])
-  const [county, setCounty] = useState([])
+  const [states, setStates] = useState<any>([])
+  const [county, setCounty] = useState<any>([])
+
+  const [adressQueried, setAdressQueried] = useState<string>('')
+
+  const [petsRegisteredData, setPetsRegisteredData] = useState<any>(null)
 
   // gets all states 
   const getBrazilianStates = async () => {
@@ -23,6 +28,8 @@ const Found: NextPage = () => {
     setStates(data)
 
   }
+
+  // get all conties related to selected state
   const getStateCounties = async (choseState: string) => {
 
     const data = await IbgeApi.getBrazilianMunicipies(choseState)
@@ -31,31 +38,48 @@ const Found: NextPage = () => {
 
   }
 
-  const router = useRouter()
+  // get all pets data registered on DB
+  const getAllPetsData = async () => {
 
-  const submitForm = (e: FormEvent) => {
+    const petsData = await getAllPetsByQuery()
+    setPetsRegisteredData(petsData)
+
+  }
+
+  const submitForm = async (e: FormEvent) => {
 
     e.preventDefault()
 
-    const pet = document.querySelectorAll('input[type=checkbox]:checked') as NodeList
-    const state = document.getElementById('state') as HTMLSelectElement
-    const county = document.getElementById('county') as HTMLSelectElement
+    const pets = document.querySelectorAll('input[type=checkbox]:checked') as NodeList
+    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(1, 3)
+    const county = (document.getElementById('county') as HTMLSelectElement).value ?
+      (document.getElementById('county') as HTMLSelectElement).value : ''
 
-    // submit query to server through URL and gets data from chose location
-    // router.push(`/found?pet=${pet.value}&state=${state.value}&county=${county.value}`)
+    let chosePetsValues: any[] = []
 
-    pet.forEach((item: any) => {
-      return console.log(item.value)
+    pets.forEach((item: any) => {
+      chosePetsValues = [...chosePetsValues, item.value]
     })
 
-    console.log(state.value, county.value)
+    // fetch data related to the form filled
+    const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county })
+
+    setPetsRegisteredData(petsData)
+
+    setAdressQueried(`${county} - ${state}`)
 
   }
 
   useEffect(() => {
 
+    // get all states
     getBrazilianStates()
+
+    // get all state's conties
     getStateCounties('AC')
+
+    // get pets registered on DB
+    getAllPetsData()
 
   }, [])
 
@@ -121,7 +145,10 @@ const Found: NextPage = () => {
               <div>
                 <label htmlFor='state'>
 
-                  <input id='state' type='text' name='estado' list='states'
+                  <input type='text'
+                    id='state' name='state'
+                    list='states'
+                    required
                     onChange={(e: any) => getStateCounties(e.target.value.slice(1, 3))}
                     placeholder="Estado"
                   />
@@ -137,7 +164,12 @@ const Found: NextPage = () => {
 
                 <label htmlFor='county'>
 
-                  <input id='county' type="text" name='Municipio' list="countys" placeholder='Município' />
+                  <input type="text"
+                    name='county' id='county'
+                    list="countys"
+                    placeholder='Município'
+                    required
+                  />
 
                   <datalist id='countys'>
 
@@ -151,7 +183,7 @@ const Found: NextPage = () => {
               </div>
 
               <div>
-                <button type='submit' name='procurar'><SVG.Search /></button>
+                <button type='submit' aria-labelledby='Procurar'><SVG.Search /></button>
               </div>
 
             </form>
@@ -213,35 +245,44 @@ const Found: NextPage = () => {
 
           <div className={FoundStyles.results}>
 
-            <h2>Resultados em Lugar Pesquisado</h2>
+            <h2>Resultados {adressQueried ? `em ${adressQueried}` : 'no Brasil'}</h2>
 
-            <div className={FoundStyles.list}>
+            {petsRegisteredData != null ? (
+              <>
+                <div className={FoundStyles.list}>
 
-              {data.map((petInfo) => (
+                  {
+                    petsRegisteredData.map((petInfo: any, key: any) => (
 
-                <ResultItem key={petInfo.id} data={petInfo}/>
+                      <ResultItem key={key} data={petInfo} />
 
-              ))}
+                    ))
+                  }
+                </div>
 
-            </div>
+                <nav className={FoundStyles.pagination}>
 
-            <nav className={FoundStyles.pagination}>
+                  <Link href={`/pag=1`}>
+                    <a>
+                      <SVG.ChevronLeft />
+                    </a>
+                  </Link>
 
-              <Link href={`/pag=1`}>
-                <a>
-                  <SVG.ChevronLeft />
-                </a>
-              </Link>
+                  <p>Página 1 de 6</p>
 
-              <p>Página 1 de 6</p>
+                  <Link href={`/pag=2`}>
+                    <a>
+                      <SVG.ChevronRight />
+                    </a>
+                  </Link>
 
-              <Link href={`/pag=2`}>
-                <a>
-                  <SVG.ChevronRight />
-                </a>
-              </Link>
+                </nav>
+              </>
+            ) : (
 
-            </nav>
+              <h3>loading</h3>
+
+            )}
 
           </div>
         </section>
