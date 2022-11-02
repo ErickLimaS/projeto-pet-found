@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { chooseWhichAnimal } from '../../redux/actions/lostPetPostStepsActions'
 import { RootState } from '../../store'
-import { AnimalItem } from '../../styles/styled-components/animal'
+import { AnimalItem } from '../../styles/FoundPage/animalItemStyles'
 
 function Animal({ info }: any) {
 

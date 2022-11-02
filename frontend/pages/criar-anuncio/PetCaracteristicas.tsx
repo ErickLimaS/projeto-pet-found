@@ -1,7 +1,7 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setCaracteristicasPet } from '../../redux/actions/lostPetPostStepsActions'
-import Step2FormStyles from '../../styles/Step2Form.module.css'
+import Step2FormStyles from '../../styles/FoundPage/steps/Step2Form.module.css'
 
 function PetCaracteristicas() {
 

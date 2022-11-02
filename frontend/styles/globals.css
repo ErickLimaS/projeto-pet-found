@@ -23,30 +23,6 @@
 
   --error: #FE1B0D;
 
-  --brand-color: #FFAC4A;
-  --brand-color2: #F9C87C;
-  --brand-color3: #ffad32;
-
-  --orange: #FB770D;
-  --light-orange: #FFA45B;
-  --lighter-orange: #FFEBDB;
-  --dark-blue: #25424c;
-
-
-  --white: rgb(250, 250, 250);
-  --white2: rgb(235, 235, 235);
-
-  --grey: rgb(95, 95, 95);
-  --grey2: grey;
-  --grey3: #c0c0c0;
-  --grey4: #e1e1e1;
-
-  --black2: #181818;
-  --black3: #212121;
-  --black4: #2c2c2c;
-
-  --nav-items-color: #005e80;
-
   --fs-heading1: clamp(2.209rem, 10vw + 1rem, 4.209rem);
   --fs-heading2: clamp(1.657rem, 8vw + 1rem, 3.157rem);
   --fs-heading3: clamp(1.569rem, 5vw + 1rem, 2.369rem);
@@ -85,9 +61,15 @@ h1, h2, h3, h4, h5, h6, p {
 
 }
 
-button, input {
+button, input, textarea {
 
   font-size: 1rem;
+
+}
+
+select {
+
+  font-size: 0.9rem;
 
 }
 

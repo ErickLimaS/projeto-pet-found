@@ -2,9 +2,13 @@ import Pet from "../models/petModel.js";
 import User from '../models/userModel.js'
 import express from "express";
 import expressAsyncHandler from 'express-async-handler';
-import { isAuth } from '../utils.js'
+import { generateToken, isAuth } from '../utils.js'
+import bcrypt from 'bcrypt'
 
 const petRouters = express.Router()
+
+// bcrypt salt
+const passwordSalt = 10;
 
 // all data related, filterd by query
 petRouters.get('/all', expressAsyncHandler(async (req, res) => {
@@ -164,29 +168,68 @@ petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
 // register a pet (user logged in)
 petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
-    const user = await User.findById(req.user.userInfo._id);
+    if (req.body.createUser === false) {
+
+        let user = await User.findById(req.user.userInfo._id);
+
+    }
 
     try {
+
+        let user;
+
+        // if user don't exist, it will create a new one
+        if (req.body.createUser === true) {
+
+            // hashes the plain password from body
+            const hashedPassword = await bcrypt.hash(req.body.user.password, passwordSalt)
+
+            user = new User({
+                name: req.body.user.name,
+                email: req.body.user.email,
+                password: hashedPassword,
+                address: {
+                    state: req.body.user.address.state,
+                    county: req.body.user.address.county,
+                    street: req.body.user.address.street || null,
+                },
+                contacts: {
+                    tel1: {
+                        ddd: req.body.user.contacts.tel1.ddd || null,
+                        tel: req.body.user.contacts.tel1.tel || null
+                    },
+                    tel2: {
+                        ddd: req.body.user.contacts.tel2.ddd || null,
+                        tel: req.body.user.contacts.tel2.tel || null
+                    },
+                    instagram: req.body.user.contacts.instagram || null,
+                    facebook: req.body.user.contacts.facebook || null
+                },
+            })
+
+            await user.save()
+
+        }
 
         const pet = new Pet({
             ownerId: user._id,
             ownerName: user.name,
-            type: req.body.type,
-            typeTranslated: req.body.typeTranslated,
-            name: req.body.name,
-            age: req.body.age,
-            breed: req.body.breed,
+            type: req.body.info.type,
+            typeTranslated: req.body.info.typeTranslated,
+            name: req.body.info.name,
+            age: req.body.info.age,
+            breed: req.body.info.breed,
             photoUrl: [
-                req.body.name //fix it
+                req.body.info.name //fix it
             ],
             lastSeen: {
-                state: req.body.lastSeen.state,
-                county: req.body.lastSeen.county,
-                street: req.body.lastSeen.street
+                state: req.body.info.lastSeen.state,
+                county: req.body.info.lastSeen.county,
+                street: req.body.info.lastSeen.street
             },
-            hasReward: req.body.hasReward,
-            rewardAmount: req.body.rewardAmount,
-            moreInfo: req.body.moreInfo,
+            hasReward: req.body.info.hasReward,
+            rewardAmount: req.body.info.rewardAmount,
+            moreInfo: req.body.info.moreInfo,
         })
 
         await pet.save();
@@ -196,7 +239,16 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
         await user.save();
 
-        return res.status(201).send(pet)
+        if (req.body.createUser === true) {
+            return res.status(201).json({
+                name: user.name,
+                token: generateToken(user),
+                pet
+            })
+        }
+        else {
+            return res.status(201).send(pet)
+        }
 
     }
     catch (error) {

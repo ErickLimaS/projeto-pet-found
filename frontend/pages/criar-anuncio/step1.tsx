@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import CriarAnuncio from './index'
-import Animal from '../../components/criar-anuncio-page/animal'
-import Step1Styles from '../../styles/cssCreatePostSteps/step1.module.css'
-import { Animais } from '../api/animals'
-import ButtonStyles from '../../styles/Index_perdi_meu_pet.module.css'
+import Animal from './animal'
+import Step1Styles from '../../styles/FoundPage/steps/Step1Form.module.css'
+import AnimalsAvailableToChoose from '../api/animals'
+import ButtonStyles from '../../styles/FoundPage/Index.module.css'
 import * as SVG from '../../public/imgs/svg'
 import { useRouter } from 'next/dist/client/router'
 import { RootState } from '../../store'
@@ -33,14 +33,14 @@ const Step1 = () => {
             <nav className={Step1Styles.nav_options}>
                 <ul>
 
-                    {Animais.map((item: any) => (
+                    {AnimalsAvailableToChoose.map((item: any) => (
                         <Animal info={item} key={item.name} />
                     ))}
 
                 </ul>
             </nav>
 
-            <div className={ButtonStyles.next_page}>
+            <div className={ButtonStyles.next_page} data-qty-buttons='1'>
 
                 <button type='button' onClick={() => nextStep()}>
                     Próxima Etapa <SVG.ChevronRight />

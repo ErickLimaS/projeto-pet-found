@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import CriarAnuncio from '../index'
 import { RootState } from '../../../store'
-import Step2FormStyles from '../../../styles/Step2Form.module.css'
+import Step2FormStyles from '../../../styles/FoundPage/steps/Step2Form.module.css'
 import * as SVG from '../../../public/imgs/svg'
 
 function Step2() {

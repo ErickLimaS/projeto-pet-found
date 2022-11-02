@@ -1,15 +1,13 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
-import Meta from '../components/Meta'
-import IbgeApi from './api/enderecosApi'
-import FoundStyles from '../styles/FoundPage.module.css'
-import { useRouter } from 'next/router'
-import * as SVG from '../public/imgs/svg'
-import { data } from './api/templateData'
+import Meta from '../../components/Meta'
+import IbgeApi from '../api/enderecosApi'
+import FoundStyles from '../../styles/FoundPage.module.css'
+import * as SVG from '../../public/imgs/svg'
 import Link from 'next/link'
 import Image from 'next/image'
-import ResultItem from '../components/found-page/ResultItem'
-import { getAllPetsByQuery } from './api/petRoutes'
+import ResultItem from './ResultItem'
+import { getAllPetsByQuery } from '../api/petRoutes'
 
 const Found: NextPage = () => {
 

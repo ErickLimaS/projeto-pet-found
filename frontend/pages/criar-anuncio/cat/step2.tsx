@@ -3,11 +3,11 @@ import React, { FormEvent, LegacyRef, MutableRefObject, SetStateAction, useEffec
 import { useDispatch, useSelector } from 'react-redux'
 import CriarAnuncio from '../index'
 import { RootState } from '../../../store'
-import ButtonsStyles from '../../../styles/Index_perdi_meu_pet.module.css'
-import Step2FormStyles from '../../../styles/Step2Form.module.css'
+import ButtonsStyles from '../../../styles/FoundPage/Index.module.css'
+import Step2FormStyles from '../../../styles/FoundPage/steps/Step2Form.module.css'
 import API from '../../api/petsInfoApi'
 import * as SVG from '../../../public/imgs/svg'
-import PetCaracteristicas from '../../../components/criar-anuncio-page/PetCaracteristicas'
+import PetCaracteristicas from '../PetCaracteristicas'
 import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step2() {

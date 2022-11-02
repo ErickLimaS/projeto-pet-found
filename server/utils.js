@@ -8,7 +8,7 @@ export const generateToken = (userInfo) => {
         },
         process.env.JWTSECRET,
         {
-            expiresIn: '1hours'
+            expiresIn: '1d'
         }
     )
 
@@ -16,29 +16,37 @@ export const generateToken = (userInfo) => {
 
 export const isAuth = (req, res, next) => {
 
-    const authorization = req.headers.authorization;
+    if (req.body.createUser === true) {
 
-    if (!authorization) {
-
-        return res.status(404).json({ message: 'Authorization not found' })
+        next()
 
     }
+    else {
 
-    //gets token after BEARER ******
-    const token = authorization.slice(7, authorization.length)
+        const authorization = req.headers.authorization;
 
-    jwt.verify(
-        token, process.env.JWTSECRET, (err, decode) => {
+        if (!authorization) {
 
-            if (err) {
-                return res.status(401).json({ message: 'Invalid Token' })
-            }
-            else {
-                req.user = decode;
-                next();
-            }
+            return res.status(404).json({ message: 'Authorization not found' })
 
         }
-    )
+
+        //gets token after BEARER ******
+        const token = authorization.slice(7, authorization.length)
+
+        jwt.verify(
+            token, process.env.JWTSECRET, (err, decode) => {
+
+                if (err) {
+                    return res.status(401).json({ message: 'Invalid Token' })
+                }
+                else {
+                    req.user = decode;
+                    next();
+                }
+
+            }
+        )
+    }
 
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import * as C from '../../styles/Found-page/ResultItem'
+import * as C from '../../styles/FoundPage/ResultItem'
 import * as SVG from '../../public/imgs/svg'
 
 function ResultItem({ data }: any) {

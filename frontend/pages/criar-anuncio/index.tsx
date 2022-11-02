@@ -1,14 +1,11 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
 import React, { FormEvent, PropsWithChildren, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../../store'
 import Meta from '../../components/Meta'
-import StepsCreatePost from '../../components/StepsCreatePost'
-import LostPageStyles from '../../styles/Index_perdi_meu_pet.module.css'
+import StepsCreatePost from './StepsCreatePost'
+import LostPageStyles from '../../styles/FoundPage/Index.module.css'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
-import * as SVG from '../../public/imgs/svg'
 import { useRouter } from 'next/router'
 
 interface Props {

@@ -9,7 +9,7 @@ interface Props {
 export const Container = styled.div<Props>`
 
     @media(max-width: 1024px){
-        margin: 1rem 0;
+        margin: 16px 0;
         width: 100%;
     }
 
@@ -20,7 +20,7 @@ export const Container = styled.div<Props>`
         justify-content: center;
         align-items: center;
 
-        border: 2px solid var(--grey4);
+        border: 2px solid var(--black-10);
         border-radius: 4px;
 
         @media(max-width: 620px){
@@ -40,18 +40,18 @@ export const Container = styled.div<Props>`
 
     ol svg{
 
-        fill: gray;
+        fill: var(--black-50);
 
     }
 
     ol li {
         transition: all ease-in-out 70ms;
-        margin: 1rem;
+        margin: 16px;
 
         border-bottom: 2px solid transparent;
 
         font-weight: 600;
-        color: var(--grey);
+        color: var(--black-50);
 
         transform: scale(0.9);
 
@@ -60,30 +60,24 @@ export const Container = styled.div<Props>`
     li#step1{
 
         transform: ${props => props.currentStep === 1 && 'scale(1)'};
-        border-bottom: ${props => props.currentStep === 1 && '2px solid var(--brand-color)'};
-        color: ${props => props.currentStep === 1 && 'var(--black3)'};
+        border-bottom: ${props => props.currentStep === 1 && '2px solid var(--primary)'};
+        color: ${props => props.currentStep === 1 && 'var(--black)'};
 
     }
     li#step2{
         
         transform: ${props => props.currentStep === 2 && 'scale(1)'};
-        border-bottom: ${props => props.currentStep === 2 && '2px solid var(--brand-color)'};
-        color: ${props => props.currentStep === 2 && 'var(--black3)'};
+        border-bottom: ${props => props.currentStep === 2 && '2px solid var(--primary)'};
+        color: ${props => props.currentStep === 2 && 'var(--black)'};
 
     }
     li#step3{
         
         transform: ${props => props.currentStep === 3 && 'scale(1)'};
-        border-bottom: ${props => props.currentStep === 3 && '2px solid var(--brand-color)'};
-        color: ${props => props.currentStep === 3 && 'var(--black3)'};
+        border-bottom: ${props => props.currentStep === 3 && '2px solid var(--primary)'};
+        color: ${props => props.currentStep === 3 && 'var(--black)'};
 
     }
-
-    ol li:last-child {
-
-
-    }
-
 
 
 `

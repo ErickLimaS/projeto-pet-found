@@ -1,9 +1,9 @@
-import axios from "axios"
+import Axios from "axios"
 import { store } from "../../store"
 
-const DB_URL = 'https://pet-found.herokuapp.com/pets'
+// const DB_URL = 'https://pet-found.herokuapp.com/pets'
 
-// const DB_URL = 'http://localhost:5000/pets' // test
+const DB_URL = 'http://localhost:9123/pets' // test
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
@@ -24,6 +24,31 @@ interface petDataTypes {
     moreInfo: string
 }
 
+interface newUserDataTypes {
+
+    email: string,
+    password: string,
+    name: string,
+    address: {
+        state: string,
+        county: string,
+        street: string | null // null is for the optional inputs
+    },
+    contacts: {
+        tel1: {
+            ddd: string | null,
+            tel: string | null
+        },
+        tel2: {
+            ddd: string | null,
+            tel: string | null
+        },
+        facebook: string | null,
+        instagram: string | null
+    }
+
+}
+
 interface queryTypes {
 
     type: any[] | null,
@@ -32,7 +57,7 @@ interface queryTypes {
 
 }
 
-const config = (route: string, body?: petDataTypes, query?: string) => {
+const config = (route: string, body?: any, query?: string) => {
 
     let methodUsedByRoute: string = "";
     let headerUsedByRoute: {};
@@ -47,6 +72,8 @@ const config = (route: string, body?: petDataTypes, query?: string) => {
                 "Content-Type": "application/json"
             }
 
+            break;
+
         case '/register':
             methodUsedByRoute = "POST"
 
@@ -54,6 +81,8 @@ const config = (route: string, body?: petDataTypes, query?: string) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${userToken}`
             }
+
+            break;
 
         case '/update-pet-status':
             methodUsedByRoute = "PUT"
@@ -63,6 +92,8 @@ const config = (route: string, body?: petDataTypes, query?: string) => {
                 "Authorization": `Bearer ${userToken}`
             }
 
+            break;
+
         case '/remove-pet':
             methodUsedByRoute = "DELETE"
 
@@ -71,14 +102,74 @@ const config = (route: string, body?: petDataTypes, query?: string) => {
                 "Authorization": `Bearer ${userToken}`
             }
 
+            break;
+
         default:
+
             methodUsedByRoute = "GET" //fix
 
             headerUsedByRoute = {
                 "Content-Type": "application/json"
             }
 
+            break;
+
     }
+
+    switch (route) {
+
+        case '/all' || '/my-pets' || '/pet':
+
+            methodUsedByRoute = "GET"
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json"
+            }
+
+            break;
+
+        case '/register':
+            methodUsedByRoute = "POST"
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userToken}`
+            }
+
+            break;
+
+        case '/update-pet-status':
+            methodUsedByRoute = "PUT"
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userToken}`
+            }
+
+            break;
+
+        case '/remove-pet':
+            methodUsedByRoute = "DELETE"
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userToken}`
+            }
+
+            break;
+
+        default:
+
+            methodUsedByRoute = "GET" //fix
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json"
+            }
+
+            break;
+
+    }
+
 
     return {
         method: methodUsedByRoute,
@@ -90,24 +181,28 @@ const config = (route: string, body?: petDataTypes, query?: string) => {
 }
 
 // makes POST request to register a new lost pet post and relate it with his owner
-export const createPetPost = async (info: petDataTypes) => {
+export const createPetPost = async (info: petDataTypes, user?: newUserDataTypes) => {
 
     try {
 
-        const data = await axios(
-            config("/register", info)
+        const data: any = await Axios(
+
+            config('/register', { createUser: true, user, info }, '')
+
         ).then(response => {
 
             if (response.status === 201) {
 
+                console.log(response)
+
                 return {
+                    status: response.status,
                     message: 'Success'
                 }
 
             }
 
         })
-
 
     }
     catch (error: any) {
@@ -145,7 +240,7 @@ export const getAllPetsByQuery = async (query?: queryTypes) => {
     }
 
     try {
-        const { data } = await axios(
+        const { data } = await Axios(
             config(`/all`, undefined, queryOnUrl && queryOnUrl)
         )
 
@@ -165,7 +260,7 @@ export const getAllPetsByQuery = async (query?: queryTypes) => {
 export const getPetInfo = async (query: string) => {
 
     try {
-        const { data } = await axios(
+        const { data } = await Axios(
             config(`/pet`, undefined, `?id=${query}`)
         )
 
@@ -186,7 +281,7 @@ export const getPetInfo = async (query: string) => {
 export const getPetsRegisteredByUser = async () => {
 
     try {
-        const { data } = await axios(
+        const { data } = await Axios(
             config(`/my-pets`)
         )
 
@@ -207,7 +302,7 @@ export const getPetsRegisteredByUser = async () => {
 export const updatePetStatus = async () => {
 
     try {
-        const { data } = await axios(
+        const { data } = await Axios(
             config(`/update-pet-status`)
         )
 
@@ -228,7 +323,7 @@ export const updatePetStatus = async () => {
 export const removePetFromDB = async () => {
 
     try {
-        const { data } = await axios(
+        const { data } = await Axios(
             config('/remove-pet')
         )
 

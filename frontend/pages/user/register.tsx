@@ -54,6 +54,7 @@ const Register: NextPage = () => {
         const confirmPassword = document.getElementById('confirm-password') as HTMLInputElement
 
         if (password.value !== confirmPassword.value) {
+            alert('Senhas diferentes. Tente novamente.') // fix
             return console.log('diffent')
         }
 

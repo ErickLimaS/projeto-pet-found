@@ -3,11 +3,11 @@ import React, { FormEvent, LegacyRef, MutableRefObject, SetStateAction, useEffec
 import { useDispatch, useSelector } from 'react-redux'
 import CriarAnuncio from '../index'
 import { RootState } from '../../../store'
-import ButtonsStyles from '../../../styles/Index_perdi_meu_pet.module.css'
-import Step2FormStyles from '../../../styles/Step2Form.module.css'
+import ButtonsStyles from '../../../styles/FoundPage/Index.module.css'
+import Step2FormStyles from '../../../styles/FoundPage/steps/Step2Form.module.css'
 import API from '../../api/petsInfoApi'
 import * as SVG from '../../../public/imgs/svg'
-import PetCaracteristicas from '../../../components/criar-anuncio-page/PetCaracteristicas'
+import PetCaracteristicas from '../PetCaracteristicas'
 import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step2() {
@@ -54,9 +54,9 @@ function Step2() {
       dispatch(setPetInfo(
         {
           name: petName.current?.value,
-          pet: animal,
+          type: animal,
           genre: petGenre.current?.value,
-          race: petRace.current?.value,
+          breed: petRace.current?.value,
           caracteristicas: caracteristicas,
           moreInfo: petMoreInfo.current?.value,
         }
@@ -145,7 +145,7 @@ function Step2() {
             </label>
           </div>
 
-          <div className={ButtonsStyles.next_page}>
+          <div className={ButtonsStyles.next_page} data-qty-buttons='2'>
 
             <button type='button'
               onClick={() => returnStep()}
