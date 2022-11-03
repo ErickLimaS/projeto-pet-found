@@ -1,8 +1,6 @@
-.footer, .footer nav, .footer nav div {
+.footer, .footer nav, .footer nav div * {
 
-    display: flex;
-
-    color: var(--black);
+    color: var(--white-75);
 
 }
 
@@ -23,7 +21,7 @@
 
 }
 
-.footer nav {
+.footer>nav {
 
     width: 100%;
 
@@ -32,9 +30,23 @@
     padding-left: 40px;
     padding-right: 40px;
 
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+@media(max-width: 890px) {
+
+    .footer nav {
+
+        padding-top: 20px;
+        padding-bottom: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
 
 }
 
@@ -49,10 +61,19 @@
     }
 
 
-    .footer nav>div {
+    .footer nav .container_1 {
 
-        width: 100% !important;
+        /* width: 100% !important; */
+        flex-direction: column;
+        align-items: flex-start;
 
+    }
+
+    .footer nav .container_1 div:last-child {
+
+        margin-left: 24px;
+
+        width: fit-content;
     }
 
 }
@@ -89,6 +110,15 @@
         font-size: 2rem !important;
 
     }
+
+}
+
+.container_1 {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
 }
 
@@ -129,7 +159,7 @@
 
         width: 80% !important;
 
-        margin: 16px 48px !important;
+        margin: 16px 32px !important;
 
     }
 
@@ -140,6 +170,11 @@
 
     }
 
+    .footer nav div.mobile_brand_text p {
+
+        margin-top: 16px;
+
+    }
 }
 
 .footer nav div.brand_text p {
@@ -202,11 +237,13 @@
 
 .footer .links {
 
+    padding: 0 32px;
+
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
-    gap: 24px;
+    gap: 32px;
 
 }
 
@@ -214,6 +251,7 @@
 
     .footer .links {
 
+        padding: 0;
         flex-direction: column;
         gap: 16px;
 
@@ -246,22 +284,22 @@
 
 }
 
-.footer div.links h6 {
+.footer .links h6 {
 
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 
     color: var(--white);
 
 }
 
-.footer .links>div li {
+.footer .links>div li li {
 
     font-size: 1rem;
     color: var(--black-75);
 
 }
 
-.footer .links>div li:hover a {
+.footer .links li li:hover a {
     transition: all ease-in-out 60ms;
 
     color: var(--white);
@@ -272,6 +310,9 @@
 .footer small {
 
     margin-top: 15px;
+
+    display: block;
+    text-align: center;
 
     font-size: 0.8rem;
     font-weight: 400;

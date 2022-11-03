@@ -45,16 +45,16 @@ function Header() {
 
                     <ul className={headerStyles.list}>
                         <li>
-                            <Link href='/criar-anuncio/step1'>Perdi meu Pet</Link>
+                            <Link href='/criar-anuncio/step1'>Ajude achar meu Pet</Link>
                         </li>
 
                         <li>
-                            <Link href='/found'>Achei Um Pet</Link>
+                            <Link href='/found'>Procurar por Pet</Link>
                         </li>
 
-                        <li>
+                        {/* <li>
                             <Link href='/como-funciona'>Como Funciona</Link>
-                        </li>
+                        </li> */}
                     </ul>
 
                     <span className={headerStyles.line}></span>
@@ -197,16 +197,16 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/criar-anuncio/step1'>Criar Anúncio</Link>
+                            <Link href='/criar-anuncio/step1'>Ajude achar meu Pet</Link>
                         </li>
 
                         <li>
-                            <Link href='/found'>Achei Um Pet</Link>
+                            <Link href='/found'>Procurar por Pet</Link>
                         </li>
 
-                        <li>
+                        {/* <li>
                             <Link href='/como-funciona'>Como Funciona</Link>
-                        </li>
+                        </li> */}
 
                     </C.MobileList>
 

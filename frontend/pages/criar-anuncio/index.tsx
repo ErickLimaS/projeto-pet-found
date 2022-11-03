@@ -26,7 +26,7 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
 
         // iniciate the steps process
         if (currentStep === 0) {
-            dispatch(changeCreateLostPetPostSteps(currentStep, 1))
+            dispatch(changeCreateLostPetPostSteps(currentStep, 1, 'next'))
         }
 
     }, [])

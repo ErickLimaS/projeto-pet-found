@@ -20,7 +20,7 @@ export const MobileList  = styled.ul<Props>`
 
     width: 100%;
 
-    background-color: var(--primary);
+    background-color: var(--secondary);
 
     >div{
 
@@ -65,6 +65,8 @@ export const MobileList  = styled.ul<Props>`
     }
 
     a{
+
+        padding: 8px 0;
 
         display: flex;
         align-items: center;

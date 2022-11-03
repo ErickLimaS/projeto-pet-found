@@ -467,6 +467,16 @@ div.drawer_sidebar_mobile {
 
     }
 
+    
+    .login button.user_login{
+
+        background-color: var(--secondary);
+
+        font-size: 0.9rem;
+        font-weight: 600;
+
+    }
+
 
     .login button.user_login[data-clicked="true"] svg {
 
@@ -512,7 +522,7 @@ div.drawer_sidebar_mobile {
 
         margin-bottom: 8px;
 
-        background: var(--primary);
+        background: var(--secondary);
 
         border-radius: 4px;
 
@@ -583,7 +593,7 @@ div.drawer_sidebar_mobile {
 
     }
 
-    .drawer_sidebar_mobile li {
+    .drawer_sidebar_mobile li:not(:nth-child(2)) {
 
         border-bottom: 1px solid var(--black-5);
 
