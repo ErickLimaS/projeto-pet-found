@@ -26,13 +26,11 @@ function Step3() {
   // has all pet's data after this form has been submited 
   const petInfoAssembled: any = useSelector((state: RootState) => state.setOwnerAndPetInfoTogether)
 
-  const { info }: any = petInfo
   const { currentStep }: any = stepsProgress
   const { animal }: any = choseAnimal
 
   const [states, setStates] = useState([])
   const [counties, setCounties] = useState([])
-  const [choseMunicipie, setChoseMunicipie] = useState<string>()
   const [lostOnSameLocation, setLostOnSameLocation] = useState<boolean>(false)
   const [reward, setReward] = useState<boolean>(false)
 
@@ -45,7 +43,6 @@ function Step3() {
   const ownerState = React.useRef<HTMLSelectElement>(null)
   const ownerCounty = React.useRef<HTMLSelectElement>(null)
   const ownerStreet = React.useRef<HTMLSelectElement>(null)
-  const ownerBirthDate = React.useRef<HTMLInputElement>(null)
   const ownerPostMoreDetails = React.useRef<HTMLTextAreaElement>(null)
 
   const ownerRewardWhenPetFound = React.useRef<HTMLInputElement>(null)
@@ -76,7 +73,7 @@ function Step3() {
 
   const returnStep = () => {
 
-    router.push(`/criar-anuncio/${animal.toLowerCase()}/step2`)
+    router.push(`/criar-anuncio/pet/step2`)
 
   }
 
@@ -90,7 +87,7 @@ function Step3() {
       dispatch(setOwnerAndPetInfoTogether(
         {
           type: petInfo.info.type,
-          typeTranslated: 'Gato',
+          typeTranslated: 'Cachorro',
           name: petInfo.info.name,
           genre: petInfo.info.genre,
           // age: 20,
@@ -119,8 +116,7 @@ function Step3() {
 
         if (responseFromServer.status === 201) {
 
-          console.log('foi')
-          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
+          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
           router.push(`/criar-anuncio/post-done`)
 
         }
@@ -133,7 +129,7 @@ function Step3() {
       dispatch(setOwnerAndPetInfoTogether(
         {
           type: petInfo.info.type,
-          typeTranslated: 'Gato',
+          typeTranslated: 'Cachorro',
           name: petInfo.info.name,
           genre: petInfo.info.genre,
           // age: 20,
@@ -192,8 +188,8 @@ function Step3() {
 
         if (responseFromServer.status === 201) {
 
-          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
-          router.push(`/criar-anuncio/post-done`)
+          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
+          router.push(`/criar-anuncio/pet/complete`)
 
         }
 
@@ -205,11 +201,12 @@ function Step3() {
   useEffect(() => {
 
     // if the first step is not completed, return to that page
-    // if ((animal == null || undefined) || (currentStep !== 3)) {
+    if ((animal == null || undefined) || (currentStep !== 3)) {
 
-    // router.push('/criar-anuncio/step1')
+      dispatch(changeCreateLostPetPostSteps(currentStep, 1, 'previous'))
+      router.push('/criar-anuncio/step1')
 
-    // }
+    }
 
     getBrazilianStates()
 
@@ -218,7 +215,7 @@ function Step3() {
   return (
     <CriarAnuncio>
 
-      <div className={Step3FormStyles.cat_form}>
+      <div className={Step3FormStyles.form_container} data-pet={`${animal}`}>
 
         {/* if USER IS logged in, shows form to choose witch contacts to be displayed on post */}
         {/* if USER IS NOT logged in, shows form to create a account*/}
@@ -274,7 +271,6 @@ function Step3() {
 
                         <select
                           ref={petLostLocationCounty} id='municipio-lost-pet' name='municipio_onde_perdi_meu_pet' required
-                          onChange={(e) => setChoseMunicipie(e.target.value)}
                         >
 
                           {counties.map((item: any) => (
@@ -493,7 +489,7 @@ function Step3() {
                     Município
 
                     <select ref={ownerCounty} id='municipio' name='municipio' required
-                      onChange={(e) => setChoseMunicipie(e.target.value)}
+
                     >
 
                       {counties.map((item: any) => (
@@ -556,7 +552,7 @@ function Step3() {
                         Município
 
                         <select ref={petLostLocationCounty} id='municipio-lost-pet' name='municipio_onde_perdi_meu_pet' required
-                          onChange={(e) => setChoseMunicipie(e.target.value)}
+
                         >
 
                           {counties.map((item: any) => (
@@ -575,7 +571,7 @@ function Step3() {
                         Rua onde aconteceu
 
                         <input type='text' ref={petLostLocationStreet} id='rua-lost-pet' name='rua_onde_perdi_meu_pet' required
-                          onChange={(e) => setChoseMunicipie(e.target.value)}
+
                         >
                         </input>
 
@@ -618,7 +614,7 @@ function Step3() {
                   <small>Insira o valor que deseja oferecer abaixo</small>
 
                   <input type='number' ref={ownerRewardWhenPetFound} id='valor-recompensa' name='valor_recompensa' required
-                    onChange={(e) => setChoseMunicipie(e.target.value)}
+
                   >
                   </input>
 

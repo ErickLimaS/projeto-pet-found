@@ -1,5 +1,8 @@
 /* each of these divs has a different SVG */
-div.cat_form::before {
+div.form_container[data-pet='DOG']::before,
+div.form_container[data-pet='CAT']::before,
+div.form_container[data-pet='OTHER']::before {
+
     top: 25%;
     left: 0;
 
@@ -13,50 +16,28 @@ div.cat_form::before {
     position: fixed;
     z-index: 1;
 
-    background-image: url(../../../public/imgs/svg/cat.svg);
     background-position: left;
     background-repeat: no-repeat;
     background-size: 60%;
+
 }
 
-div.dog_form::before {
-    top: 25%;
-    left: 0;
+div.form_container[data-pet='CAT']::before {
 
-    min-height: 100%;
-    width: 100%;
+    background-image: url(../../../public/imgs/svg/cat.svg);
 
-    content: '';
+}
 
-    opacity: 0.06;
-
-    position: fixed;
-    z-index: 1;
+div.form_container[data-pet='DOG']::before {
 
     background-image: url(../../../public/imgs/svg/dog.svg);
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: 50%;
+
 }
 
-div.other_form::before {
-    top: 25%;
-    left: 0;
-
-    min-height: 100%;
-    width: 100%;
-
-    content: '';
-
-    opacity: 0.06;
-
-    position: fixed;
-    z-index: 1;
+div.form_container[data-pet='OTHER']::before {
 
     background-image: url(../../../public/imgs/svg/cat.svg);
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: 60%;
+
 }
 
 form.step2_form {
@@ -92,22 +73,17 @@ form.step2_form>div {
     }
 }
 
+@media(max-width: 480px) {
+
+    form.step2_form>div {
+        width: 100%;
+    }
+}
+
 form.step2_form>div span svg {
 
     height: 32px;
     width: 100%;
-
-}
-
-form.step2_form>div span:first-child svg {
-
-    fill: rgb(107, 107, 255);
-
-}
-
-form.step2_form>div span:last-child svg {
-
-    fill: rgb(255, 146, 164);
 
 }
 
@@ -129,7 +105,9 @@ form.step2_form>div.genre_flex_row {
 
     padding: 16px;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 16px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -138,6 +116,38 @@ form.step2_form>div.genre_flex_row {
     border-radius: 4px;
 
 }
+div.genre_flex_row div.genre_wrapper{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+}
+
+div.genre_flex_row div.genre_wrapper svg{
+
+    height: 32px;
+
+}
+
+div.genre_flex_row div.genre_wrapper:first-child svg{
+
+    fill: rgb(107, 107, 255);
+
+}
+
+div.genre_flex_row div.genre_wrapper:last-child svg{
+
+    fill: rgb(255, 146, 164);
+
+}
+
+div.genre_flex_row div.genre_wrapper input{
+
+    accent-color: var(--secondary);
+
+} 
 
 form.step2_form>div label {
 
@@ -187,7 +197,7 @@ form.step2_form input, form.step2_form select {
     background-color: var(--white);
     border: 2px solid var(--black-10);
     border-radius: 4px;
-    
+
 }
 
 form.step2_form div.caracteristicas_input_button {

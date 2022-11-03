@@ -238,12 +238,12 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
             postDetails: req.body.info.postDetails
         })
 
-        // await pet.save();
+        await pet.save();
 
         // populates User model with this Pet schema currently saved
         user.petsRegistered.push(pet)
 
-        // await user.save();
+        await user.save();
 
         if (req.body.createUser === true) {
             return res.status(201).json({

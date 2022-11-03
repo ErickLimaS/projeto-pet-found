@@ -12,7 +12,7 @@ import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions
 
 function Step2() {
 
-  const [catsBreed, setCatsBreed] = useState<any>([])
+  const [petBreed, setPetBreed] = useState<any>([])
 
   const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
   const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
@@ -31,11 +31,21 @@ function Step2() {
 
   const dispatch: any = useDispatch()
 
-  // fetch data of cats breed
-  const loadCatsBreed = async () => {
+  // fetch data of dogs breed
+  const loadPetBreed = async () => {
 
-    const data = await API.getCatsBreed()
-    setCatsBreed(data)
+    if (animal == 'DOG') {
+      const data = await API.getDogsBreed()
+      setPetBreed(data)
+    }
+    else if (animal == 'CAT') {
+      const data = await API.getCatsBreed()
+      setPetBreed(data)
+    }
+    else if (animal == 'OTHER') {
+      const data = await API.getDogsBreed() // fix
+      setPetBreed(data)
+    }
 
   }
 
@@ -62,9 +72,9 @@ function Step2() {
         }
       ))
 
-      dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
+      dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
 
-      router.push(`/criar-anuncio/${animal.toLowerCase()}/step3`)
+      router.push(`/criar-anuncio/pet/step3`)
 
     }
 
@@ -75,17 +85,18 @@ function Step2() {
     // if the first step is not completed, return to that page
     if ((animal == null || undefined) || (currentStep !== 2)) {
 
-      // router.push('/criar-anuncio/step1')
+      dispatch(changeCreateLostPetPostSteps(currentStep, 1, 'previous'))
+      router.push('/criar-anuncio/step1')
 
     }
 
-    loadCatsBreed()
+    loadPetBreed()
 
   }, [])
 
   return (
     <CriarAnuncio>
-      <div className={Step2FormStyles.cat_form}>
+      <div className={Step2FormStyles.form_container} data-pet={`${animal}`}>
         <form className={Step2FormStyles.step2_form} name="Form" onSubmit={(e) => submitForm(e)}>
 
           <div className={Step2FormStyles.pet_photo}>
@@ -102,19 +113,24 @@ function Step2() {
             </label>
           </div>
 
-          <div className={Step2FormStyles.genre_flex_row}>
+          <div className={Step2FormStyles.genre_flex_row} aria-label='Escolha o gênero do pet'>
 
-            <span><SVG.MaleSymbol /></span>
-            <label htmlFor='macho'>
-              Macho
-              <input type='radio' ref={petGenre} id='macho' name='genre' value='male'></input>
-            </label>
+            <div className={Step2FormStyles.genre_wrapper}>
+              <SVG.MaleSymbol aria-label='Simbolo de Masculino'/>
+              <label htmlFor='macho'>
+                Macho
+                <input type='radio' ref={petGenre} id='macho' name='genre' value='male'></input>
+              </label>
+            </div>
 
-            <label htmlFor='femea'>
-              Fêmea
-              <input type='radio' ref={petGenre} id='femea' name='genre' value='female' ></input>
-            </label>
-            <span><SVG.FemaleSymbol /></span>
+            <div className={Step2FormStyles.genre_wrapper}>
+              <label htmlFor='femea'>
+                Fêmea
+                <input type='radio' ref={petGenre} id='femea' name='genre' value='female' ></input>
+              </label>
+              <SVG.FemaleSymbol aria-label='Simbolo de Feminino'/>
+            </div>
+
           </div>
 
           <div>
@@ -123,7 +139,7 @@ function Step2() {
 
               <select id='race' ref={petRace} name='caracteristicas' required >
 
-                {catsBreed.map((item: any) => (
+                {petBreed.map((item: any) => (
 
                   <option value={item.name} key={item.id}>{item.name}</option>
 

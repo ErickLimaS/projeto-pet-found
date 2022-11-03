@@ -1,5 +1,8 @@
 /* each of these divs has a different SVG */
-div.cat_form::before {
+div.form_container[data-pet='DOG']::before,
+div.form_container[data-pet='CAT']::before,
+div.form_container[data-pet='OTHER']::before {
+
     top: 25%;
     left: 0;
 
@@ -13,50 +16,28 @@ div.cat_form::before {
     position: fixed;
     z-index: 1;
 
-    background-image: url(../../../public/imgs/svg/cat.svg);
     background-position: left;
     background-repeat: no-repeat;
     background-size: 60%;
+
 }
 
-div.dog_form::before {
-    top: 25%;
-    left: 0;
+div.form_container[data-pet='CAT']::before {
 
-    min-height: 100%;
-    width: 100%;
+    background-image: url(../../../public/imgs/svg/cat.svg);
 
-    content: '';
+}
 
-    opacity: 0.06;
-
-    position: fixed;
-    z-index: 1;
+div.form_container[data-pet='DOG']::before {
 
     background-image: url(../../../public/imgs/svg/dog.svg);
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: 50%;
+
 }
 
-div.other_form::before {
-    top: 25%;
-    left: 0;
-
-    min-height: 100%;
-    width: 100%;
-
-    content: '';
-
-    opacity: 0.06;
-
-    position: fixed;
-    z-index: 1;
+div.form_container[data-pet='OTHER']::before {
 
     background-image: url(../../../public/imgs/svg/cat.svg);
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: 60%;
+
 }
 
 form.step3_form {
@@ -106,7 +87,7 @@ form.step3_form>p {
 
 }
 
-form.step3_form >a {
+form.step3_form>a {
 
     text-decoration: underline;
 
@@ -217,14 +198,14 @@ form.step3_form div.reward_flex_row svg {
 }
 
 
-form.step3_form div.set_reward label{
+form.step3_form div.set_reward label {
 
     color: var(--secondary);
 
 }
 
 
-form.step3_form div.set_reward label small{ 
+form.step3_form div.set_reward label small {
 
     color: initial;
 
@@ -353,7 +334,7 @@ form.step3_form input, form.step3_form select {
 form.step3_form>div.more_info label {
 
     width: 100%;
-    
+
     color: var(--secondary);
 
 }

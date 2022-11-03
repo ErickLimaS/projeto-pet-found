@@ -3,12 +3,12 @@ import type { NextPage } from 'next'
 import PostCompleteStyles from '../../styles/PostDone.module.css'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store'
+import { RootState } from '../../../store'
 import Link from 'next/link'
-import * as SVG from '../../public/imgs/svg'
-import Meta from '../../components/Meta'
+import * as SVG from '../../../public/imgs/svg'
+import Meta from '../../../components/Meta'
 
-const PostDone: NextPage = () => {
+const Complete: NextPage = () => {
 
     const steps = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
     const postInfo: any = useSelector((state: RootState) => state.setOwnerAndPetInfoTogether)
@@ -18,8 +18,8 @@ const PostDone: NextPage = () => {
 
     useEffect(() => {
 
-        // iniciate the steps process
-        if (currentStep !== 4) {
+        // if user dont follow the steps from beginning, reiniciate the steps process
+        if (currentStep !== 4 && postInfo.info == null || undefined) {
             router.push('/criar-anuncio/step1')
         }
 
@@ -33,7 +33,7 @@ const PostDone: NextPage = () => {
                 <h1>Anúncio Criado</h1>
 
                 <p>lorem loremloremloremloremlorem loremlorem vvlorem vloremloremv vloremloremv</p>
-                
+
                 {postInfo == null && (
                     <div className={PostCompleteStyles.post_info}>
 
@@ -91,4 +91,4 @@ const PostDone: NextPage = () => {
     )
 }
 
-export default PostDone
+export default Complete

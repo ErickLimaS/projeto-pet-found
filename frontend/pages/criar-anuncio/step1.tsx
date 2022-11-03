@@ -13,9 +13,7 @@ import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostSte
 const Step1 = () => {
 
     const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
-    const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
 
-    const { animal }: any = choseAnimal
     const { currentStep }: any = stepsProgress
 
     const router = useRouter()
@@ -23,8 +21,8 @@ const Step1 = () => {
 
     const nextStep = () => {
 
-        dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
-        router.push(`/criar-anuncio/${animal.toLowerCase()}/step2`)
+        dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
+        router.push(`/criar-anuncio/pet/step2`)
 
     }
 

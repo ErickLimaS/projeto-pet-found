@@ -79,7 +79,7 @@ div.next_page[data-qty-buttons='2'] {
 
     div.next_page[data-qty-buttons='1'] , div.next_page[data-qty-buttons='2'] {
 
-        flex-direction: column-reverse;
+        /* flex-direction: column-reverse; */
 
         gap: 24px 0;
 
@@ -116,7 +116,15 @@ div.next_page button {
 
         justify-content: space-around;
 
-        width: 80%;
+
+    }
+}
+
+@media(max-width: 380px) {
+
+    div.next_page button {
+
+        padding: 16px 8px;
 
     }
 }
