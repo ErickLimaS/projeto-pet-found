@@ -31,10 +31,10 @@ function Step2() {
 
   const dispatch: any = useDispatch()
 
-  // fetch data of dogs breed
+  // fetch data of cats breed
   const loadCatsBreed = async () => {
 
-    const data = await API.getDogsBreed()
+    const data = await API.getCatsBreed()
     setCatsBreed(data)
 
   }
@@ -54,9 +54,9 @@ function Step2() {
       dispatch(setPetInfo(
         {
           name: petName.current?.value,
-          pet: animal,
+          type: animal,
           genre: petGenre.current?.value,
-          race: petRace.current?.value,
+          breed: petRace.current?.value,
           caracteristicas: caracteristicas,
           moreInfo: petMoreInfo.current?.value,
         }
@@ -107,12 +107,12 @@ function Step2() {
             <span><SVG.MaleSymbol /></span>
             <label htmlFor='macho'>
               Macho
-              <input type='radio' ref={petGenre} id='macho' name='genre' value='macho'></input>
+              <input type='radio' ref={petGenre} id='macho' name='genre' value='male'></input>
             </label>
 
             <label htmlFor='femea'>
               Fêmea
-              <input type='radio' ref={petGenre} id='femea' name='genre' value='femea' ></input>
+              <input type='radio' ref={petGenre} id='femea' name='genre' value='female' ></input>
             </label>
             <span><SVG.FemaleSymbol /></span>
           </div>
@@ -145,7 +145,7 @@ function Step2() {
             </label>
           </div>
 
-          <div className={ButtonsStyles.next_page}>
+          <div className={ButtonsStyles.next_page} data-qty-buttons='2'>
 
             <button type='button'
               onClick={() => returnStep()}

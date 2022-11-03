@@ -16,6 +16,7 @@ export const generateToken = (userInfo) => {
 
 export const isAuth = (req, res, next) => {
 
+    //  if createUser, its will not be needed to check token
     if (req.body.createUser === true) {
 
         next()

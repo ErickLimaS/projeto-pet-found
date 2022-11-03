@@ -83,7 +83,7 @@ export const setCaracteristicasPetReducer = (state = {}, action: any) => {
     switch (action.type) {
 
         case SET_CARACTERISTICAS_PET:
-            return { ...state, caracteristicas: action.payload }
+            return { ...state, particulars: action.payload }
         default:
             return state
 

@@ -6,10 +6,13 @@ const petSchema = new mongoose.Schema(
         ownerId: { type: mongoose.ObjectId, required: true },
         ownerName: { type: String, required: true },
         name: { type: String, required: true },
-        age: { type: Number, required: true },
+        // age: { type: Number, required: true },
         breed: { type: String, required: true },
         type: { type: String, required: true },
         typeTranslated: { type: String },
+        particulars: [
+            { type: String }
+        ],
         createdAt: { type: Date, default: () => Date.now(), immutable: true },
         updatedAt: { type: Date, default: () => Date.now() },
         wasFound: { type: Boolean, default: false },
@@ -23,7 +26,8 @@ const petSchema = new mongoose.Schema(
         },
         hasReward: { type: Boolean, required: true },
         rewardAmount: { type: Number },
-        moreInfo: { type: String, required: true }
+        moreInfo: { type: String, required: true },
+        postDetails: { type: String } // owner providing details on the post
     }
 
 )

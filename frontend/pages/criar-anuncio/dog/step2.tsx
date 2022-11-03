@@ -107,12 +107,12 @@ function Step2() {
             <span><SVG.MaleSymbol /></span>
             <label htmlFor='macho'>
               Macho
-              <input type='radio' ref={petGenre} id='macho' name='genre' value='macho'></input>
+              <input type='radio' ref={petGenre} id='macho' name='genre' value='male'></input>
             </label>
 
             <label htmlFor='femea'>
               Fêmea
-              <input type='radio' ref={petGenre} id='femea' name='genre' value='femea' ></input>
+              <input type='radio' ref={petGenre} id='femea' name='genre' value='female' ></input>
             </label>
             <span><SVG.FemaleSymbol /></span>
           </div>

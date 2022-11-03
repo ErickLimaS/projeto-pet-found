@@ -101,11 +101,11 @@ export const setPetRace = (race: string) => async (dispatch: Dispatch<AnyAction>
 
 }
 
-export const setCaracteristicasPet = (caracteristicas: any) => async (dispatch: Dispatch<AnyAction>) => {
+export const setCaracteristicasPet = (particulars: any) => async (dispatch: Dispatch<AnyAction>) => {
 
     dispatch({
         type: SET_CARACTERISTICAS_PET,
-        payload: caracteristicas
+        payload: particulars
     })
 
 }

@@ -168,17 +168,18 @@ petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
 // register a pet (user logged in)
 petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
+    let user;
+
+    // if user has a account, it will be stored here
     if (req.body.createUser === false) {
 
-        let user = await User.findById(req.user.userInfo._id);
+        user = await User.findById(req.user.userInfo._id);
 
     }
 
     try {
 
-        let user;
-
-        // if user don't exist, it will create a new one
+        // if user don't exist, it will create a new account
         if (req.body.createUser === true) {
 
             // hashes the plain password from body
@@ -217,27 +218,32 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
             type: req.body.info.type,
             typeTranslated: req.body.info.typeTranslated,
             name: req.body.info.name,
-            age: req.body.info.age,
+            // age: req.body.info.age,
             breed: req.body.info.breed,
-            photoUrl: [
-                req.body.info.name //fix it
-            ],
+            particulars: req.body.info.particulars,
+            // photoUrl: [
+            //     req.body.info.name //fix it
+            // ],
             lastSeen: {
-                state: req.body.info.lastSeen.state,
-                county: req.body.info.lastSeen.county,
-                street: req.body.info.lastSeen.street
+                state: req.body.info.lastSeen.whereOwnerLives ?
+                    user.address.state : req.body.info.lastSeen.state,
+                county: req.body.info.lastSeen.whereOwnerLives ?
+                    user.address.county : req.body.info.lastSeen.county,
+                street: req.body.info.lastSeen.whereOwnerLives ?
+                    (user.address.street || null) : req.body.info.lastSeen.street
             },
             hasReward: req.body.info.hasReward,
             rewardAmount: req.body.info.rewardAmount,
             moreInfo: req.body.info.moreInfo,
+            postDetails: req.body.info.postDetails
         })
 
-        await pet.save();
+        // await pet.save();
 
         // populates User model with this Pet schema currently saved
         user.petsRegistered.push(pet)
 
-        await user.save();
+        // await user.save();
 
         if (req.body.createUser === true) {
             return res.status(201).json({

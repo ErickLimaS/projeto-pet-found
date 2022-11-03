@@ -18,6 +18,7 @@ function Step3() {
 
   // pet info (name, pet, genre)
   const petInfo: any = useSelector((state: RootState) => state.setPetInfo)
+  const petCaracteristicas: any = useSelector((state: RootState) => state.setCaracteristicasPet)
 
   // user data (name, token)
   const user: any = useSelector((state: RootState) => state.currentUser)
@@ -92,12 +93,12 @@ function Step3() {
           typeTranslated: 'Cachorro',
           name: petInfo.info.name,
           genre: petInfo.info.genre,
-          age: 20,
+          // age: 20,
           breed: petInfo.info.breed,
           // photoUrl: [
           //   req.body.name //fix it
           // ],
-          caracteristics: petInfo.info.caracteristicas || null,
+          particulars: petCaracteristicas.particulars || null,
           lastSeen: {
             whereOwnerLives: lostOnSameLocation,
             state: petLostLocationState.current?.value,
@@ -107,6 +108,7 @@ function Step3() {
           hasReward: reward,
           rewardAmount: reward ? ownerRewardWhenPetFound.current?.value : null,
           moreInfo: ownerPostMoreDetails.current?.value || null,
+          postDetails: ownerPostMoreDetails.current?.value || null
         }
       ))
 
@@ -118,8 +120,8 @@ function Step3() {
         if (responseFromServer.status === 201) {
 
           console.log('foi')
-          // dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
-          // router.push(`/criar-anuncio/post-done`)
+          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
+          router.push(`/criar-anuncio/post-done`)
 
         }
 
@@ -134,12 +136,12 @@ function Step3() {
           typeTranslated: 'Cachorro',
           name: petInfo.info.name,
           genre: petInfo.info.genre,
-          age: 20,
+          // age: 20,
           breed: petInfo.info.breed,
           // photoUrl: [
           //   req.body.name //fix it
           // ],
-          caracteristics: petInfo.info.caracteristicas || null,
+          particulars: petCaracteristicas.particulars || null,
           lastSeen: {
             whereOwnerLives: lostOnSameLocation,
             state: petLostLocationState.current?.value,
@@ -148,7 +150,8 @@ function Step3() {
           },
           hasReward: reward,
           rewardAmount: reward ? ownerRewardWhenPetFound.current?.value : null,
-          moreInfo: petInfo.info.moreInfo
+          moreInfo: petInfo.info.moreInfo,
+          postDetails: ownerPostMoreDetails.current?.value || null
         }
       ))
 
@@ -187,11 +190,8 @@ function Step3() {
         // waiting for server response about saving the user account and pet post
         const responseFromServer: any = await createPetPost(petInfoAssembled.info, createUserToSubmit)
 
-        console.log(responseFromServer)
-
         if (responseFromServer.status === 201) {
 
-          console.log('foi')
           dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1))
           router.push(`/criar-anuncio/post-done`)
 

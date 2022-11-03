@@ -1,9 +1,9 @@
 import Axios from "axios"
 import { store } from "../../store"
 
-// const DB_URL = 'https://pet-found.herokuapp.com/pets'
+const DB_URL = 'https://pet-found.herokuapp.com/pets'
 
-const DB_URL = 'http://localhost:9123/pets' // test
+// const DB_URL = 'http://localhost:9123/pets' // test
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
@@ -170,7 +170,6 @@ const config = (route: string, body?: any, query?: string) => {
 
     }
 
-
     return {
         method: methodUsedByRoute,
         url: `${DB_URL}${route}${query && query}`,
@@ -185,24 +184,35 @@ export const createPetPost = async (info: petDataTypes, user?: newUserDataTypes)
 
     try {
 
-        const data: any = await Axios(
+        let response: any
+        await Axios(
 
-            config('/register', { createUser: true, user, info }, '')
+            config('/register', { createUser: user ? true : false, user, info }, '')
 
-        ).then(response => {
+        ).then(res => {
 
-            if (response.status === 201) {
-
-                console.log(response)
-
-                return {
-                    status: response.status,
-                    message: 'Success'
-                }
-
-            }
+            response = res
 
         })
+
+        if (response.status === 201) {
+
+            return {
+                data: response.data,
+                status: response.status,
+                message: 'Success'
+            }
+
+        }
+        else {
+
+            return {
+                data: response.data,
+                status: response.status,
+                message: 'Error'
+            };
+
+        }
 
     }
     catch (error: any) {

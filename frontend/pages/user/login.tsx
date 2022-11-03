@@ -21,8 +21,18 @@ export const Login: NextPage = () => {
         //if user is logged in, he will be redirected to home page
         if (user.name && user.token) {
 
-            router.push('/')
+            const { redirect } = router.query // redirects to page after login
 
+            if (redirect) {
+
+                router.push(`/${redirect}`)
+
+            }
+            else {
+
+                router.push('/')
+
+            }
         }
 
     }, [user, loginProcess])
