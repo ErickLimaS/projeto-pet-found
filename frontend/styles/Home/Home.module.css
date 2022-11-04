@@ -730,6 +730,7 @@ li.grid_item p {
     margin-left: 20px;
     margin-right: 20px;
 
+    font-size: var(--small-1);
     text-align: center;
 
     color: var(--black-75);

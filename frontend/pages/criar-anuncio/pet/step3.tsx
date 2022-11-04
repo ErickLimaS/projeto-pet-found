@@ -104,7 +104,7 @@ function Step3() {
           },
           hasReward: reward,
           rewardAmount: reward ? ownerRewardWhenPetFound.current?.value : null,
-          moreInfo: ownerPostMoreDetails.current?.value || null,
+          moreInfo: petInfo.info.moreInfo || null,
           postDetails: ownerPostMoreDetails.current?.value || null
         }
       ))

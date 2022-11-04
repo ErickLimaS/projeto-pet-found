@@ -2,7 +2,7 @@ import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
 import { store } from '../../store'
 
-const DB_URL = 'https://pet-found.herokuapp.com/user'
+const DB_URL = 'https://pet-found.up.railway.app/user'
 
 // testes
 // const DB_URL = 'http://localhost:5000/user'

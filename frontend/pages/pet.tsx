@@ -7,6 +7,7 @@ import Meta from '../components/Meta'
 import PageLoading from '../components/PageLoading'
 import Image from 'next/image'
 import * as SVG from '../public/imgs/svg'
+import { getPetInfo } from './api/petRoutes'
 
 const Pet: NextPage = () => {
 
@@ -19,19 +20,15 @@ const Pet: NextPage = () => {
     const router = useRouter()
 
     // gets all pet's data 
-    const getPetInfo = () => {
+    const getPetData = async () => {
 
-        setLoading(true)
+        if (router.query.id) {
 
-        data.find((item) => {
-            if (String(item.id) == router.query.id) {
-                console.log(item)
-                return setPetInfo(item)
-            }
-        })
-        console.log(petInfo)
+            const data = await getPetInfo(`${router.query.id}`)
 
-        setLoading(false)
+            setPetInfo(data)
+
+        }
 
     }
 
@@ -56,8 +53,11 @@ const Pet: NextPage = () => {
 
     useEffect(() => {
 
-        getPetInfo()
+        setLoading(true)
 
+        getPetData()
+
+        setLoading(false)
     }, [router])
 
     return (
@@ -106,58 +106,64 @@ const Pet: NextPage = () => {
                                 <div className={PetPageStyles.details}>
 
                                     <p>
-                                        Raça: <b>{petInfo?.race}</b>
+                                        Espécie: <b>{petInfo?.breed}</b>
+                                    </p>
+                                    <p>
+                                        Gênero: {petInfo?.genre}
                                     </p>
                                     <p>
                                         Idade: {petInfo?.age}
                                     </p>
-                                    
+
                                 </div>
 
                             </div>
 
-                            <div className={PetPageStyles.singularities}>
+                            <div>
+                                <h2 className={`${PetPageStyles.heading2_color}`}>
+                                    Segundo o dono, el{petInfo?.genre === 'male' ? 'e' : 'a'} é...
+                                </h2>
 
-                                <ul>
-                                    <li><SVG.Exclamation /> option1</li>
+                                <div className={PetPageStyles.singularities}>
 
-                                    <li><SVG.Exclamation /> option2</li>
+                                    <ul>
+                                        {petInfo?.particulars?.map((item: string) => (
 
-                                    <li><SVG.Exclamation /> option3</li>
+                                            <li key={item}><SVG.Exclamation />{item}</li>
+                                        ))}
 
-                                    <li><SVG.Exclamation /> option1</li>
-
-                                    <li><SVG.Exclamation /> option1</li>
-
-                                    <li><SVG.Exclamation /> option1</li>
-
-                                </ul>
+                                    </ul>
+                                </div>
 
                             </div>
 
                         </section>
 
-                        <section>
+                        <section className={PetPageStyles.second_info_container}>
 
                             <div id={PetPageStyles["second-content"]}>
                                 <div className={PetPageStyles.text}>
 
-                                    <h2>Perdido em</h2>
+                                    <h2 className={`${PetPageStyles.heading2_color} ${PetPageStyles.heading2_size}`}>
+                                        Perdido em
+                                    </h2>
 
                                     <p>
-                                        <b>
-                                            {petInfo?.lastSeen.street}, {petInfo?.lastSeen.county} - {petInfo?.lastSeen.state}
-                                        </b>
+
+                                        {petInfo?.lastSeen?.street}<br /> {petInfo?.lastSeen?.county} <br /> {petInfo?.lastSeen?.state}
+
                                     </p>
 
                                 </div>
 
-                                <div className={PetPageStyles.text}>
+                                <div className={`${PetPageStyles.text} ${PetPageStyles.reward}`}>
 
-                                    <h2>Recompença</h2>
+                                    <h2 className={PetPageStyles.heading2_size}>
+                                        Recompença
+                                    </h2>
 
                                     <p>
-                                        R$ {petInfo?.rewardAmountOffered}
+                                        R$ {petInfo?.rewardAmount},00
                                     </p>
 
                                 </div>
@@ -174,7 +180,9 @@ const Pet: NextPage = () => {
 
                             <div id={PetPageStyles["description"]}>
 
-                                <h2>Descrição do Pet</h2>
+                                <h2 className={PetPageStyles.heading2_color}>
+                                    Descrição do Pet
+                                </h2>
 
                                 <p>
                                     {petInfo?.moreInfo}

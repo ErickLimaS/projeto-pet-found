@@ -1,9 +1,11 @@
 div.container {
 
-    margin-top: 24px;
-    margin-bottom: 24px;
-    margin-left: 48px;
-    margin-right: 48px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 48px;
+    padding-right: 48px;
+
+    background-color: #fafafa;
 
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -41,8 +43,8 @@ div.container[data-panel-expanded='true'] {
 
     div.container {
 
-        margin-left: 24px;
-        margin-right: 24px;
+        padding-left: 24px;
+        padding-right: 24px;
     }
 
 }
@@ -51,8 +53,8 @@ div.container[data-panel-expanded='true'] {
 
     div.container {
 
-        margin-left: 8px;
-        margin-right: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
 }
@@ -69,7 +71,7 @@ div.container[data-panel-expanded='true'] {
 
     .container section#first-content {
 
-        margin-bottom: 24px;
+        padding-bottom: 24px;
 
     }
 
@@ -124,7 +126,7 @@ div.container[data-panel-expanded='true'] {
 
     left: 0%;
 
-    background: linear-gradient(to right, var(--black-75), transparent);
+    background: linear-gradient(to right, var(--black-50), transparent);
 
     border: none;
     border-radius: 16px 0px 0px 16px;
@@ -137,7 +139,7 @@ div.container[data-panel-expanded='true'] {
 
     right: 0%;
 
-    background: linear-gradient(to left, var(--black-75), transparent);
+    background: linear-gradient(to left, var(--black-50), transparent);
 
     border: none;
     border-radius: 0px 16px 16px 0px;
@@ -147,7 +149,7 @@ div.container[data-panel-expanded='true'] {
 .container section#first-content .img_container img {
 
     width: max-content;
-    background-color: rgb(165, 165, 165);
+    background-color: rgb(169, 252, 213);
     border-radius: 16px;
 
 }
@@ -163,33 +165,52 @@ div.container[data-panel-expanded='true'] {
 
 }
 
-.container section#first-content h1 {
+section#first-content .pet_info h1 {
 
     margin-bottom: 24px;
+
+    text-align: center;
 
     color: var(--primary);
 
 }
 
+section#first-content .pet_info .details {
 
-.container section#first-content p {
+    padding: 16px;
 
-    margin-bottom: 16px;
+    background-color: var(--primary-75);
+    border-radius: 4px;
 
 }
 
-.container section#first-content p:last-child {
+section#first-content .pet_info .details p {
+
+    margin-bottom: 16px;
+
+    color: var(--white);
+    font-weight: 600;
+
+}
+
+section#first-content .pet_info .details p:last-child {
 
     margin-bottom: 0;
 
+}
+
+.container section#first-content h2 {
+
+    font-size: var(--fs-heading4);
 
 }
 
 .container section#first-content .singularities {
 
     background-color: var(--black-5);
+    box-shadow: 9px 9px 10px 2px var(--black-25);
 
-    padding: 32px 80px;
+    padding: 32px 64px;
 
     border-radius: 8px;
 
@@ -206,15 +227,28 @@ div.container[data-panel-expanded='true'] {
 
 }
 
+@media(max-width: 520px) {
+    .container section#first-content .singularities {
+        padding: 24px 16px;
+    }
+}
+
 .container section#first-content .singularities ul {
 
     display: grid;
     justify-items: flex-start;
     justify-content: center;
     align-items: center;
-    gap: 0 40%;
+    gap: 16px 20%;
     grid-template-columns: 1fr 1fr;
 
+}
+
+@media(max-width: 520px) {
+    .container section#first-content .singularities ul {
+
+        gap: 16px 5%;
+    }
 }
 
 .container section#first-content .singularities ul li {
@@ -222,6 +256,14 @@ div.container[data-panel-expanded='true'] {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    color: var(--black);
+
+}
+
+.container section#first-content .singularities ul li:nth-child(even) {
+
+    justify-self: flex-end;
 
 }
 
@@ -237,38 +279,57 @@ div.container[data-panel-expanded='true'] {
 
 .container section#first-content .singularities ul li svg {
 
-    transform: scale(1.4);
+    transform: scale(2);
 
+
+    fill: var(--secondary);
     margin-right: 8px;
 
 }
 
+
 .container #second-content {
+
+    position: relative;
+
+    z-index: 1;
 
     height: fit-content;
 
     padding: 40px 54px;
 
-    background-color: var(--black-5);
-
+    background-color: var(--white-75);
     border-radius: 8px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-}
-
-@media(max-width: 1366px) {
-
-    .container #second-content {
-
-        background-color: var(--white);
-
-    }
+    box-shadow: 9px 9px 10px 2px var(--black-25);
 
 }
 
+div#second-content::before {
+
+    content: '';
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+
+    border-radius: 8px;
+
+    opacity: 0.2;
+
+    background-image: url(/imgs/pet/bcg_desk.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
 
 @media(max-width: 1020px) {
 
@@ -277,6 +338,28 @@ div.container[data-panel-expanded='true'] {
         padding: 16px 40px;
 
     }
+
+}
+
+@media(max-width: 560px) {
+
+    .container #second-content {
+
+        padding: 16px;
+
+    }
+
+}
+
+h2.heading2_color {
+
+    color: var(--secondary);
+
+}
+
+.heading2_size {
+
+    font-size: var(--fs-heading3);
 
 }
 
@@ -290,26 +373,77 @@ div.container[data-panel-expanded='true'] {
 
 }
 
-.container #second-content .text h2 {
+.container #second-content .text:first-child h2 {
 
-    font-size: 2.666rem;
+    /* font-size: 2.666rem; */
 
     margin-bottom: 32px;
 
-    color: var(--secondary);
+}
+
+.container #second-content .text:first-child p {
+
+    font-size: var(--small-1);
+    font-weight: 500;
 
 }
 
+.container #second-content .reward {
 
-.container #second-content div.text:nth-child(2) p {
+    padding: 16px;
 
-    font-size: 2.333rem;
+    gap: 32px 0;
+
+    border-radius: 4px;
+    background-color: var(--primary-75);
+
+}
+
+.container #second-content div.text.reward h2 {
+
+    /* margin-bottom: 32px; */
+
+    font-size: var(--fs-heading4);
+
+    color: var(--white);
+    font-weight: 600;
+
+}
+
+.container #second-content .reward p {
+
+    font-size: var(--fs-heading4);
+
+    color: var(--white);
+    font-weight: 600;
+
+    line-height: 1;
+
+}
+
+@media(max-width: 1020px) {
+
+    .container #second-content .reward {
+
+        width: 80%;
+
+    }
+
+}
+
+@media(max-width: 520px) {
+
+    .container #second-content .reward {
+
+        width: 100%;
+
+    }
 
 }
 
 .container #second-content div.button {
 
-    width: 80%;
+    width: 100%;
 
 }
 
@@ -319,14 +453,15 @@ div.container[data-panel-expanded='true'] {
 
     width: 100%;
 
-    background: var(--brand-gradient);
+    background: var(--secondary);
 
     padding: 16px 0;
 
     border: none;
-    border-radius: 24px;
+    border-radius: 20px;
 
-    font-size: 1rem;
+    font-size: var(--small-1)!important;
+
     color: var(--white);
 
 }
@@ -335,7 +470,40 @@ div.container[data-panel-expanded='true'] {
 
     transition: all ease 100ms;
     transform: scale(1.05);
-    background: var(--secondary);
+
+}
+
+.container #description {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-top: 24px;
+
+}
+
+.container #description h2 {
+
+    margin-bottom: 8px;
+
+    font-size: var(--fs-heading5);
+
+}
+
+.container #description p {
+
+    box-shadow: 9px 9px 10px 2px var(--black-25);
+
+    width: 100%;
+    min-height: 200px;
+
+    padding: 16px;
+
+    border-radius: 8px;
+    background-color: var(--black-5);
+
+    text-align: justify;
 
 }
 
@@ -398,7 +566,6 @@ div.container[data-panel-expanded='true'] {
 
 .expand_true_found_pet_owner_contact h1 {
 
-    font-size: calc(1.233rem + 3vw);
     margin-bottom: 24px;
     text-align: center;
 
@@ -406,7 +573,6 @@ div.container[data-panel-expanded='true'] {
 
 .expand_true_found_pet_owner_contact>p {
 
-    font-size: calc(1rem + 0.1vw);
     margin-bottom: 32px;
 
 }
@@ -539,7 +705,6 @@ div.container[data-panel-expanded='true'] {
     background-color: var(--secondary);
 
     color: var(--white);
-    font-size: 1rem;
 
 }
 
@@ -560,7 +725,7 @@ div.container[data-panel-expanded='true'] {
 
     text-decoration: underline;
 
-    font-size: 1rem;
+    /* font-size: 1rem; */
 
     background-color: transparent;
     border: none;
@@ -572,31 +737,5 @@ div.container[data-panel-expanded='true'] {
 .expand_true_found_pet_owner_contact form .submitButton button:last-child:hover {
 
     background-color: var(--black-10);
-
-}
-
-.container #description {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    margin-top: 40px;
-
-}
-
-.container #description h2 {
-
-    margin-bottom: 32px;
-
-    font-size: 2.333rem;
-
-    color: var(--secondary);
-
-}
-
-.container #description p {
-
-    text-align: justify;
 
 }

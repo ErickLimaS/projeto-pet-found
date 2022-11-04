@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const petSchema = new mongoose.Schema(
 
     {
-        ownerId: { type: mongoose.ObjectId, required: true },
+        ownerId: { type: mongoose.ObjectId, required: true, immutable: true },
         ownerName: { type: String, required: true },
         name: { type: String, required: true },
         // age: { type: Number, required: true },
