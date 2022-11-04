@@ -6,7 +6,7 @@ import FoundStyles from '../../styles/FoundPage.module.css'
 import * as SVG from '../../public/imgs/svg'
 import Link from 'next/link'
 import Image from 'next/image'
-import ResultItem from './ResultItem'
+import ResultItem from '../../components/found/ResultItem'
 import { getAllPetsByQuery } from '../api/petRoutes'
 
 const Found: NextPage = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import CriarAnuncio from './index'
-import Animal from './animal'
+import Animal from '../../components/criar-anuncio/animal'
 import Step1Styles from '../../styles/FoundPage/steps/Step1Form.module.css'
 import AnimalsAvailableToChoose from '../api/animals'
 import ButtonStyles from '../../styles/FoundPage/Index.module.css'

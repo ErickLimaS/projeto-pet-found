@@ -7,7 +7,7 @@ import ButtonsStyles from '../../../styles/FoundPage/Index.module.css'
 import Step2FormStyles from '../../../styles/FoundPage/steps/Step2Form.module.css'
 import API from '../../api/petsInfoApi'
 import * as SVG from '../../../public/imgs/svg'
-import PetCaracteristicas from '../PetCaracteristicas'
+import PetCaracteristicas from '../../../components/criar-anuncio/PetCaracteristicas'
 import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step2() {

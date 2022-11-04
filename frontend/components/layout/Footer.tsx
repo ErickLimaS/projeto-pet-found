@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import footerStyles from '../styles/Layout/Footer.module.css'
-import * as SVG from '../public/imgs/svg'
+import footerStyles from '../../styles/Layout/Footer.module.css'
+import * as SVG from '../../public/imgs/svg'
 
 function Footer() {
     return (

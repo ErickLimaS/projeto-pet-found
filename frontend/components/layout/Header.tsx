@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import headerStyles from '../styles/Layout/Header.module.css'
-import * as C from '../styles/Layout/headerStyledComponents'
-import * as SVG from '../public/imgs/svg'
+import headerStyles from '../../styles/Layout/Header.module.css'
+import * as C from '../../styles/Layout/headerStyledComponents'
+import * as SVG from '../../public/imgs/svg'
 import { useSelector } from 'react-redux'
-import { RootState } from '../store'
-import { logoutUser } from '../pages/api/userRoutes'
+import { RootState } from '../../store'
+import { logoutUser } from '../../pages/api/userRoutes'
 
 function Header() {
 
