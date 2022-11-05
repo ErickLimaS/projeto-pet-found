@@ -210,14 +210,14 @@
 
     line-height: initial;
 
-    font-size: 0.8rem;
+    font-size: var(--small-2);
 }
 
 @media(max-width: 710px) {
 
     .container .form_container form div.pet_checkbox p {
 
-        font-size: 0.6rem;
+        font-size: var(--small-2);
     }
 
 }
@@ -493,7 +493,7 @@
 }
 
 
-@media(max-width: 680px) {
+@media(max-width: 820px) {
 
     .container section.results_container aside.search_params {
 
@@ -520,7 +520,7 @@
 
 }
 
-@media(max-width: 680px) {
+@media(max-width: 820px) {
 
     .container section.results_container aside.search_params form {
 
@@ -542,7 +542,7 @@
     justify-content: space-between;
     align-items: center;
 
-    font-size: 0.8rem;
+    font-size: var(--small-2);
     font-weight: 700;
     color: var(--secondary);
 
@@ -552,7 +552,7 @@
 }
 
 
-@media(max-width: 680px) {
+@media(max-width: 820px) {
 
 
     .container section.results_container aside.search_params form label {
@@ -630,7 +630,6 @@
 
 section.results_container .results h2 {
 
-    font-size: 1.777rem;
     color: var(--secondary);
 
     line-height: initial;
@@ -649,16 +648,6 @@ section.results_container .results h2 {
 
 }
 
-@media(max-width: 680px) {
-
-    section.results_container .results h2 {
-
-        font-size: 1.333rem;
-
-    }
-
-}
-
 
 section.results_container .results div.list {
 
@@ -669,12 +658,16 @@ section.results_container .results div.list {
 
 }
 
-
 @media(max-width: 820px) {
 
     section.results_container .results div.list {
 
-        align-items: center;
+        /* align-items: center; */
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+
 
     }
 }
@@ -720,7 +713,6 @@ section.results_container .results nav.pagination p {
 
     color: var(--secondary);
     font-family: Poppins;
-    font-size: 1.2rem;
     font-weight: 700;
 
 }

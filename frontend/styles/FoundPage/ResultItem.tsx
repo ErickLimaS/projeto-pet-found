@@ -34,7 +34,21 @@ export const Container = styled.a`
     
     @media(max-width: 820px){
 
+        flex-direction: column;
+        align-items: center;
+
         width: 100%;
+        min-width: initial;
+        
+        >div:first-child{
+            width: 80%!important;
+        }
+        >div:last-child{
+
+            padding: 8px 16px;
+
+            width: 100%!important;
+        }
 
     }
 
@@ -105,39 +119,101 @@ export const Container = styled.a`
 
             margin: 24px 0;
             width: 100%;
-            
-            h3{
 
-                font-size: 1.777rem;
-                font-weight: 600;
+            .name_icon_container{
 
+                margin-bottom: 16px;
+                display: flex;
                 
-                @media(max-width: 480px){
+                @media(max-width: 820px){
                     
-                    font-size: 1.333rem;
+
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
 
                 }
-                
-            }
 
-            p{
+                h3{
 
-                font-size: 0.8rem;
+                    font-size: var(--fs-heading5);
+                    font-weight: 600;
+
+                    line-height: 1.2;
+                    
+                    @media(max-width: 820px){
+
+
+                        text-align: center;
+
+                    }
+
+                    @media(max-width: 480px){
+                        
+                        font-size: var(--fs-paragraph);
+
+                    }
+
+                }
 
             }
             
+            p{
 
+                font-size: var(--small-2);
+
+            }
+            
         }
 
     }
 
 
 `
+// mobile icon
+export const ItemRewardIconMobile = styled.div`
 
+    @media(min-width: 820px){
+
+        display: none;
+
+    }
+
+    position: relative;
+    top: -0;
+    right: -0;
+
+    border-radius: 50%;
+
+    margin-left: 10px;
+
+    height: 40px;
+    width: 40px;
+
+    background-color: var(--secondary);
+
+    svg{
+
+        display: block;
+        
+        transform: scale(0.8);
+        fill: var(--white);
+
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+    }
+
+`
+
+// desktop icon
 export const ItemRewardIcon = styled.div`
 
     position: absolute;
-    top: -40px;
+    top: -70px;
     right: -70px;
 
     height: 105px;
@@ -146,34 +222,23 @@ export const ItemRewardIcon = styled.div`
     transform: rotate(45deg);
 
     background-color: var(--secondary);
+
     
-    @media(max-width: 425px){
+    @media(max-width: 820px){
 
-        top: -35px;
-        right: -40px;
-
-        height: 72px;
-        width: 92px;
+        display: none;
 
     }
+    
 
     svg{
-        transform: scale(0.8)  rotate(-45deg);
+        transform: scale(0.7)  rotate(-45deg);
 
         fill: var(--white);
 
         position: relative;
-        top: 50%;
-        left: 42%;
-
-        @media(max-width: 425px){
-
-            transform: scale(0.6)  rotate(-45deg);
-
-            top: 48%;
-            left: 34%;
-
-        }
+        top: 60%;
+        left: 54%;
 
     }
 

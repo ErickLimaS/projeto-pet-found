@@ -8,15 +8,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ResultItem from '../../components/found/ResultItem'
 import { getAllPetsByQuery } from '../api/petRoutes'
+import { useRouter } from 'next/router'
 
 const Found: NextPage = () => {
 
   const [states, setStates] = useState<any>([])
   const [county, setCounty] = useState<any>([])
 
+
   const [adressQueried, setAdressQueried] = useState<string>('')
 
   const [petsRegisteredData, setPetsRegisteredData] = useState<any>(null)
+
+  const router = useRouter()
 
   // gets all states 
   const getBrazilianStates = async () => {
@@ -48,10 +52,29 @@ const Found: NextPage = () => {
 
     e.preventDefault()
 
-    const pets = document.querySelectorAll('input[type=checkbox]:checked') as NodeList
-    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(1, 3)
+    const pets = document.querySelectorAll('form.sort_pets_address input[type=checkbox]:checked') as NodeList
+    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(5)
     const county = (document.getElementById('county') as HTMLSelectElement).value ?
       (document.getElementById('county') as HTMLSelectElement).value : ''
+
+    // gets which time_sort value will be sent to server
+    const sortTime = () => {
+
+      if ((document.getElementById('last_24_hours') as HTMLInputElement).checked) {
+        return 24
+      }
+      else if ((document.getElementById('last_12_hours') as HTMLInputElement).checked) {
+        return 12
+      }
+      else if ((document.getElementById('last_6_hours') as HTMLInputElement).checked) {
+        return 6
+      }
+      else {
+        return null
+      }
+
+    }
+    const time_sort = sortTime()
 
     let chosePetsValues: any[] = []
 
@@ -60,13 +83,28 @@ const Found: NextPage = () => {
     })
 
     // fetch data related to the form filled
-    const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county })
+    const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county, time_sort })
 
     setPetsRegisteredData(petsData)
 
     setAdressQueried(`${county} - ${state}`)
 
   }
+
+  // const submitAsideFormQueries = async (e: FormEvent) => {
+
+  //   e.preventDefault()
+
+  //   // time_sort=24
+
+  //   console.log(router.pathname)    
+
+  //   const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county })
+
+
+  //   // router.push
+
+  // }
 
   useEffect(() => {
 
@@ -91,7 +129,7 @@ const Found: NextPage = () => {
 
           <div className={FoundStyles.form_container}>
 
-            <form onSubmit={(e: FormEvent) => submitForm(e)}>
+            <form onSubmit={(e: FormEvent) => submitForm(e)} className='sort_pets_address'>
 
               <div className={FoundStyles.pet_checkbox}>
                 <div>
@@ -204,24 +242,24 @@ const Found: NextPage = () => {
 
           <aside className={FoundStyles.search_params}>
 
-            <form onChange={(e: any) => console.log(e.target.name, e.target.value)}>
+            <form onSubmit={(e) => submitForm(e)} className='sort_time'>
 
               <label>
                 Nas Últimas 6 horas
-                <input type="checkbox" name='last_6_hours' value="true"></input>
+                <input type="checkbox" id='last_6_hours' name='last_6_hours' value='true'></input>
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
               <label>
                 Nas Últimas 12 horas
-                <input type="checkbox" name='last_12_hours' value="true"></input>
+                <input type="checkbox" id='last_12_hours' name='last_12_hours' value="true"></input>
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
 
               <label>
                 Nas Últimas 24 horas
-                <input type="checkbox" name='last_24_hours' value="true"></input>
+                <input type="checkbox" id='last_24_hours' name='last_24_hours' value="true"></input>
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
@@ -237,6 +275,8 @@ const Found: NextPage = () => {
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
+              <button type='submit'>Filtrar Resultados</button>
+
             </form>
 
           </aside>
@@ -245,7 +285,7 @@ const Found: NextPage = () => {
 
             <h2>Resultados {adressQueried ? `em ${adressQueried}` : 'no Brasil'}</h2>
 
-            {petsRegisteredData != null ? (
+            {petsRegisteredData != null && petsRegisteredData.length > 0 ? (
               <>
                 <div className={FoundStyles.list}>
 

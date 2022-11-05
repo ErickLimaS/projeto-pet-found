@@ -5,11 +5,11 @@ POST http://localhost:5000/pets/register
 Content-Type: application/json
 
 {
-        "type": "TEST11",
-        "typeTranslated": "res",
-        "name": "Erick",
-        "age": 11,
-        "breed": "TEST",
+        "type": "Rabbit",
+        "typeTranslated": "Coelho",
+        "name": "Erick coelho",
+        "age": 23,
+        "breed": "danado",
         "lastSeen": {
             "state": "TEST",
             "county": "TEST",

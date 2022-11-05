@@ -117,7 +117,7 @@ function Step3() {
         if (responseFromServer.status === 201) {
 
           dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
-          router.push(`/criar-anuncio/post-done`)
+          router.push(`/pet/complete`)
 
         }
 

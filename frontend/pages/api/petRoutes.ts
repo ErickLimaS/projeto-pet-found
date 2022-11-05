@@ -3,7 +3,7 @@ import { store } from "../../store"
 
 const DB_URL = 'https://pet-found.up.railway.app/pets'
 
-// const DB_URL = 'http://localhost:9123/pets' // test
+// const DB_URL = 'http://localhost:5000/pets' // test
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
@@ -53,7 +53,8 @@ interface queryTypes {
 
     type: any[] | null,
     state: string,
-    county: string
+    county: string,
+    time_sort?: any | null
 
 }
 
@@ -234,7 +235,13 @@ export const getAllPetsByQuery = async (query?: queryTypes) => {
     if (query) {
 
         // all inputs filled
-        if (query.type != null && query.state != "" && query.county != "") {
+        if (query.type != null && query.state != "" && query.county != "" && query.time_sort != null) {
+
+            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state=${query.state}&county=${query.county}&time_sort=${query.time_sort}`.replace(',', '')
+
+        }
+        // type, state, county filled
+        else if (query.type != null && query.state != "" && query.county != "" && query.time_sort == null) {
 
             queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state=${query.state}&county=${query.county}`.replace(',', '')
 

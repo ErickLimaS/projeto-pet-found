@@ -21,6 +21,7 @@ const petSchema = new mongoose.Schema(
         // ],
         lastSeen: {
             state: { type: String, required: true },
+            state_abbrev: { type: String, required: true },
             county: { type: String, required: true },
             street: { type: String }
         },

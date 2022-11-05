@@ -17,12 +17,49 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
     const petType = req.query.type || null
     const state = req.query.state ? decodeURI(req.query.state) : null
     const county = req.query.county ? decodeURI(req.query.county) : null
+    const timeSort = req.query.time_sort || null;
 
-    if (petType != null || state != null || county != null) {
+    if (petType != null || state != null || county != null || timeSort != null) {
 
         try {
-            // with type, state and county
-            if (petType != null && state != null && county != null) {
+
+            // with sort_time, type, state, county
+            if (petType != null && state != null && county != null && timeSort != null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                Pet.find({
+
+                    'type': petType,
+                    'lastSeen.state': state,
+                    'lastSeen.county': county,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+            }
+
+            // with type, state, county
+            else if (petType != null && state != null && county != null) {
 
                 Pet.find({
 
@@ -51,7 +88,42 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
                 })
             }
 
-            // no type, just state and county
+            // just time_sort, state and county
+            else if (timeSort != null && petType == null && state != null && county != null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                Pet.find({
+
+                    'lastSeen.state': state,
+                    'lastSeen.county': county,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+
+            }
+
+            // just state and county
             else if (petType == null && state != null && county != null) {
 
                 Pet.find({
@@ -81,8 +153,42 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
             }
 
-            // just type
-            else if (petType != null && state == null && county == null) {
+            // only type and sort_time
+            else if (petType != null && timeSort != null && state == null && county == null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                Pet.find({
+
+                    'type': petType,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+
+            }
+
+            // only type
+            else if (petType != null && state == null && county == null && timeSort == null) {
 
                 Pet.find({
 
@@ -109,8 +215,24 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
                 })
 
             }
+
+            // only sort_time
+            else if (timeSort != null && petType == null && state == null && county == null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                const data = await Pet.find(
+                    { 'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData } }
+                )
+
+                return res.status(200).json(data)
+
+            }
+
             else {
-                return res.status(404).send('Query Method Error. Error on front.')
+                return res.status(404).send('Query Method Error. Error on frontend.')
             }
 
         }
@@ -283,7 +405,7 @@ petRouters.get("/my-pets", isAuth, expressAsyncHandler(async (req, res) => {
     }
     catch (err) {
 
-        return res.status(500).json({ message: `Internal Error: ${err}` })
+        return res.status(500).json({ message: `Internal Error: ${err} ` })
 
     }
 }))
@@ -310,7 +432,7 @@ petRouters.put("/update-pet-status", isAuth, expressAsyncHandler(async (req, res
     }
     catch (err) {
 
-        return res.status(500).json({ message: `Internal Error: ${err}` })
+        return res.status(500).json({ message: `Internal Error: ${err} ` })
 
     }
 
