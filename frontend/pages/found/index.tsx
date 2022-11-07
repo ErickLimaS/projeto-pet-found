@@ -53,7 +53,7 @@ const Found: NextPage = () => {
     e.preventDefault()
 
     const pets = document.querySelectorAll('form.sort_pets_address input[type=checkbox]:checked') as NodeList
-    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(5)
+    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(1,3)
     const county = (document.getElementById('county') as HTMLSelectElement).value ?
       (document.getElementById('county') as HTMLSelectElement).value : ''
 
@@ -76,35 +76,55 @@ const Found: NextPage = () => {
     }
     const time_sort = sortTime()
 
-    let chosePetsValues: any[] = []
+    // has disability
+    const hasDisabilitySelector = () => {
 
+      if (
+        (document.getElementById('has_disability') as HTMLInputElement).checked
+        && (document.getElementById('has_no_disability') as HTMLInputElement).checked) {
+
+        // return '&hasDisability=true&hasDisability=false'
+        return [true, false]
+
+      }
+      else if ((document.getElementById('has_disability') as HTMLInputElement).checked) {
+
+        // return '&hasDisability=true'
+        return [true]
+
+      }
+      else if ((document.getElementById('has_no_disability') as HTMLInputElement).checked) {
+
+        // return 'hasDisability=false'
+        
+        return [false]
+
+      }
+      else {
+
+        return null
+
+      }
+
+    }
+    const hasDisability = hasDisabilitySelector()
+
+    // creates a array of animal types
+    let chosePetsValues: any[] = []
     pets.forEach((item: any) => {
       chosePetsValues = [...chosePetsValues, item.value]
     })
 
     // fetch data related to the form filled
-    const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county, time_sort })
+    const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county, time_sort, hasDisability })
 
+    // sets all data received from server
     setPetsRegisteredData(petsData)
 
+    // sets state and county required for the form to show on top of results heading 
     setAdressQueried(`${county} - ${state}`)
 
   }
-
-  // const submitAsideFormQueries = async (e: FormEvent) => {
-
-  //   e.preventDefault()
-
-  //   // time_sort=24
-
-  //   console.log(router.pathname)    
-
-  //   const petsData = await getAllPetsByQuery({ type: chosePetsValues, state, county })
-
-
-  //   // router.push
-
-  // }
 
   useEffect(() => {
 
@@ -263,15 +283,17 @@ const Found: NextPage = () => {
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
+              <span id={FoundStyles.line}></span>
+
               <label>
                 Não Possui Deficiência
-                <input type="checkbox" name='has_no_disability' value="true"></input>
+                <input type="checkbox" id='has_no_disability' name='has_no_disability' value="true"></input>
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
               <label>
                 Possui Deficiência
-                <input type="checkbox" name='has_disability' value="true"></input>
+                <input type="checkbox" id='has_disability' name='has_disability' value="true"></input>
                 <span className={FoundStyles.checkmark}></span>
               </label>
 
@@ -318,7 +340,13 @@ const Found: NextPage = () => {
               </>
             ) : (
 
-              <h3>loading</h3>
+              <div className={FoundStyles.no_results_container}>
+                
+                <h3>Nenhum resultado encontrado</h3>
+
+                <p>Nenhum item postado aqui está dentro dos parâmetros usados.</p>
+
+              </div>
 
             )}
 

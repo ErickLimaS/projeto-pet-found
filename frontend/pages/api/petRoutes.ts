@@ -1,9 +1,9 @@
 import Axios from "axios"
 import { store } from "../../store"
 
-const DB_URL = 'https://pet-found.up.railway.app/pets'
+// const DB_URL = 'https://pet-found.up.railway.app/pets'
 
-// const DB_URL = 'http://localhost:5000/pets' // test
+const DB_URL = 'http://localhost:9123/pets' // test
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
@@ -16,6 +16,7 @@ interface petDataTypes {
     breed: string,
     lastSeen: {
         state: string,
+        state_abbrev: string,
         county: string,
         street: string
     },
@@ -31,6 +32,7 @@ interface newUserDataTypes {
     name: string,
     address: {
         state: string,
+        state_abbrev: string,
         county: string,
         street: string | null // null is for the optional inputs
     },
@@ -54,7 +56,8 @@ interface queryTypes {
     type: any[] | null,
     state: string,
     county: string,
-    time_sort?: any | null
+    time_sort?: any | null,
+    hasDisability?: any | null
 
 }
 
@@ -228,29 +231,41 @@ export const getAllPetsByQuery = async (query?: queryTypes) => {
 
     let queryOnUrl: string = '';
 
-    const animalTypes = query?.type || null
-    console.log(query)
-
     // if has query, sets how will the query be on the url
     if (query) {
 
         // all inputs filled
-        if (query.type != null && query.state != "" && query.county != "" && query.time_sort != null) {
+        if (query.type != null && query.state != "" && query.county != "" && query.time_sort != null && query.hasDisability != null) {
 
-            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state=${query.state}&county=${query.county}&time_sort=${query.time_sort}`.replace(',', '')
+            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state_abbrev=${query.state}&county=${query.county}&time_sort=${query.time_sort}${query.hasDisability.map((value: boolean) => { return `&hasDisability=${value}` })}`.replace(',', '')
 
         }
+
+        // type, state, county, time_sort filled
+        else if (query.type != null && query.state != "" && query.county != "" && query.time_sort != null && query.hasDisability == null) {
+
+            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state_abbrev=${query.state}&county=${query.county}&time_sort=${query.time_sort}`.replace(',', '')
+
+        }
+
+        // type, state, county, hasDisability filled
+        else if (query.type != null && query.state != "" && query.county != "" && query.time_sort == null && query.hasDisability != null) {
+
+            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state_abbrev=${query.state}&county=${query.county}${query.hasDisability.map((value: boolean) => { return `&hasDisability=${value}` })}`.replace(',', '')
+
+        }
+
         // type, state, county filled
-        else if (query.type != null && query.state != "" && query.county != "" && query.time_sort == null) {
+        else if (query.type != null && query.state != "" && query.county != "" && query.time_sort == null && query.hasDisability == null) {
 
-            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state=${query.state}&county=${query.county}`.replace(',', '')
+            queryOnUrl = `?${query.type.map((type) => { return `type=${type}&` })}state_abbrev=${query.state}&county=${query.county}`.replace(',', '')
 
         }
 
-        // only state and county
+        // only state and county filled
         else {
 
-            queryOnUrl = `?state=${query.state}&county=${query.county}`
+            queryOnUrl = `?state_abbrev=${query.state}&county=${query.county}`
 
         }
 

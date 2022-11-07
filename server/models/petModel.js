@@ -16,6 +16,7 @@ const petSchema = new mongoose.Schema(
         createdAt: { type: Date, default: () => Date.now(), immutable: true },
         updatedAt: { type: Date, default: () => Date.now() },
         wasFound: { type: Boolean, default: false },
+        hasDisability: {type: Boolean, required: true},
         // photoUrl: [
         //     { type: String, required: true } //fix it
         // ],

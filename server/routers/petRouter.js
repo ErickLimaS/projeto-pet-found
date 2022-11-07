@@ -15,16 +15,17 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
     // stores querys
     const petType = req.query.type || null
-    const state = req.query.state ? decodeURI(req.query.state) : null
+    const state = req.query.state_abbrev ? decodeURI(req.query.state_abbrev) : null
     const county = req.query.county ? decodeURI(req.query.county) : null
     const timeSort = req.query.time_sort || null;
+    const hasDisability = req.query.hasDisability || null;
 
     if (petType != null || state != null || county != null || timeSort != null) {
 
         try {
 
-            // with sort_time, type, state, county
-            if (petType != null && state != null && county != null && timeSort != null) {
+            // with sort_time, type, state, county and hasDisability
+            if (petType != null && state != null && county != null && timeSort != null && hasDisability != null) {
 
                 let reqSortData = new Date()
                 reqSortData.setHours(reqSortData.getHours() - timeSort)
@@ -33,9 +34,76 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
                 Pet.find({
 
                     'type': petType,
-                    'lastSeen.state': state,
+                    'lastSeen.state_abbrev': state,
+                    'lastSeen.county': county,
+                    'hasDisability': hasDisability,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+            }
+
+            // with sort_time, type, state, county
+            else if (petType != null && state != null && county != null && timeSort != null && hasDisability == null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                Pet.find({
+
+                    'type': petType,
+                    'lastSeen.state_abbrev': state,
                     'lastSeen.county': county,
                     'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+            }
+
+            // with type, state, county and hasDisability
+            else if (petType != null && state != null && county != null && hasDisability != null) {
+
+                Pet.find({
+
+                    'type': petType,
+                    'lastSeen.state_abbrev': state,
+                    'hasDisability': hasDisability,
+                    'lastSeen.county': county
 
                 }, function (err, docs) {
                     if (err) {
@@ -59,12 +127,12 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
             }
 
             // with type, state, county
-            else if (petType != null && state != null && county != null) {
+            else if (petType != null && state != null && county != null && hasDisability == null) {
 
                 Pet.find({
 
                     'type': petType,
-                    'lastSeen.state': state,
+                    'lastSeen.state_abbrev': state,
                     'lastSeen.county': county
 
                 }, function (err, docs) {
@@ -88,8 +156,8 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
                 })
             }
 
-            // just time_sort, state and county
-            else if (timeSort != null && petType == null && state != null && county != null) {
+            // just time_sort, state, county and hasDisability
+            else if (timeSort != null && petType == null && state != null && county != null && hasDisability != null) {
 
                 let reqSortData = new Date()
                 reqSortData.setHours(reqSortData.getHours() - timeSort)
@@ -97,7 +165,43 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
                 Pet.find({
 
-                    'lastSeen.state': state,
+                    'lastSeen.state_abbrev': state,
+                    'lastSeen.county': county,
+                    'hasDisability': hasDisability,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+
+            }
+
+            // just time_sort, state and county
+            else if (timeSort != null && petType == null && state != null && county != null && hasDisability == null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                Pet.find({
+
+                    'lastSeen.state_abbrev': state,
                     'lastSeen.county': county,
                     'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
 
@@ -123,13 +227,79 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
             }
 
-            // just state and county
-            else if (petType == null && state != null && county != null) {
+            // just state, county and hasDisability
+            else if (petType == null && state != null && county != null && hasDisability != null) {
 
                 Pet.find({
 
-                    'lastSeen.state': state,
+                    'lastSeen.state_abbrev': state,
+                    'hasDisability': hasDisability,
                     'lastSeen.county': county
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+
+            }
+
+            // just state, county 
+            else if (petType == null && state != null && county != null && hasDisability == null) {
+
+                Pet.find({
+
+                    'lastSeen.state_abbrev': state,
+                    'lastSeen.county': county
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+
+            }
+
+            // only type, hasDisability and sort_time
+            else if (petType != null && timeSort != null && state == null && county == null && hasDisability != null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                Pet.find({
+
+                    'type': petType,
+                    'hasDisability': hasDisability,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
 
                 }, function (err, docs) {
                     if (err) {
@@ -154,7 +324,7 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
             }
 
             // only type and sort_time
-            else if (petType != null && timeSort != null && state == null && county == null) {
+            else if (petType != null && timeSort != null && state == null && county == null && hasDisability == null) {
 
                 let reqSortData = new Date()
                 reqSortData.setHours(reqSortData.getHours() - timeSort)
@@ -187,8 +357,37 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
             }
 
+            // only hasDisability and type
+            else if (petType != null && state == null && county == null && timeSort == null && hasDisability != null) {
+
+                Pet.find({
+                    'hasDisability': hasDisability,
+                    'type': petType
+
+                }, function (err, docs) {
+                    if (err) {
+                        return res.status(400).send(err)
+                    }
+                    else {
+
+                        if (docs.length > 0) {
+
+                            return res.status(200).json(docs)
+
+                        }
+                        else {
+
+                            return res.status(404).json({ message: 'No results found' })
+
+                        }
+
+                    }
+                })
+
+            }
+
             // only type
-            else if (petType != null && state == null && county == null && timeSort == null) {
+            else if (petType != null && state == null && county == null && timeSort == null && hasDisability == null) {
 
                 Pet.find({
 
@@ -216,8 +415,24 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
 
             }
 
+            // only hasDisability and sort_time
+            else if (timeSort != null && petType == null && state == null && county == null && hasDisability != null) {
+
+                let reqSortData = new Date()
+                reqSortData.setHours(reqSortData.getHours() - timeSort)
+                reqSortData.toISOString
+
+                const data = await Pet.find({
+                    'hasDisability': hasDisability,
+                    'createdAt': { $lte: new Date().toISOString(), $gte: reqSortData }
+                })
+
+                return res.status(200).json(data)
+
+            }
+
             // only sort_time
-            else if (timeSort != null && petType == null && state == null && county == null) {
+            else if (timeSort != null && petType == null && state == null && county == null && hasDisability == null) {
 
                 let reqSortData = new Date()
                 reqSortData.setHours(reqSortData.getHours() - timeSort)

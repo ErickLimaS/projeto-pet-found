@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+interface Props {
+
+    hasReward: boolean
+
+}
+
 export const Container = styled.a`
 
     display: flex;
@@ -171,7 +177,7 @@ export const Container = styled.a`
 
 `
 // mobile icon
-export const ItemRewardIconMobile = styled.div`
+export const ItemRewardIconMobile = styled.div<Props>`
 
     @media(min-width: 820px){
 
@@ -190,7 +196,7 @@ export const ItemRewardIconMobile = styled.div`
     height: 40px;
     width: 40px;
 
-    background-color: var(--secondary);
+    background-color: ${props => props.hasReward ? 'var(--secondary)' : 'var(--black-75)'};
 
     svg{
 
@@ -210,7 +216,7 @@ export const ItemRewardIconMobile = styled.div`
 `
 
 // desktop icon
-export const ItemRewardIcon = styled.div`
+export const ItemRewardIcon = styled.div<Props>`
 
     position: absolute;
     top: -70px;
@@ -221,7 +227,7 @@ export const ItemRewardIcon = styled.div`
 
     transform: rotate(45deg);
 
-    background-color: var(--secondary);
+    background-color: ${props => props.hasReward ? 'var(--secondary)' : 'var(--black-75)'};
 
     
     @media(max-width: 820px){

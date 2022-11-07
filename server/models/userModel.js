@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
         updatedAt: { type: Date, default: () => Date.now() },
         address: {
             state: { type: String, required: true },
+            state_abbrev: { type: String, required: true },
             county: { type: String, required: true },
             street: { type: String }
         },

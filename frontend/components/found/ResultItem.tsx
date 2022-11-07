@@ -31,7 +31,7 @@ function ResultItem({ data }: any) {
                             {data.name.slice(1, data.name.length)}
                         </h3>
 
-                        <C.ItemRewardIconMobile>
+                        <C.ItemRewardIconMobile hasReward={data.hasReward}>
 
                             {data.hasReward ?
                                 <SVG.Coin aria-label='Há recompensa por esse pet encontrado.' />
@@ -48,7 +48,7 @@ function ResultItem({ data }: any) {
 
                 </div>
 
-                <C.ItemRewardIcon>
+                <C.ItemRewardIcon hasReward={data.hasReward}>
 
                     {data.hasReward ?
                         <SVG.Coin aria-label='Há recompensa por esse pet encontrado.' />

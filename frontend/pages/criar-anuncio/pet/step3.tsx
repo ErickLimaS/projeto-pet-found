@@ -98,7 +98,8 @@ function Step3() {
           particulars: petCaracteristicas.particulars || null,
           lastSeen: {
             whereOwnerLives: lostOnSameLocation,
-            state: petLostLocationState.current?.value,
+            state: petLostLocationState.current?.value.slice(5),
+            state_abbrev: petLostLocationState.current?.value.slice(1, 3),
             county: petLostLocationCounty.current?.value,
             street: petLostLocationStreet.current?.value || null
           },
@@ -140,7 +141,8 @@ function Step3() {
           particulars: petCaracteristicas.particulars || null,
           lastSeen: {
             whereOwnerLives: lostOnSameLocation,
-            state: petLostLocationState.current?.value,
+            state: petLostLocationState.current?.value.slice(5),
+            state_abbrev: petLostLocationState.current?.value.slice(1, 3),
             county: petLostLocationCounty.current?.value,
             street: petLostLocationStreet.current?.value || null
           },
@@ -164,7 +166,8 @@ function Step3() {
           password: ownerPassword.current!.value,
           name: ownerName.current!.value,
           address: {
-            state: ownerState.current!.value,
+            state: ownerState.current!.value.slice(1,3),
+            state_abbrev: ownerState.current!.value.slice(5),
             county: ownerCounty.current!.value,
             street: null // null is for the optional inputs
           },
@@ -254,7 +257,7 @@ function Step3() {
 
                       {states.map((item: any) => (
 
-                        <option value={item.sigla} key={item.id}>{item.nome}</option>
+                        <option value={`(${item.sigla}) ${item.nome}`} key={item.id}>{item.nome}</option>
 
                       ))}
 
@@ -474,7 +477,7 @@ function Step3() {
 
                     {states.map((item: any) => (
 
-                      <option value={item.sigla} key={item.id}>{item.nome}</option>
+                      <option value={`(${item.sigla}) ${item.nome}`} key={item.id}>{item.nome}</option>
 
                     ))}
 
@@ -536,7 +539,7 @@ function Step3() {
 
                       {states.map((item: any) => (
 
-                        <option value={item.sigla} key={item.id}>{item.nome}</option>
+                        <option value={`(${item.sigla}) ${item.nome}`} key={item.id}>{item.nome}</option>
 
                       ))}
 

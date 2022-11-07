@@ -121,7 +121,6 @@ div.logo svg {
 
 .header>nav .links ul.list li a {
 
-    font-size: 0.9rem;
     font-weight: bold;
 
 }
@@ -188,8 +187,6 @@ div.logo svg {
 
     border-radius: 24px;
     border: 1px solid var(--white-50);
-
-    font-size: 0.8rem;
 
 }
 
@@ -306,8 +303,7 @@ div.logo svg {
 
     display: flex;
     text-align: center;
-
-    font-size: 0.95rem;
+    
     font-weight: 500;
 
     justify-content: space-between;
@@ -401,8 +397,6 @@ div.logo svg {
     border-radius: 24px;
     border: 1px solid var(--white-50);
 
-    font-size: 0.8rem;
-
 }
 
 .header .login_desktop a:hover span {
@@ -472,7 +466,6 @@ div.drawer_sidebar_mobile {
 
         background-color: var(--secondary);
 
-        font-size: 0.9rem;
         font-weight: 600;
 
     }
@@ -549,7 +542,6 @@ div.drawer_sidebar_mobile {
         display: flex;
         text-align: center;
 
-        font-size: 0.95rem;
         font-weight: 500;
 
         justify-content: space-between;
