@@ -1,9 +1,9 @@
 import Axios from "axios"
 import { store } from "../../store"
 
-// const DB_URL = 'https://pet-found.up.railway.app/pets'
+const DB_URL = 'https://pet-found.up.railway.app/pets'
 
-const DB_URL = 'http://localhost:9123/pets' // test
+// const DB_URL = 'http://localhost:9123/pets' // test
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''

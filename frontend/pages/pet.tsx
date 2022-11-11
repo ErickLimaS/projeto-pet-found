@@ -14,12 +14,13 @@ const Pet: NextPage = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const [petInfo, setPetInfo] = useState<any>(null)
     const [expanded, setExpanded] = useState<boolean>(false)
+    const [hasCollarInput, setHasCollarInput] = useState<boolean>(true)
 
     const petImg = React.useRef<HTMLInputElement>(null)
 
     const router = useRouter()
 
-    // gets all pet's data 
+    // gets current pet's data 
     const getPetData = async () => {
 
         if (router.query.id) {
@@ -32,13 +33,7 @@ const Pet: NextPage = () => {
 
     }
 
-    const openPetFoundPanel = () => {
-
-        setExpanded(true)
-
-    }
-
-    const confirmPetFound = (e: any) => {
+    const submitPetFoundForm = (e: any) => {
 
         // Send to user 'A' account whose pet is lost a notification about user 'B' found their pet. Then user 'A' will be able to contact with user 'B'.
 
@@ -58,6 +53,7 @@ const Pet: NextPage = () => {
         getPetData()
 
         setLoading(false)
+
     }, [router])
 
     return (
@@ -205,6 +201,7 @@ const Pet: NextPage = () => {
 
                         <form
                             encType="multipart/form-data"
+                            onSubmit={(e) => submitPetFoundForm(e)}
                         >
 
                             <div>
@@ -222,14 +219,14 @@ const Pet: NextPage = () => {
                                 <div className={PetPageStyles.radio_inputs}>
                                     <label>
                                         Sim
-                                        <input type='radio' value='true' name='hasCollar' />
+                                        <input type='radio' onClick={() => setHasCollarInput(true)} value='true' name='hasCollar' id='hasCollar_true' />
 
                                     </label>
 
                                     <label>
 
                                         Não
-                                        <input type='radio' value='false' name='hasCollar' />
+                                        <input type='radio' onClick={() => setHasCollarInput(false)} value='false' name='hasCollar' id='hasCollar_false' />
 
                                     </label>
                                 </div>
@@ -238,7 +235,7 @@ const Pet: NextPage = () => {
                                 <label>
 
                                     O que está escrito nela?
-                                    <input type='text' name='nameOnCollar' />
+                                    <input type='text' name='nameOnCollar' disabled={hasCollarInput ? false : true} />
 
                                 </label>
                             </div>
@@ -246,7 +243,7 @@ const Pet: NextPage = () => {
                                 <label>
 
                                     Onde Encontrou o Pet?
-                                    <input type='text' placeholder='Endereço Completo' name='addressWhenFound' />
+                                    <input type='text' placeholder='Ex: Rua das Laranjeiras, Bairro do Limão, SP' name='addressWhenFound' />
 
                                 </label>
                             </div>

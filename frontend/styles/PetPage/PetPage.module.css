@@ -460,7 +460,7 @@ h2.heading2_color {
     border: none;
     border-radius: 20px;
 
-    font-size: var(--small-1)!important;
+    font-size: var(--small-1) !important;
 
     color: var(--white);
 
@@ -525,10 +525,12 @@ h2.heading2_color {
     left: 25%;
     right: 25%;
 
+    padding: 16px 32px;
+
     display: flex;
     justify-content: space-between;
 
-    background: var(--brand-gradient);
+    background: linear-gradient(to bottom right, rgb(255 151 0 / 80%), rgb(255 122 61 / 78%));
     background-color: rgb(255, 255, 255);
 
     border-radius: 16px;
@@ -537,8 +539,6 @@ h2.heading2_color {
 
     display: flex;
     flex-direction: column;
-
-    padding: 16px;
 
 }
 
@@ -553,7 +553,7 @@ h2.heading2_color {
 
 }
 
-@media(max-width: 425px) {
+@media(max-width: 768px) {
 
     .expand_true_found_pet_owner_contact {
 
@@ -564,16 +564,46 @@ h2.heading2_color {
 
 }
 
+@media(max-width: 425px) {
+
+    .expand_true_found_pet_owner_contact {
+
+        padding: 16px 8px;
+
+        left: 2%;
+        right: 2%;
+
+    }
+
+}
+
+.expand_true_found_pet_owner_contact input[type='radio']{
+
+    cursor: pointer;
+
+}
+
+.expand_true_found_pet_owner_contact h1,
+.expand_true_found_pet_owner_contact p,
+.expand_true_found_pet_owner_contact label,
+.expand_true_found_pet_owner_contact button {
+
+    color: var(--white);
+
+}
+
 .expand_true_found_pet_owner_contact h1 {
 
     margin-bottom: 24px;
     text-align: center;
+    font-size: var(--fs-heading3);
 
 }
 
 .expand_true_found_pet_owner_contact>p {
 
     margin-bottom: 32px;
+    font-size: var(--small-1);
 
 }
 
@@ -586,6 +616,18 @@ h2.heading2_color {
     align-items: flex-start;
     justify-items: center;
     gap: 16px;
+
+}
+
+div.a[data-pet-has-collar='true']{
+
+    display: block;
+
+}
+
+div.a[data-pet-has-collar='false']{
+
+    display: none;
 
 }
 
