@@ -462,14 +462,14 @@ petRouters.get('/all', expressAsyncHandler(async (req, res) => {
             Pet.find((err, docs) => {
 
                 if (err) {
-                    return res.status(500).json({ message: 'Erro Interno' })
+                    return res.status(500).json({ message: `${err}` })
                 }
                 return res.status(200).json(docs)
 
             })
         }
         catch (error) {
-            return res.status(404).json({ message: error })
+            return res.status(404).json({ message: `${error}` })
         }
 
     }
@@ -496,7 +496,7 @@ petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
     }
     catch (error) {
 
-        return res.status(500).json({ message: error })
+        return res.status(500).json({ message: `${error}` })
 
     }
 
@@ -595,7 +595,56 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
     }
     catch (error) {
-        return res.status(500).json({ message: error })
+        return res.status(500).json({ message: `${error}` })
+    }
+
+}))
+
+// set pet as found
+petRouters.put('/set-as-found', isAuth, expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.userInfo._id);
+
+    // checks if user is the owner of the pet
+    if (user) {
+
+        const petIsFromUser = user.petsRegistered.find((pet) => pet == req.body.pet._id)
+
+        if (!petIsFromUser) {
+
+            return res.status(401).json({ message: 'User Is Not the Owner or Pet Dont Exist' });
+
+        }
+
+    }
+    else {
+
+        return res.status(404).json({ message: 'User Not Found' });
+
+    }
+
+    try {
+
+        Pet.findOneAndUpdate({ _id: req.body.pet._id }, { wasFound: true },
+            function (err, result) {
+
+                if (err) {
+                    return res.status(404).json({ message: `${err}` });
+                }
+                else {
+
+                    return res.status(200).json({ message: 'Success' });
+
+                }
+
+            }
+        )
+
+    }
+    catch (error) {
+
+        return res.status(500).json({ message: `${error}` })
+
     }
 
 }))
@@ -620,7 +669,7 @@ petRouters.get("/my-pets", isAuth, expressAsyncHandler(async (req, res) => {
     }
     catch (err) {
 
-        return res.status(500).json({ message: `Internal Error: ${err} ` })
+        return res.status(500).json({ message: `${err}` })
 
     }
 }))
@@ -647,7 +696,7 @@ petRouters.put("/update-pet-status", isAuth, expressAsyncHandler(async (req, res
     }
     catch (err) {
 
-        return res.status(500).json({ message: `Internal Error: ${err} ` })
+        return res.status(500).json({ message: `${err}` })
 
     }
 
@@ -665,7 +714,7 @@ petRouters.delete("/remove-pet", isAuth, expressAsyncHandler(async (req, res) =>
     }
     catch (err) {
 
-        return res.status(404).json({ message: "Pet não encontrado." })
+        return res.status(404).json({ message: `${error}` })
 
     }
 

@@ -8,7 +8,7 @@ export const generateToken = (userInfo) => {
         },
         process.env.JWTSECRET,
         {
-            expiresIn: '1d'
+            expiresIn: '8h'
         }
     )
 

@@ -16,7 +16,7 @@ const petSchema = new mongoose.Schema(
         createdAt: { type: Date, default: () => Date.now(), immutable: true },
         updatedAt: { type: Date, default: () => Date.now() },
         wasFound: { type: Boolean, default: false },
-        hasDisability: {type: Boolean, required: true},
+        hasDisability: { type: Boolean, required: true },
         // photoUrl: [
         //     { type: String, required: true } //fix it
         // ],
@@ -34,15 +34,15 @@ const petSchema = new mongoose.Schema(
 
 )
 
-// date updates with users last saved action 
-petSchema.pre("save", function (next) {
+// date updates before updating data
+petSchema.pre('findOneAndUpdate', async function (next) {
 
     try {
-        this.updatedAt = Date.now()
+        this.update({updatedAt: Date.now()})
         next()
     }
     catch (error) {
-        return { message: error }
+        return { message: `${error}` }
     }
 
 })
