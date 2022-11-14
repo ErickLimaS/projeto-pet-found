@@ -1,11 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const userSchema = new mongoose.Schema(
 
     {
         name: { type: String, required: true },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
+        profileImg: { type: String },
         createdAt: { type: Date, default: () => Date.now(), immutable: true },
         updatedAt: { type: Date, default: () => Date.now() },
         address: {
@@ -37,10 +39,11 @@ const userSchema = new mongoose.Schema(
 
 )
 
-userSchema.pre("save", function (next) {
+// date updates before updating data
+userSchema.pre("findOneAndUpdate", async function (next) {
 
     try {
-        this.updatedAt = Date.now()
+        this.update({ updatedAt: Date.now() })
         next()
     }
     catch (error) {

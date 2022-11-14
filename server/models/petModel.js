@@ -38,7 +38,7 @@ const petSchema = new mongoose.Schema(
 petSchema.pre('findOneAndUpdate', async function (next) {
 
     try {
-        this.update({updatedAt: Date.now()})
+        this.update({ updatedAt: Date.now() })
         next()
     }
     catch (error) {

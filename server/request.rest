@@ -55,3 +55,12 @@ Content-Type: application/json
     "password": "test@gmail.coM123!"
 }
 
+###
+PUT http://localhost:5000/user/update-profile
+Content-Type: application/json
+
+{
+    "updateMethod": "CHANGE_NAME",
+    "name": "New Name",
+    "password": "test@gmail.coM123!!"
+}
