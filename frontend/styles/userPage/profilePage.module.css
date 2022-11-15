@@ -1,0 +1,442 @@
+.container {
+
+    max-width: 1440px;
+    min-height: inherit;
+
+    padding: 8px;
+    margin: 0 auto;
+
+    background-color: #f3f3f3;
+
+}
+
+@media((min-width: 560px) and (max-width: 1020px)) {
+
+    .container {
+
+        padding: 16px 32px;
+
+    }
+
+}
+
+@media(min-width: 1020px) {
+
+    .container {
+
+        padding: 16px 48px;
+
+        display: grid;
+        gap: 40px;
+        grid-template-columns: 1fr 3fr;
+
+    }
+
+    .container>* {
+
+        max-width: 1440px;
+
+    }
+
+}
+
+/* INPUT STYLES FOR THE WHOLE PAGE */
+
+.container input[type='text'] {
+
+    padding: 8px 0px;
+    padding-left: 8px;
+
+    border-radius: 4px;
+    border: 2px solid var(--black-25);
+
+}
+
+@media((min-width: 350px) and (max-width: 560px)) {
+
+    .container input[type='text'] {
+
+        padding: 12px 12px;
+        padding-left: 8px;
+
+        font-size: var(--fs-heading6);
+
+    }
+
+}
+
+/* END */
+
+section.user_info_wrapper {
+
+    padding: 32px 0;
+
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    grid-template-areas:
+        "img user"
+        "button button";
+
+}
+
+@media((min-width: 560px) and (max-width: 1020px)) {
+
+    section.user_info_wrapper {
+
+        grid-template-areas:
+            "img user"
+            "img button";
+
+    }
+
+}
+
+@media(min-width: 1020px) {
+
+    section.user_info_wrapper {
+
+        display: flex;
+        flex-direction: column;
+
+    }
+}
+
+.user_info_wrapper #profile_img {
+
+    grid-area: img;
+    background-color: var(--black-5);
+    border-radius: 50%;
+
+}
+
+@media((min-width: 560px) and (max-width: 768px)) {
+
+    .user_info_wrapper span:has(#profile_img) {
+
+        grid-area: img;
+        height: 180px !important;
+        width: 180px !important;
+
+    }
+
+}
+
+@media((min-width: 768px) and (max-width: 1020px)) {
+
+    .user_info_wrapper span:has(#profile_img) {
+
+        grid-area: img;
+        height: 240px !important;
+        width: 240px !important;
+
+        align-self: center;
+
+    }
+
+}
+
+@media(min-width: 1020px) {
+
+    .user_info_wrapper span:has(#profile_img) {
+
+        margin-bottom: 16px !important;
+
+        grid-area: img;
+        height: 200px !important;
+        width: 200px !important;
+
+        align-self: center;
+
+    }
+
+}
+
+.user_info_wrapper .user_info {
+
+    grid-area: user;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 8px;
+    gap: 8px;
+
+}
+
+@media((min-width: 350px) and (max-width: 1020px)) {
+
+    .user_info_wrapper .user_info {
+
+        width: 100%;
+
+    }
+
+}
+
+.user_info_wrapper .user_info h2 {
+
+    font-size: var(--fs-heading5);
+    font-weight: 500;
+    color: var(--secondary);
+    line-height: 40px;
+
+}
+
+@media((min-width: 560px) and (max-width: 1020px)) {
+
+    .user_info_wrapper .user_info h2 {
+
+        font-size: var(--fs-heading4);
+    }
+
+}
+
+@media(min-width:1020px) {
+
+    .user_info_wrapper .user_info h2 {
+
+        margin-bottom: 8px !important;
+
+    }
+
+}
+
+
+.user_info_wrapper .user_info p {
+
+    align-self: flex-start;
+
+}
+
+.user_info_wrapper button {
+
+    grid-area: button;
+    width: 100%;
+
+    margin-top: 16px;
+    padding: 12px 16px;
+
+    font-size: var(--small-1);
+    font-weight: 600;
+
+    color: var(--white);
+
+    background-color: var(--secondary);
+    border-radius: 8px;
+    border: none;
+
+}
+
+@media((min-width: 768px) and (max-width: 1020px)) {
+
+    .user_info_wrapper button {
+
+        max-height: 60px;
+
+    }
+}
+
+.user_info_wrapper .contacts_mobile_display {
+
+    display: none;
+
+}
+
+@media(min-width: 1020px) {
+
+    .user_info_wrapper .contacts_mobile_display {
+
+        margin-top: 24px;
+        display: block;
+
+    }
+
+    .contacts_mobile_display h3 {
+
+        font-size: var(--fs-heading5);
+
+    }
+
+    .contacts_mobile_display ul {
+
+        padding: 16px;
+        background-color: var(--black-5);
+
+    }
+
+}
+
+/* ACTIVITY SECTION */
+
+section.user_activity {
+
+    padding-bottom: 16px;
+
+    background-color: var(--white);
+    border-radius: 4px;
+
+}
+
+@media(min-width: 1020px) {
+
+    section.user_activity {
+
+        display: flex;
+        background-color: var(--white);
+        flex-direction: column;
+
+    }
+
+}
+
+.user_activity nav.tab_container {
+
+    padding: 16px 0;
+
+    display: flex;
+    flex-direction: row;
+    gap: 0 8px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+@media(min-width: 1020px) {
+
+    .user_activity nav.tab_container {
+
+        padding: 0;
+        padding-left: 10px;
+
+        width: 100%;
+
+        background-color: #f3f3f3;
+
+        justify-content: flex-start;
+        align-self: flex-start;
+
+    }
+
+}
+
+nav.tab_container button {
+
+    padding: 12px 6px;
+    border-radius: 4px;
+    border: none;
+
+    font-size: var(--small-1);
+    font-weight: 600;
+    color: var(--black-75);
+    background-color: var(--black-5);
+
+}
+
+@media((min-width: 350px) and (max-width: 560px)) {
+
+    nav.tab_container button {
+
+        padding: 12px 12px;
+
+    }
+}
+
+@media((min-width: 560px) and (max-width: 1020px)) {
+
+    nav.tab_container button {
+
+        padding: 14px 16px;
+
+    }
+}
+
+@media(min-width: 1020px) {
+
+    nav.tab_container button {
+
+        padding: 14px 16px;
+        border-radius: 4px 4px 0 0;
+
+    }
+}
+
+nav.tab_container button[data-tab-activated='true'] {
+
+    background-color: var(--primary);
+    color: var(--white);
+
+}
+
+@media(min-width: 1020px) {
+
+    nav.tab_container button[data-tab-activated='true'] {
+
+        background-color: var(--white);
+        color: var(--primary);
+
+    }
+
+}
+
+.user_activity .navigation_index_selected {
+
+    display: none;
+
+}
+
+.user_activity .navigation_index_selected[data-tab-activated='true'] {
+
+    display: block;
+
+    margin-top: 16px;
+
+}
+
+@media(min-width: 1020px) {
+
+    .user_activity .navigation_index_selected[data-tab-activated='true'] {
+
+        margin-top: 24px;
+    }
+
+}
+
+.activity_field_container h3 {
+
+    text-align: center;
+    font-size: var(--fs-heading5);
+    color: var(--primary);
+
+}
+
+@media((min-width: 560px) and (max-width: 1020px)) {
+
+    .activity_field_container h3 {
+
+        font-size: var(--fs-heading4);
+    }
+
+}
+
+@media(min-width: 1020px) {
+
+    .activity_field_container h3 {
+
+        margin-left: 24px;
+        text-align: start;
+
+    }
+
+}
+
+.activity_field_container>div {
+
+    min-height: 200px;
+    margin: 0 8px;
+    padding: 16px;
+
+    border-radius: 8px;
+
+    background-color: var(--black-10);
+
+}

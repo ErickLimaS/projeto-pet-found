@@ -78,7 +78,13 @@ function Header() {
                                     <div className={headerStyles.user_panel}>
 
                                         <ul>
-
+                                            <li>
+                                                <Link href='/user/profile'>
+                                                    <a>
+                                                        <SVG.Profile /> Meu Perfil
+                                                    </a>
+                                                </Link>
+                                            </li>
                                             <li>
                                                 <Link href='/my-pets'>
                                                     <a>
@@ -87,7 +93,7 @@ function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link href='/settings'>
+                                                <Link href='/user/profile?nav=4'>
                                                     <a>
                                                         <SVG.GearFill /> Configurações
                                                     </a>
@@ -156,6 +162,14 @@ function Header() {
                                             <ul>
 
                                                 <li>
+                                                    <Link href='/user/profile'>
+                                                        <a>
+                                                            <SVG.Profile /> Meu Perfil
+                                                        </a>
+                                                    </Link>
+                                                </li>
+
+                                                <li>
                                                     <Link href='/my-pets'>
                                                         <a>
                                                             <SVG.PawIcon /> Meus Pets
@@ -163,7 +177,7 @@ function Header() {
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link href='/settings'>
+                                                    <Link href='/user/profile?nav=4'>
                                                         <a>
                                                             <SVG.GearFill /> Configurações
                                                         </a>

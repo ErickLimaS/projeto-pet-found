@@ -45,7 +45,7 @@ function Footer() {
                                     </li>
 
                                     <li>
-                                        <Link href='https://servicodados.ibge.gov.br/api/docs/localidades'>IBGE - Localidades</Link>
+                                        <Link href='https://servicodados.ibge.gov.br/api/docs/localidades'>IBGE - API</Link>
                                     </li>
 
                                 </ul>
