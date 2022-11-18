@@ -173,6 +173,8 @@ div.logo svg {
 
     cursor: pointer;
 
+    min-width: 180px;
+
     display: flex;
     flex-direction: row;
 

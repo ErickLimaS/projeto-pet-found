@@ -41,7 +41,6 @@
 }
 
 /* INPUT STYLES FOR THE WHOLE PAGE */
-
 .container input[type='text'] {
 
     padding: 8px 0px;
@@ -204,7 +203,28 @@ section.user_info_wrapper {
 
 .user_info_wrapper .user_info p {
 
-    align-self: flex-start;
+    align-self: center;
+
+    font-size: var(--small-2);
+
+}
+
+.user_info_wrapper .contacts_mobile_display li {
+
+    width: 100%;
+    text-align: right;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.user_info_wrapper .contacts_mobile_display li svg {
+
+    fill: var(--primary);
+
+    transform: scale(1.3);
 
 }
 
@@ -327,7 +347,7 @@ nav.tab_container button {
 
     font-size: var(--small-1);
     font-weight: 600;
-    color: var(--black-75);
+    color: var(--black-50);
     background-color: var(--black-5);
 
 }
@@ -384,7 +404,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 }
 
-.user_activity .navigation_index_selected[data-tab-activated='true'] {
+.user_activity .navigation_index_selected[aria-expanded='true'] {
 
     display: block;
 
@@ -394,7 +414,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 @media(min-width: 1020px) {
 
-    .user_activity .navigation_index_selected[data-tab-activated='true'] {
+    .user_activity .navigation_index_selected[aria-expanded='true'] {
 
         margin-top: 24px;
     }
@@ -429,7 +449,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 }
 
-.activity_field_container>div {
+.activity_field_container ul.list_lost_pets {
 
     min-height: 200px;
     margin: 0 8px;
@@ -438,5 +458,286 @@ nav.tab_container button[data-tab-activated='true'] {
     border-radius: 8px;
 
     background-color: var(--black-10);
+
+}
+
+@media((min-width: 425px) and (max-width: 719px)) {
+
+    .activity_field_container ul.list_lost_pets {
+
+        padding: 8px;
+
+        display: grid;
+        gap: 16px 8px;
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+}
+
+@media((min-width: 720px) and (max-width: 768px)) {
+
+    .activity_field_container ul.list_lost_pets {
+
+        padding: 8px;
+
+        display: grid;
+        gap: 16px 8px;
+        grid-template-columns: 1fr 1fr 1fr;
+
+    }
+
+}
+
+.activity_field_container ul.list_lost_pets li:not(:last-child) {
+
+    margin-bottom: 16px;
+
+}
+
+@media((min-width: 425px) and (max-width: 768px)) {
+
+    .activity_field_container ul.list_lost_pets li:not(:last-child) {
+
+        margin-bottom: 0;
+
+    }
+
+}
+
+.activity_field_container ul.list_lost_pets li a.link_pet_page span.custom_border {
+
+    align-self: center;
+
+    width: 200px !important;
+    height: 1px !important;
+
+    background-color: var(--black-25);
+
+}
+
+.activity_field_container ul.list_lost_pets li a.link_pet_page {
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background-color: var(--white);
+    border-radius: 4px;
+
+    box-shadow: 4px 4px 6px 0 var(--black-25);
+
+}
+
+@media((min-width: 425px) and (max-width: 768px)) {
+
+    .activity_field_container ul.list_lost_pets li a.link_pet_page {
+
+        height: 100%;
+
+    }
+
+}
+
+@media(min-width: 769px) {
+
+    .activity_field_container ul.list_lost_pets li[data-found='true'] a.link_pet_page {
+
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 8px;
+
+    }
+
+    .activity_field_container ul.list_lost_pets li[data-found='false'] a.link_pet_page {
+
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0 18px;
+
+    }
+
+    /* span IS the Img container */
+    .activity_field_container ul.list_lost_pets li a.link_pet_page>span {
+
+        width: 230px !important;
+        height: 160px !important;
+
+        box-shadow: px 4px 6px 0 var(--black-25);
+
+    }
+
+
+    .activity_field_container ul.list_lost_pets li a.link_pet_page span.custom_border {
+
+        align-self: center;
+
+        width: 1px !important;
+        height: 140px !important;
+
+        background-color: var(--black-25);
+
+    }
+
+    .activity_field_container ul.list_lost_pets li a.link_pet_page>div {
+
+        width: 32.5%;
+
+    }
+
+
+}
+
+.activity_field_container ul.list_lost_pets li[data-found=true] a.link_pet_page {
+
+    filter: grayscale(100%);
+
+}
+
+.activity_field_container ul.list_lost_pets li[data-found=true] a.link_pet_page::after {
+
+    position: absolute;
+    z-index: 1;
+
+    top: calc(15% + 3vw);
+    left: 10%;
+    right: 10%;
+
+    padding: 8px;
+
+    content: 'ACHADO!';
+    background-color: var(--black-75);
+    border: 2px solid var(--black-50);
+    border-radius: 8px;
+
+    text-align: center;
+    font-size: var(--fs-heading5);
+    color: var(--white);
+
+}
+
+@media((min-width: 425px) and (max-width: 768px)) {
+
+    .activity_field_container ul.list_lost_pets li[data-found=true] a.link_pet_page::after {
+
+        top: calc(6% + 3vw);
+        left: 10%;
+        right: 10%;
+
+    }
+
+}
+
+@media(min-width: 769px) {
+
+    .activity_field_container ul.list_lost_pets li[data-found=true] a.link_pet_page::after {
+
+        top: 35%;
+        left: 2%;
+        right: calc(65% + 3vw);
+
+    }
+
+}
+
+.activity_field_container ul.list_lost_pets li a.link_pet_page img {
+
+    background-color: rgb(173, 202, 255);
+
+    position: relative;
+    top: 0;
+
+}
+
+.activity_field_container ul.list_lost_pets li[data-found=true] img {
+
+    filter: blur(1.5px) !important;
+
+}
+
+.activity_field_container ul.list_lost_pets li a.link_pet_page div.pet_info {
+
+    padding: 16px 8px;
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_info h4 {
+
+    font-size: var(--fs-heading5);
+    color: var(--secondary);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_info p {
+
+    font-size: var(--fs-heading6);
+    color: var(--black-75);
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_info p.reward_paragraph {
+
+    margin-top: 8px;
+
+    font-size: var(--small-1);
+    font-weight: 600;
+    color: var(--tertiary);
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_found_by {
+
+    padding: 16px 8px;
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_found_by * {
+
+    color: var(--black-75);
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_found_by h4 {
+
+    font-size: var(--fs-heading6);
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_found_by h4>a {
+
+    display: inline;
+
+    text-decoration: underline;
+
+}
+
+ul.list_lost_pets li a.link_pet_page div.pet_found_by p {
+
+    margin-top: 8px;
+
+}
+
+@media(min-width: 769px) {
+
+    ul.list_lost_pets li a.link_pet_page div.pet_found_by h4 {
+
+        font-size: var(--small-1);
+
+    }
+
+    ul.list_lost_pets li a.link_pet_page div.pet_found_by p {
+
+        margin-top: 8px;
+
+        font-size: var(--fs-heading6);
+
+    }
 
 }

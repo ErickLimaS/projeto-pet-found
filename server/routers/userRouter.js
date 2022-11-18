@@ -110,6 +110,33 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 
 }))
 
+// all user data
+userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
+
+    // verifies if email exist
+    const user = await User.findById(req.user.userInfo._id, '-password -_id -updatedAt' ).populate('petsRegistered')
+
+    if (!user) {
+
+        return res.status(404).json(
+            { message: 'User not found' }
+        )
+
+    }
+
+    try {
+
+        return res.status(200).json(user)
+
+    }
+    catch (err) {
+
+        return res.status(500).json({ message: err })
+
+    }
+
+}))
+
 // updates user profile data 
 userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) => {
 
@@ -120,7 +147,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
     if (!passwordIsCorrect) {
 
-        return res.status(401).json({message: 'Data Not Validated'})
+        return res.status(401).json({ message: 'Data Not Validated' })
 
     }
 

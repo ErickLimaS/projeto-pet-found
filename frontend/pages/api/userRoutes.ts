@@ -10,7 +10,7 @@ const DB_URL = 'https://pet-found.up.railway.app/user'
 interface userRegisterTypes {
     email: string,
     password: string,
-    name: string, 
+    name: string,
     address: {
         state: string,
         county: string,
@@ -39,35 +39,39 @@ interface userLoginTypes {
 const reduxState = store.getState()
 const userStoredData: any = reduxState.currentUser
 
-// sets the route and config used for the intended page purpose 
-const config = (route: string, userInfo: userRegisterTypes | userLoginTypes) => {
+// sets the route and config used for the intended page purpose (DISABLED)
+const config = (route: string, userInfo?: userRegisterTypes | userLoginTypes) => {
 
     // gets the needed headers configs for each route
-    let headersToThisRoute;
+
     switch (route) {
-        // case '/change-password':
-        //     headersToThisRoute = {
+        case '/update-profile':
 
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${userStoredData.token}`
+            return {
+                url: `${DB_URL}${route}`,
+                method: 'PUT',
+                headers: {
 
-        //     }
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userStoredData.token}`
+
+                },
+                data: userInfo
+            }
         case '/register' || '/login':
-            headersToThisRoute = {
+            return {
+                url: `${DB_URL}${route}`,
+                method: 'POST',
+                headers: {
 
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
 
+                },
+                data: userInfo
             }
     }
 
-    return {
 
-        method: 'POST',
-        url: `${DB_URL}${route}`,
-        headers: headersToThisRoute,
-        data: userInfo
-
-    }
 
 }
 
@@ -76,9 +80,16 @@ export const registerUser = async (info: userRegisterTypes) => {
     try {
 
         const data: any = await Axios(
+            {
+                url: `${DB_URL}/register`,
+                method: 'POST',
+                headers: {
 
-            config('/register', info)
+                    'Content-Type': 'application/json'
 
+                },
+                data: info
+            }
         ).then(response => {
 
             if (response.status == 201) {
@@ -105,7 +116,16 @@ export const loginUser = async (info: userLoginTypes) => {
     try {
 
         const data = await Axios(
-            config('/login', info)
+            {
+                url: `${DB_URL}/login`,
+                method: 'POST',
+                headers: {
+
+                    'Content-Type': 'application/json'
+
+                },
+                data: info
+            }
         ).then(response => {
 
             if (response.status == 202) {
@@ -128,9 +148,35 @@ export const loginUser = async (info: userLoginTypes) => {
 
 }
 
+export const getAccountInfo = async () => {
+
+    try {
+
+        const { data } = await Axios({
+            url: `${DB_URL}/info`,
+            method: 'GET',
+            headers: {
+
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userStoredData.token}`
+
+            }
+        })
+
+        return { status: 200, data: data };
+
+    }
+    catch (error: any) {
+
+        return { status: error.response.status, message: error.response.data.message };
+
+    }
+
+}
+
 export const logoutUser = async () => {
 
     // redux dispatch
     store.dispatch(currentUser("REMOVE_USER"))
 
-} 
+}
