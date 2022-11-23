@@ -34,6 +34,12 @@ const userSchema = new mongoose.Schema(
                 ref: 'Pet'
             }
         ],
+        petsUserFound: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Pet'
+            }
+        ],
         notifications: []
     }
 

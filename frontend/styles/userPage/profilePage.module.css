@@ -449,7 +449,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 }
 
-.activity_field_container ul.list_lost_pets {
+.activity_field_container ul.list_lost_pets, p.message_not_found {
 
     min-height: 200px;
     margin: 0 8px;
@@ -463,7 +463,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 @media((min-width: 425px) and (max-width: 719px)) {
 
-    .activity_field_container ul.list_lost_pets {
+    .activity_field_container ul.list_lost_pets, p.message_not_found {
 
         padding: 8px;
 
@@ -477,7 +477,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 @media((min-width: 720px) and (max-width: 768px)) {
 
-    .activity_field_container ul.list_lost_pets {
+    .activity_field_container ul.list_lost_pets, p.message_not_found {
 
         padding: 8px;
 
@@ -633,9 +633,9 @@ nav.tab_container button[data-tab-activated='true'] {
 
     .activity_field_container ul.list_lost_pets li[data-found=true] a.link_pet_page::after {
 
-        top: 35%;
+        top: 30%;
         left: 2%;
-        right: calc(65% + 3vw);
+        width: 180px;
 
     }
 

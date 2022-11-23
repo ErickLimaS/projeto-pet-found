@@ -49,7 +49,7 @@ const Profile: NextPage = () => {
         // if user is NOT logged in
         if (!userState.name && !userState.token) {
 
-            // router.push('/user/login')
+            router.push('/user/login')
             alert('no user')
 
         }
@@ -161,12 +161,7 @@ const Profile: NextPage = () => {
                         </button>
                         <button type='button'
                             data-tab-activated={tabIndex === 3 ? 'true' : 'false'}
-                            onClick={() => { setTabIndex(3) }} aria-label='Ir para a sessão meus contatos'>
-                            Contatos
-                        </button>
-                        <button type='button'
-                            data-tab-activated={tabIndex === 4 ? 'true' : 'false'}
-                            onClick={() => { setTabIndex(4) }} aria-label='Ir para a sessão de mais opções'>
+                            onClick={() => { setTabIndex(3) }} aria-label='Ir para a sessão de mais opções'>
                             Mais
                         </button>
                     </nav>
@@ -186,7 +181,7 @@ const Profile: NextPage = () => {
                                             <a className={Styles.link_pet_page}>
                                                 <Image
                                                     src={profile}
-                                                    alt={`${user?.name}, foto de perfil`}
+                                                    alt={`Foto do anúncio de ${pet?.name}`}
                                                     layout='responsive'
                                                     height={160}
                                                     width={300}
@@ -247,7 +242,6 @@ const Profile: NextPage = () => {
 
                                 ))}
 
-
                             </ul>
 
                         </div>
@@ -260,33 +254,77 @@ const Profile: NextPage = () => {
 
                             <h3>Quem eu Ajudadei</h3>
 
-                            <ul className={Styles.list_lost_pets}>
+                            {user?.petsUserFound ? (
+                                <ul className={Styles.list_lost_pets}>
 
-                                <li>post</li>
+                                    {user?.petsUserFound?.map((pet: any, key: any) => (
 
-                            </ul>
+                                        <li key={key} data-found={pet.wasFound ? 'true' : 'false'}>
+                                            <Link href={`/pet?id=${pet._id}`} >
+                                                <a className={Styles.link_pet_page}>
+                                                    <Image
+                                                        src={profile}
+                                                        alt={`Foto do anúncio de ${pet?.name}`}
+                                                        layout='responsive'
+                                                        height={160}
+                                                        width={300}
+                                                        className={Styles.pet_img}
+                                                    />
+
+                                                    <div className={Styles.pet_info}>
+                                                        <h4>
+                                                            {pet.name}
+                                                        </h4>
+
+                                                        <p>{pet.breed}</p>
+                                                        {pet.hasReward ? (
+                                                            <p className={Styles.reward_paragraph}>R$ {pet.rewardAmount},00</p>
+                                                        ) : (
+                                                            <p className={Styles.reward_paragraph}>Sem recompensa</p>
+                                                        )}
+
+                                                    </div>
+
+
+                                                    <span className={Styles.custom_border}></span>
+
+                                                    <div className={Styles.pet_found_by}>
+
+                                                        <h4>
+                                                            <Link href='/'>pet.userWhoFound.name</Link> achou seu pet
+                                                        </h4>
+
+                                                        {pet.hasReward ? (
+
+                                                            <p>pet.userWhoFound.rewardAccepted a Recomensa</p>
+
+                                                        ) : (
+
+                                                            <p>pet.userWhoFound.rewardAccepted a Recomensa</p>
+                                                        )}
+
+                                                        <p>Achou em pet.userWhoFound.dateWhenFound</p>
+
+                                                    </div>
+
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                    ))}
+
+                                </ul>
+                            ) : (
+
+                                <p className={Styles.message_not_found}>Você não encontrou nenhum pet ainda.</p>
+
+                            )}
 
                         </div>
 
                     </div>
 
                     <div aria-expanded={tabIndex === 3 ? 'true' : 'false'} className={Styles.navigation_index_selected}>
-
-                        <div className={Styles.activity_field_container}>
-
-                            <h3>Meus Contatos</h3>
-
-                            <ul className={Styles.list_lost_pets}>
-
-                                <li>post</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                    <div aria-expanded={tabIndex === 4 ? 'true' : 'false'} className={Styles.navigation_index_selected}>
 
                         <div className={Styles.activity_field_container}>
 

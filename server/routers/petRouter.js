@@ -625,7 +625,15 @@ petRouters.put('/set-as-found', isAuth, expressAsyncHandler(async (req, res) => 
 
     try {
 
-        Pet.findOneAndUpdate({ _id: req.body.pet._id }, { wasFound: true },
+        Pet.findOneAndUpdate({ _id: req.body.pet._id },
+            {
+                wasFound: true,
+                userWhoFound: {
+                    _id: req.body.userWhoFound,
+                    rewardAccepted: req.body.rewardAccepted,
+                    dateWhenFound: Date.now()
+                }
+            },
             function (err, result) {
 
                 if (err) {

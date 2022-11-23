@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const petSchema = new mongoose.Schema(
 
@@ -16,6 +16,17 @@ const petSchema = new mongoose.Schema(
         createdAt: { type: Date, default: () => Date.now(), immutable: true },
         updatedAt: { type: Date, default: () => Date.now() },
         wasFound: { type: Boolean, default: false },
+        userWhoFound: {
+            user: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                }
+            ],
+            _id: { type: mongoose.ObjectId },
+            rewardAccepted: { type: Boolean },
+            dateWhenFound: { type: Date }
+        },
         hasDisability: { type: Boolean, required: true },
         // photoUrl: [
         //     { type: String, required: true } //fix it
