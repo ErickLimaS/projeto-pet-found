@@ -4,6 +4,7 @@ export { default as Brand } from "./Brand";
 export { default as CaretDownFill } from "./CaretDownFill";
 export { default as Cat } from "./Cat";
 export { default as Cat2 } from "./Cat2";
+export { default as CheckLg } from "./CheckLg";
 export { default as ChevronLeft } from "./ChevronLeft";
 export { default as ChevronRight } from "./ChevronRight";
 export { default as Coin } from "./Coin";

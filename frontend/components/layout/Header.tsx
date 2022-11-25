@@ -49,7 +49,7 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/found'>Procurar por Pet</Link>
+                            <Link href='/found'>Achei um Pet</Link>
                         </li>
 
                         {/* <li>
@@ -215,7 +215,7 @@ function Header() {
                         </li>
 
                         <li>
-                            <Link href='/found'>Procurar por Pet</Link>
+                            <Link href='/found'>Achei um Pet</Link>
                         </li>
 
                         {/* <li>

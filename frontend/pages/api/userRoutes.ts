@@ -2,10 +2,10 @@ import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
 import { store } from '../../store'
 
-const DB_URL = 'https://pet-found.up.railway.app/user'
+// const DB_URL = 'https://pet-found.up.railway.app/user'
 
 // testes
-// const DB_URL = 'http://localhost:5000/user'
+const DB_URL = 'http://localhost:9123/user'
 
 interface userRegisterTypes {
     email: string,
@@ -161,6 +161,63 @@ export const getAccountInfo = async () => {
                 'Authorization': `Bearer ${userStoredData.token}`
 
             }
+        })
+
+        return { status: 200, data: data };
+
+    }
+    catch (error: any) {
+
+        return { status: error.response.status, message: error.response.data.message };
+
+    }
+
+}
+
+export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string) => {
+
+    try {
+
+        let dataToBeSend: {}
+        switch (method) {
+
+            case 'EMAIL_OR_PASSWORD':
+
+                dataToBeSend = {
+
+                    updateMethod: email && 'CHANGE_EMAIL' || newPassword && 'CHANGE_PASSWORD',
+                    email: email || null,
+                    newPassword: newPassword || null,
+                    currentPassword: currentPassword
+
+                }
+                break;
+
+            case 'CHANGE_NAME':
+
+                dataToBeSend = {
+
+                    updateMethod: 'CHANGE_NAME',
+                    name: 'name',
+                    currentPassword: currentPassword
+
+                }
+                break;
+
+            default:
+                return
+        }
+
+        const { data } = await Axios({
+            url: `${DB_URL}/update-profile`,
+            method: 'PUT',
+            headers: {
+
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userStoredData.token}`
+
+            },
+            data: dataToBeSend
         })
 
         return { status: 200, data: data };

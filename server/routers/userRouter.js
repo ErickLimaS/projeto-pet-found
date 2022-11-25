@@ -159,11 +159,11 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
     const user = await User.findById(req.user.userInfo._id)
 
     // checks if password matchs with the one stored on server
-    const passwordIsCorrect = await bcrypt.compare(req.body.password, user.password)
+    const passwordIsCorrect = await bcrypt.compare(req.body.currentPassword, user.password)
 
     if (!passwordIsCorrect) {
 
-        return res.status(401).json({ message: 'Data Not Validated' })
+        return res.status(401).json({ message: 'Incorrect User Info Received' })
 
     }
 

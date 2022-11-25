@@ -1,13 +1,13 @@
 import Styles from '../../styles/userPage/profilePage.module.css'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Meta from '../../components/Meta'
 import { RootState } from '../../store'
 import Image from 'next/image'
 import profile from '../../public/imgs/profile-icon.png'
-import { getAccountInfo } from '../api/userRoutes'
+import { getAccountInfo, updateAccountData } from '../api/userRoutes'
 import * as SVG from '../../public/imgs/svg'
 import Link from 'next/link'
 
@@ -43,6 +43,28 @@ const Profile: NextPage = () => {
     const userState: any = useSelector((state: RootState) => state.currentUser)
 
     const router = useRouter()
+
+    // submit data from form
+    const submitChangesForm = async (e: FormEvent, method: string) => {
+
+        e.preventDefault()
+
+        const form = e.target as HTMLFormElement
+
+        const email = form.email.value
+        const newPasswordCheck1 = form.new_password_1.value
+        const newPasswordCheck2 = form.new_password_2.value
+        const currentPassword = form.current_password.value
+
+        if (newPasswordCheck1 !== newPasswordCheck2) {
+
+            return alert('dont match')
+
+        }
+
+        updateAccountData(method, email, newPasswordCheck1, currentPassword)
+
+    }
 
     useEffect(() => {
 
@@ -252,9 +274,9 @@ const Profile: NextPage = () => {
 
                         <div className={Styles.activity_field_container}>
 
-                            <h3>Quem eu Ajudadei</h3>
+                            <h3>Quem eu Ajudei</h3>
 
-                            {user?.petsUserFound ? (
+                            {user?.petsUserFound?.length > 0 ? (
                                 <ul className={Styles.list_lost_pets}>
 
                                     {user?.petsUserFound?.map((pet: any, key: any) => (
@@ -324,17 +346,71 @@ const Profile: NextPage = () => {
 
                     </div>
 
-                    <div aria-expanded={tabIndex === 3 ? 'true' : 'false'} className={Styles.navigation_index_selected}>
+                    <div aria-expanded={tabIndex === 3 ? 'true' : 'false'} className={`${Styles.navigation_index_selected} ${Styles.form_container}`}>
 
                         <div className={Styles.activity_field_container}>
 
                             <h3>Configurações da Conta</h3>
 
-                            <ul className={Styles.list_lost_pets}>
+                            <form onSubmit={(e) => submitChangesForm(e, 'EMAIL_OR_PASSWORD')}>
 
-                                <li>post</li>
+                                <div className={Styles.input_wrapper}>
 
-                            </ul>
+                                    <label>
+                                        Mudar Email
+                                        <input type='email' id='email' name='email' placeholder={`${user?.email?.slice(0, 5)}*********.com`}></input>
+                                    </label>
+
+                                </div>
+
+                                <div className={Styles.input_wrapper}>
+
+                                    <label>
+                                        Mudar Senha
+                                        <input type='password'
+                                            id='new_password_1' name='new_password_1'
+                                            placeholder='*********'
+                                            pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+                                            title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                        ></input>
+                                    </label>
+
+                                </div>
+
+                                <div className={Styles.input_wrapper}>
+
+                                    <label>
+                                        Repita a Nova Senha
+                                        <input type='password'
+                                            id='new_password_2' name='new-password_2'
+                                            placeholder='*********'
+                                            pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+                                            title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                        ></input>
+                                    </label>
+
+                                </div>
+
+                                <div className={Styles.input_wrapper}>
+
+                                    <label>
+                                        Confirme as mudanças com sua senha atual
+                                        <input type='password'
+                                            required id='current_password' name='current_password'
+                                            placeholder='*********'
+                                            pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+                                            title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                        ></input>
+                                    </label>
+
+                                </div>
+
+                                <button type='submit' aria-label='Confirmar Mudança'>
+                                    <SVG.CheckLg aria-label='Check Ícone' />
+                                    Confimar Mudanças
+                                </button>
+
+                            </form>
 
                         </div>
 

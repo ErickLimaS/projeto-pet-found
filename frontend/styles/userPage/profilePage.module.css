@@ -352,6 +352,12 @@ nav.tab_container button {
 
 }
 
+nav.tab_container button:hover {
+
+    color: var(--black-75);
+
+}
+
 @media((min-width: 350px) and (max-width: 560px)) {
 
     nav.tab_container button {
@@ -486,6 +492,13 @@ nav.tab_container button[data-tab-activated='true'] {
         grid-template-columns: 1fr 1fr 1fr;
 
     }
+
+}
+
+.activity_field_container ul.list_lost_pets li:hover {
+
+    transition: all ease-in 50ms;
+    transform: scale(1.005);
 
 }
 
@@ -739,5 +752,118 @@ ul.list_lost_pets li a.link_pet_page div.pet_found_by p {
         font-size: var(--fs-heading6);
 
     }
+
+}
+
+/* tab index 3 */
+
+div.form_container form {
+
+    padding: 16px;
+
+
+}
+
+div.form_container form div.input_wrapper {
+
+    display: grid;
+    /* grid-template-areas: 'input_wrapper input_wrapper input_wrapper input_wrapper input_wrapper button'; */
+    grid-template-areas: 'input_wrapper';
+    gap: 0 4px;
+
+}
+
+
+div.form_container form div.input_wrapper:not(:last-child) {
+
+    margin-bottom: 16px;
+
+}
+
+div.form_container button[type='submit'] {
+
+    margin-top: 16px;
+
+}
+
+div.input_wrapper label {
+
+    grid-area: input_wrapper;
+    display: flex;
+    flex-direction: column;
+
+    font-size: var(--small-1);
+
+    color: var(--primary);
+
+}
+
+
+div.input_wrapper label input {
+
+    margin-top: 4px;
+    padding: 12px 16px;
+
+    border-radius: 4px;
+    border: 2px solid var(--black-25);
+
+    outline: none;
+
+}
+
+div.input_wrapper label input:focus-visible {
+
+
+    border: 2px solid var(--primary-75);
+
+}
+
+div.form_container button[type='submit'] {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+
+    height: max-content;
+    width: 100%;
+
+    color: var(--white);
+    font-size: var(--small-1);
+    font-weight: 600;
+
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-color: #00b200;
+
+}
+
+div.form_container button[type='submit']:hover {
+
+    transition: all ease 100ms;
+    box-shadow: 3px 3px 3px 0 var(--black-50);
+
+}
+
+@media(min-width: 768px) {
+
+    div.form_container button[type='submit'] {
+
+        float: right;
+
+        width: fit-content;
+
+    }
+
+}
+
+div.form_container button svg {
+
+    fill: var(--white);
+
+    transform: scale(1.8);
+
+    margin-right: 16px;
 
 }
