@@ -66,13 +66,57 @@ const Profile: NextPage = () => {
 
     }
 
+    const submitNameAndAddressChanges = async (e: FormEvent) => {
+
+        e.preventDefault()
+
+        const form = e.target as HTMLFormElement
+
+        const name: string | undefined = (form.name as any).value || undefined
+        const street: string | undefined = form.street.value || undefined
+        const county: string | undefined = form.county.value || undefined
+        const state: string | undefined = form.state.value || undefined
+        const password: string = form.current_password.value
+
+        // console.log(name, street, county, state)
+
+        if (name && !street && !county && !state) {
+            updateAccountData(
+                'CHANGE_NAME',
+                undefined, // not sent by this function 
+                undefined, // not sent by this function 
+                password, // current password
+                name, undefined, undefined, undefined
+            )
+        }
+        else if (name && street && county && state) {
+            updateAccountData(
+                'CHANGE_NAME_AND_ADDRESS',
+                undefined, // not sent by this function 
+                undefined, // not sent by this function 
+                password, // current password
+                name, street, county, state
+            )
+        }
+        else {
+            updateAccountData(
+                'CHANGE_ADDRESS',
+                undefined, // not sent by this function 
+                undefined, // not sent by this function 
+                password, // current password
+                undefined, street, county, state
+            )
+        }
+
+        setEditable(!editable)
+    }
+
     useEffect(() => {
 
         // if user is NOT logged in
         if (!userState.name && !userState.token) {
 
-            router.push('/user/login')
-            alert('no user')
+            router.push('/user/login?redirect=user/profile')
 
         }
         else {
@@ -123,19 +167,68 @@ const Profile: NextPage = () => {
                     <div className={Styles.user_info}>
 
                         {editable ? (
-                            <input type='text' aria-label='Edite o nome de usuário' defaultValue={user?.name}></input>
-                        ) : (
-                            <h2>{user?.name}</h2>
-                        )}
+                            <form
+                                id='user_info_form'
+                                onSubmit={(e) => submitNameAndAddressChanges(e)}
+                            >
 
-                        <p>{user.address?.street}</p>
-                        <p><b>{user.address?.county}, {user.address?.state}</b></p>
+                                <input type='text'
+                                    id='name' name='name'
+                                    placeholder='Seu Nome'
+                                    aria-label='Edite o nome de usuário' defaultValue={user?.name}></input>
+
+                                <div className={Styles.user_address_inputs}>
+                                    <input type='text'
+                                        id='street' name='street'
+                                        placeholder='Rua onde mora'
+                                        defaultValue={user.address?.street}></input>
+                                    <div>
+                                        <input type='text'
+                                            id='county' name='county'
+                                            placeholder='Município'
+                                            defaultValue={user.address?.county}></input>
+                                        <input type='text'
+                                            id='state' name='state'
+                                            placeholder='Estado'
+                                            defaultValue={user.address?.state}></input>
+                                    </div>
+                                    <input type='password'
+                                        id='current_password2' name='current_password'
+                                        required
+                                        pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+                                        title='Precisa conter letras maiúsculas, números e caracteres especiais.'
+                                        placeholder='Confirme com sua senha'
+                                    ></input>
+                                </div>
+
+                                <button type='submit' id='submit' style={{ display: 'none' }}>
+                                    Salvar Dados
+                                </button>
+
+                            </form>
+                        ) : (
+                            <>
+                                <h2>{user?.name}</h2>
+
+                                <p>{user.address?.street}</p>
+                                <p><b>{user.address?.county}, {user.address?.state}</b></p>
+                            </>
+                        )}
 
                     </div>
 
-                    <button type='button' onClick={() => setEditable(!editable)}>
-                        {editable ? 'Salvar Dados' : 'Editar'}
-                    </button>
+
+                    {editable ? (
+                        <label htmlFor='submit' className={Styles.button_label}>
+                            Salvar Dados
+                        </label>
+                    ) : (
+                        <button type='button'
+                            form='user_info_form'
+                            onClick={() => setEditable(!editable)}>
+                            Editar
+                        </button>
+                    )}
 
                     <div className={Styles.contacts_mobile_display}>
 

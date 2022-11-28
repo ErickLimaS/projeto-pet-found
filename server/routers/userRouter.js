@@ -252,6 +252,51 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                     return res.status(202).json(await successfullReponse())
 
+                case 'CHANGE_NAME_AND_ADDRESS':
+
+                    User.findOneAndUpdate(
+                        { _id: req.user.userInfo._id },
+                        {
+                            name: req.body.name,
+                            address: {
+                                street: req.body.street,
+                                county: req.body.county,
+                                state: req.body.state
+                            }
+                        },
+                        async function (err, result) {
+
+                            if (err) {
+                                return res.status(404).json({ message: `${err}` })
+                            }
+
+                        }
+                    )
+
+                    return res.status(202).json(await successfullReponse())
+
+                case 'CHANGE_ADDRESS':
+
+                    User.findOneAndUpdate(
+                        { _id: req.user.userInfo._id },
+                        {
+                            address: {
+                                street: req.body.street,
+                                county: req.body.county,
+                                state: req.body.state
+                            }
+                        },
+                        async function (err, result) {
+
+                            if (err) {
+                                return res.status(404).json({ message: `${err}` })
+                            }
+
+                        }
+                    )
+
+                    return res.status(202).json(await successfullReponse())
+
                 case 'CHANGE_CONTACTS':
 
                     User.findOneAndUpdate(

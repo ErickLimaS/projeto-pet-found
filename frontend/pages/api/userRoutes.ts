@@ -174,7 +174,7 @@ export const getAccountInfo = async () => {
 
 }
 
-export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string) => {
+export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string) => {
 
     try {
 
@@ -198,7 +198,34 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                 dataToBeSend = {
 
                     updateMethod: 'CHANGE_NAME',
-                    name: 'name',
+                    name: name,
+                    currentPassword: currentPassword
+
+                }
+                break;
+
+            case 'CHANGE_NAME_AND_ADDRESS':
+
+                dataToBeSend = {
+
+                    updateMethod: 'CHANGE_NAME_AND_ADDRESS',
+                    name: name,
+                    street: street,
+                    county: county,
+                    state: state,
+                    currentPassword: currentPassword
+
+                }
+                break;
+
+            case 'CHANGE_ADDRESS':
+
+                dataToBeSend = {
+
+                    updateMethod: 'CHANGE_ADDRESS',
+                    street: street,
+                    county: county,
+                    state: state,
                     currentPassword: currentPassword
 
                 }

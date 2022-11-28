@@ -41,7 +41,7 @@
 }
 
 /* INPUT STYLES FOR THE WHOLE PAGE */
-.container input[type='text'] {
+.container input[type='text'], .container input[type='password'] {
 
     padding: 8px 0px;
     padding-left: 8px;
@@ -49,11 +49,20 @@
     border-radius: 4px;
     border: 2px solid var(--black-25);
 
+    outline: none;
+
+}
+
+.container input:focus-visible {
+
+
+    border: 2px solid var(--primary-75);
+
 }
 
 @media((min-width: 350px) and (max-width: 560px)) {
 
-    .container input[type='text'] {
+    .container input[type='text'], .container input[type='password'] {
 
         padding: 12px 12px;
         padding-left: 8px;
@@ -200,12 +209,61 @@ section.user_info_wrapper {
 
 }
 
-
 .user_info_wrapper .user_info p {
 
     align-self: center;
 
     font-size: var(--small-2);
+
+}
+
+.user_info form, .user_info form .user_address_inputs {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px 0;
+
+}
+
+.user_info form .user_address_inputs>div {
+
+    display: grid;
+    gap: 0 8px;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+.user_info form input {
+
+    width: 100%;
+
+}
+
+@media(min-width: 720px) {
+
+    .user_info form, .user_info form .user_address_inputs {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px 0;
+
+    }
+
+    .user_info form .user_address_inputs>div {
+
+        display: grid;
+        gap: 0 8px;
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+    .user_info form input {
+
+        width: 100%;
+
+    }
 
 }
 
@@ -228,7 +286,14 @@ section.user_info_wrapper {
 
 }
 
-.user_info_wrapper button {
+.user_info_wrapper button:hover, .user_info_wrapper .button_label:hover {
+
+    transition: all ease 100ms;
+    transform: scale(1.05);
+
+}
+
+.user_info_wrapper button, .user_info_wrapper .button_label {
 
     grid-area: button;
     width: 100%;
@@ -247,9 +312,33 @@ section.user_info_wrapper {
 
 }
 
+.user_info_wrapper .button_label {
+
+    cursor: pointer;
+
+    text-align: center;
+    margin: auto 0;
+
+    background-color: var(--white);
+    color: var(--secondary);
+    border: 2px solid var(--primary);
+
+}
+
+@media(min-width: 1020px) {
+
+    .user_info_wrapper .button_label {
+
+        margin: 0;
+        margin-top: 16px;
+
+    }
+
+}
+
 @media((min-width: 768px) and (max-width: 1020px)) {
 
-    .user_info_wrapper button {
+    .user_info_wrapper button, .user_info_wrapper .button_label {
 
         max-height: 60px;
 
