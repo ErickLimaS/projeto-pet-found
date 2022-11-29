@@ -35,6 +35,20 @@ interface userLoginTypes {
     password: string
 }
 
+interface userDataTypes {
+    email?: string,
+    newPassword?: string,
+    currentPassword?: string,
+    name?: string,
+    street?: string,
+    county?: string,
+    state?: string,
+    tel1?: string,
+    tel2?: string,
+    facebook?: string,
+    instagram?: string
+}
+
 // gets token of the user already logged in
 const reduxState = store.getState()
 const userStoredData: any = reduxState.currentUser
@@ -174,7 +188,7 @@ export const getAccountInfo = async () => {
 
 }
 
-export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string) => {
+export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string, tel1?: string, tel2?: string, facebook?: string, instagram?: string) => {
 
     try {
 
@@ -228,6 +242,20 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                     state: state,
                     currentPassword: currentPassword
 
+                }
+                break;
+
+            case 'CHANGE_CONTACTS':
+
+                dataToBeSend = {
+
+                    updateMethod: 'CHANGE_CONTACTS',
+                    contacts: {
+                        tel1: tel1,
+                        tel2: tel2,
+                        facebook: facebook,
+                        instagram: instagram
+                    }
                 }
                 break;
 

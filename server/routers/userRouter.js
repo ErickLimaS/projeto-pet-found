@@ -159,13 +159,16 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
     const user = await User.findById(req.user.userInfo._id)
 
     // checks if password matchs with the one stored on server
-    const passwordIsCorrect = await bcrypt.compare(req.body.currentPassword, user.password)
+    const checkPassword = async () => {
+        const passwordIsCorrect = await bcrypt.compare(req.body.currentPassword, user.password)
 
-    if (!passwordIsCorrect) {
+        if (!passwordIsCorrect) {
 
-        return res.status(401).json({ message: 'Incorrect User Info Received' })
+            return res.status(401).json({ message: 'Incorrect User Info Received' })
 
+        }
     }
+
 
     // standardize the result for a successfull update request
     const successfullReponse = async () => {
@@ -191,6 +194,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_PROFILE_IMAGE':
 
+                    checkPassword()
+
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
                         { profileImg: req.body.profileImg },
@@ -207,6 +212,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_EMAIL':
 
+                    checkPassword()
+
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
                         { email: req.body.email },
@@ -221,6 +228,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                     return res.status(202).json(await successfullReponse())
 
                 case 'CHANGE_PASSWORD':
+
+                    checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -238,6 +247,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_NAME':
 
+                    checkPassword()
+
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
                         { name: req.body.name },
@@ -253,6 +264,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                     return res.status(202).json(await successfullReponse())
 
                 case 'CHANGE_NAME_AND_ADDRESS':
+
+                    checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -276,6 +289,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                     return res.status(202).json(await successfullReponse())
 
                 case 'CHANGE_ADDRESS':
+
+                    checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },

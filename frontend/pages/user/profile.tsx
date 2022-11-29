@@ -38,6 +38,7 @@ const Profile: NextPage = () => {
 
     const [user, setUser] = useState<any>([])
     const [editable, setEditable] = useState<boolean>(false)
+    const [editContacts, setEditContacts] = useState<boolean>(false)
     const [tabIndex, setTabIndex] = useState<number>(1)
 
     const userState: any = useSelector((state: RootState) => state.currentUser)
@@ -66,46 +67,75 @@ const Profile: NextPage = () => {
 
     }
 
-    const submitNameAndAddressChanges = async (e: FormEvent) => {
+    const submitNameAddressContacts = async (e: FormEvent, method: string) => {
 
         e.preventDefault()
 
         const form = e.target as HTMLFormElement
 
-        const name: string | undefined = (form.name as any).value || undefined
-        const street: string | undefined = form.street.value || undefined
-        const county: string | undefined = form.county.value || undefined
-        const state: string | undefined = form.state.value || undefined
-        const password: string = form.current_password.value
+        switch (method) {
+            case 'NAME_AND_ADDRESS':
 
-        // console.log(name, street, county, state)
+                const name: string | undefined = (form.name as any).value || undefined
+                const street: string | undefined = form.street.value || undefined
+                const county: string | undefined = form.county.value || undefined
+                const state: string | undefined = form.state.value || undefined
+                const password: string = form.current_password.value
 
-        if (name && !street && !county && !state) {
-            updateAccountData(
-                'CHANGE_NAME',
-                undefined, // not sent by this function 
-                undefined, // not sent by this function 
-                password, // current password
-                name, undefined, undefined, undefined
-            )
-        }
-        else if (name && street && county && state) {
-            updateAccountData(
-                'CHANGE_NAME_AND_ADDRESS',
-                undefined, // not sent by this function 
-                undefined, // not sent by this function 
-                password, // current password
-                name, street, county, state
-            )
-        }
-        else {
-            updateAccountData(
-                'CHANGE_ADDRESS',
-                undefined, // not sent by this function 
-                undefined, // not sent by this function 
-                password, // current password
-                undefined, street, county, state
-            )
+                // console.log(name, street, county, state)
+
+                if (name && !street && !county && !state) {
+                    updateAccountData(
+                        'CHANGE_NAME',
+                        undefined, // not sent by this function 
+                        undefined, // not sent by this function 
+                        password, // current password
+                        name, undefined, undefined, undefined
+                    )
+                }
+                else if (name && street && county && state) {
+                    updateAccountData(
+                        'CHANGE_NAME_AND_ADDRESS',
+                        undefined, // not sent by this function 
+                        undefined, // not sent by this function 
+                        password, // current password
+                        name, street, county, state
+                    )
+                }
+                else {
+                    updateAccountData(
+                        'CHANGE_ADDRESS',
+                        undefined, // not sent by this function 
+                        undefined, // not sent by this function 
+                        password, // current password
+                        undefined, street, county, state
+                    )
+                }
+                break;
+
+            case 'CONTACTS':
+
+                const tel1: string | undefined = form.tel1.value || undefined
+                const tel2: string | undefined = form.tel2.value || undefined
+                const facebook: string | undefined = form.facebook.value || undefined
+                const instagram: string | undefined = form.instagram.value || undefined
+
+                updateAccountData(
+                    'CHANGE_CONTACTS',
+                    undefined, // not sent by this function 
+                    undefined, // not sent by this function 
+                    undefined, // current password
+                    undefined, // not sent by this function 
+                    undefined, // not sent by this function 
+                    undefined, // not sent by this function 
+                    undefined, // not sent by this function 
+                    tel1, tel2, facebook, instagram
+                )
+
+            default:
+                alert(`erro`)
+                break;
+
         }
 
         setEditable(!editable)
@@ -169,7 +199,7 @@ const Profile: NextPage = () => {
                         {editable ? (
                             <form
                                 id='user_info_form'
-                                onSubmit={(e) => submitNameAndAddressChanges(e)}
+                                onSubmit={(e) => submitNameAddressContacts(e, 'NAME_AND_ADDRESS')}
                             >
 
                                 <input type='text'
@@ -202,7 +232,12 @@ const Profile: NextPage = () => {
                                 </div>
 
                                 <button type='submit' id='submit' style={{ display: 'none' }}>
-                                    Salvar Dados
+                                    Salvar Mudanças
+                                </button>
+
+                                <button type='button' id='no_changes' style={{ display: 'none' }}
+                                    onClick={() => setEditable(!editable)}>
+                                    Voltar sem modificar
                                 </button>
 
                             </form>
@@ -219,12 +254,21 @@ const Profile: NextPage = () => {
 
 
                     {editable ? (
-                        <label htmlFor='submit' className={Styles.button_label}>
-                            Salvar Dados
-                        </label>
+                        <>
+
+                            <label role='button' htmlFor='submit' className={Styles.button}>
+                                Salvar Mudanças
+                            </label>
+
+                            <label role='button' htmlFor='no_changes' className={Styles.button_label_no_changes}>
+                                Voltar sem modificar
+                            </label>
+
+                        </>
                     ) : (
                         <button type='button'
                             form='user_info_form'
+                            className={Styles.edit_button}
                             onClick={() => setEditable(!editable)}>
                             Editar
                         </button>
@@ -232,30 +276,95 @@ const Profile: NextPage = () => {
 
                     <div className={Styles.contacts_mobile_display}>
 
-                        <h3>Contatos</h3>
-                        <ul>
-                            {user?.contacts?.tel1 && (
-                                <li>
-                                    <SVG.Telephone aria-label='Primeiro número de Telefone' /> {user?.contacts?.tel1}
-                                </li>
+                        <div className={Styles.heading}>
+                            <h3>Contatos</h3>
+                            {!editContacts ? (
+                                <button type='button' data-action='edit' onClick={() => setEditContacts(true)}>Editar</button>
+                            ) : (
+                                <button type='button' data-action='cancel' onClick={() => setEditContacts(false)}>Cancelar</button>
                             )}
-                            {user?.contacts?.tel2 && (
+                        </div>
+
+                        {!editContacts ? (
+                            <ul>
                                 <li>
-                                    <SVG.Telephone aria-label='Segundo número de Telefone' /> {user?.contacts?.tel2}
+                                    <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' /> {user?.contacts?.tel1}
                                 </li>
-                            )}
-                            {user?.contacts?.facebook && (
                                 <li>
-                                    <SVG.Facebook aria-label='Link do perfil do facebook' />
-                                    <a href={user?.contacts?.facebook}>Perfil do Facebook</a>
+                                    <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' /> {user?.contacts?.tel2 ? (
+                                        user?.contacts?.tel2
+                                    ) : (
+                                        <p>Não Adicionado</p>
+                                    )}
                                 </li>
-                            )}
-                            {user?.contacts?.instagram && (
                                 <li>
-                                    <SVG.Instagram aria-label='Link do perfil do instagram' /> <a href={user?.contacts?.instagram}>Perfil do Instagram</a>
+                                    <SVG.Facebook fill='#4267B2' aria-label='Link do perfil do facebook' />
+                                    {user?.contacts?.facebook ? (
+                                        <a href={user?.contacts?.facebook} target='_blank' rel='noreferrer'>Meu Perfil</a>
+                                    ) : (
+                                        <p>Não Adicionado</p>
+                                    )}
                                 </li>
-                            )}
-                        </ul>
+                                <li>
+                                    <SVG.Instagram fill='#E1306C' aria-label='Link do perfil do instagram' />
+                                    {user?.contacts?.instagram ? (
+                                        <a href={`https://www.instagram.com/${user?.contacts?.instagram.slice(1)}`} target='_blank' rel='noreferrer'>{user?.contacts?.instagram}</a>
+                                    ) : (
+                                        <p>Não Adicionado</p>
+                                    )}
+                                </li>
+                            </ul>
+                        ) : (
+                            <form onSubmit={(e) => submitNameAddressContacts(e, 'CONTACTS')}>
+                                <label>
+                                    <div className={Styles.heading}>
+                                        <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' />
+                                        Telefone 1
+                                    </div>
+                                    <input type='tel' id='tel1' name='tel1'
+                                        pattern='^\d.{10,10}$'
+                                        placeholder='Seu número'
+                                        defaultValue={user?.contacts?.tel1}></input>
+                                </label>
+
+                                <label>
+                                    <div className={Styles.heading}>
+                                        <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' />
+                                        Telefone 2
+                                    </div>
+                                    <input type='tel' id='tel2' name='tel2'
+                                        pattern='^\d.{10,10}$'
+                                        placeholder='Seu outro número'
+                                        defaultValue={user?.contacts?.tel2}></input>
+                                </label>
+                                <label>
+                                    <div className={Styles.heading}>
+                                        <SVG.Facebook fill='#4267B2' aria-label='Link do perfil do facebook' />
+                                        Facebook
+                                    </div>
+                                    <input type='text' id='facebook' name='facebook'
+                                        placeholder='Copie e cole aqui o link do seu perfil'
+                                        pattern='(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)'
+                                        title='Verifique se está nesse formato: https://pt-br.facebook.com/seu-nome-de-usuario'
+                                        defaultValue={user?.contacts?.facebook}></input>
+                                </label>
+                                <label>
+                                    <div className={Styles.heading}>
+                                        <SVG.Instagram fill='#E1306C' aria-label='Link do perfil do instagram' />
+                                        Instagram
+                                    </div>
+                                    <input type='text' id='instagram' name='instagram'
+                                        placeholder='Coloque o @ do seu perfil'
+                                        pattern='^@[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$'
+                                        title='Verifique se está nesse formato: @petfound'
+                                        defaultValue={user?.contacts?.instagram}></input>
+                                </label>
+
+                                <button type='submit' id='submit_contacts' >
+                                    Salvar Mudanças
+                                </button>
+                            </form>
+                        )}
 
                     </div>
 
