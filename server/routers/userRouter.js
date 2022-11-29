@@ -194,7 +194,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_PROFILE_IMAGE':
 
-                    checkPassword()
+                    await checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -212,7 +212,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_EMAIL':
 
-                    checkPassword()
+                    await checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -229,7 +229,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_PASSWORD':
 
-                    checkPassword()
+                    await checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -247,7 +247,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_NAME':
 
-                    checkPassword()
+                    await checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -265,7 +265,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_NAME_AND_ADDRESS':
 
-                    checkPassword()
+                    await checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
@@ -290,7 +290,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                 case 'CHANGE_ADDRESS':
 
-                    checkPassword()
+                    await checkPassword()
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },

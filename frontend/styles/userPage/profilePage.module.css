@@ -410,29 +410,40 @@ section.user_info_wrapper {
 
 }
 
-.contacts_mobile_display div.heading button[data-action='edit'] {
+div.heading button[data-action='edit'] {
 
     padding: 8px;
 
     background-color: transparent;
     border: none;
     border-radius: 4px;
+    border: 1px solid var(--primary);
 
     text-decoration: underline;
     color: var(--primary);
 
 }
 
-.contacts_mobile_display div.heading button[data-action='cancel'] {
+@media(min-width: 1020px) {
+
+    div.heading button[data-action='edit'] {
+
+        border: none;
+
+    }
+
+}
+
+div.heading button[data-action='cancel'] {
 
     padding: 8px;
 
     background-color: var(--white);
     box-shadow: 5px 5px 5px 0 var(--black-10);
-    border: 1px solid var(--primary);
+    border: 1px solid var(--error);
     border-radius: 4px;
 
-    color: var(--primary);
+    color: var(--error);
 
 }
 
@@ -612,6 +623,12 @@ nav.tab_container button:hover {
 
         padding: 14px 16px;
         border-radius: 4px 4px 0 0;
+
+    }
+
+    nav.tab_container button[data-tab='4'] {
+
+        display: none;
 
     }
 }
@@ -1080,9 +1097,8 @@ div.form_container button[type='submit']:hover {
 
     div.form_container button[type='submit'] {
 
-        float: right;
-
         width: fit-content;
+        overflow: auto;
 
     }
 
@@ -1093,6 +1109,54 @@ div.form_container button svg {
     fill: var(--white);
 
     transform: scale(1.8);
+
+    margin-right: 16px;
+
+}
+
+.navigation_index_selected .activity_field_container .heading {
+
+    padding: 16px;
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+.activity_field_container ul.contacts_list {
+
+    padding: 16px;
+
+}
+
+.activity_field_container ul.contacts_list li {
+
+    padding: 8px 0;
+
+    display: flex;
+    align-items: center;
+
+    color: var(--black);
+
+    font-weight: 500;
+
+}
+
+.activity_field_container form.contacts_form label {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.activity_field_container ul.contacts_list li a {
+
+    text-decoration: underline;
+
+}
+
+.activity_field_container ul.contacts_list li svg {
 
     margin-right: 16px;
 

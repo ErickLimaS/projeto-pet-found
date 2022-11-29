@@ -85,32 +85,48 @@ const Profile: NextPage = () => {
                 // console.log(name, street, county, state)
 
                 if (name && !street && !county && !state) {
-                    updateAccountData(
+                    const result = await updateAccountData(
                         'CHANGE_NAME',
                         undefined, // not sent by this function 
                         undefined, // not sent by this function 
                         password, // current password
                         name, undefined, undefined, undefined
                     )
+                    if (result?.status === 200) {
+
+                        // 
+
+                    }
                 }
                 else if (name && street && county && state) {
-                    updateAccountData(
+                    const result = await updateAccountData(
                         'CHANGE_NAME_AND_ADDRESS',
                         undefined, // not sent by this function 
                         undefined, // not sent by this function 
                         password, // current password
                         name, street, county, state
                     )
+                    if (result?.status === 200) {
+
+                        // 
+
+                    }
                 }
                 else {
-                    updateAccountData(
+                    const result = await updateAccountData(
                         'CHANGE_ADDRESS',
                         undefined, // not sent by this function 
                         undefined, // not sent by this function 
                         password, // current password
                         undefined, street, county, state
                     )
+                    if (result?.status === 200) {
+
+                        // 
+
+                    }
                 }
+
                 break;
 
             case 'CONTACTS':
@@ -120,7 +136,7 @@ const Profile: NextPage = () => {
                 const facebook: string | undefined = form.facebook.value || undefined
                 const instagram: string | undefined = form.instagram.value || undefined
 
-                updateAccountData(
+                const result = await updateAccountData(
                     'CHANGE_CONTACTS',
                     undefined, // not sent by this function 
                     undefined, // not sent by this function 
@@ -132,9 +148,11 @@ const Profile: NextPage = () => {
                     tel1, tel2, facebook, instagram
                 )
 
-            default:
-                alert(`erro`)
-                break;
+                if (result?.status === 200) {
+
+                    // 
+
+                }
 
         }
 
@@ -251,7 +269,6 @@ const Profile: NextPage = () => {
                         )}
 
                     </div>
-
 
                     {editable ? (
                         <>
@@ -374,19 +391,28 @@ const Profile: NextPage = () => {
 
                     <nav className={Styles.tab_container}>
                         <button type='button'
+                            data-tab='1'
                             data-tab-activated={tabIndex === 1 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(1) }} aria-label='Ir para a sessão Posts Feitos'>
                             Posts
                         </button>
                         <button type='button'
+                            data-tab='2'
                             data-tab-activated={tabIndex === 2 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(2) }} aria-label='Ir para a sessão de pessoas ajudadas'>
                             Ajudados
                         </button>
                         <button type='button'
+                            data-tab='3'
                             data-tab-activated={tabIndex === 3 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(3) }} aria-label='Ir para a sessão de mais opções'>
                             Mais
+                        </button>
+                        <button type='button'
+                            data-tab='4'
+                            data-tab-activated={tabIndex === 4 ? 'true' : 'false'}
+                            onClick={() => { setTabIndex(4) }} aria-label='Ir para a sessão de meus contatos'>
+                            Contatos
                         </button>
                     </nav>
 
@@ -613,6 +639,115 @@ const Profile: NextPage = () => {
                                 </button>
 
                             </form>
+
+                        </div>
+
+                    </div>
+
+                    <div aria-expanded={tabIndex === 4 ? 'true' : 'false'} className={`${Styles.navigation_index_selected} ${Styles.form_container}`}>
+
+                        <div className={Styles.activity_field_container}>
+
+                            <div className={Styles.heading}>
+                                <h3>Contatos</h3>
+                                {!editContacts ? (
+                                    <button type='button' data-action='edit' onClick={() => setEditContacts(true)}>Editar</button>
+                                ) : (
+                                    <button type='button' data-action='cancel' onClick={() => setEditContacts(false)}>Cancelar</button>
+                                )}
+                            </div>
+
+                            {!editContacts ? (
+                                <ul className={Styles.contacts_list}>
+                                    <li>
+                                        <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' />
+                                        ({user?.contacts?.tel1.slice(0, 2)})
+                                        {user?.contacts?.tel1.slice(2, 7)}
+                                        -
+                                        {user?.contacts?.tel1.slice(7)}
+
+                                    </li>
+                                    <li>
+                                        <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' />
+                                        {user?.contacts?.tel2 ? (
+                                            <>
+                                                ({user?.contacts?.tel2.slice(0, 2)})
+                                                {user?.contacts?.tel2.slice(2, 7)}
+                                                -
+                                                {user?.contacts?.tel2.slice(7)}
+                                            </>
+                                        ) : (
+                                            <p>Não Adicionado</p>
+                                        )}
+                                    </li>
+                                    <li>
+                                        <SVG.Facebook fill='#4267B2' aria-label='Link do perfil do facebook' />
+                                        {user?.contacts?.facebook ? (
+                                            <a href={user?.contacts?.facebook} target='_blank' rel='noreferrer'>Meu Perfil</a>
+                                        ) : (
+                                            <p>Não Adicionado</p>
+                                        )}
+                                    </li>
+                                    <li>
+                                        <SVG.Instagram fill='#E1306C' aria-label='Link do perfil do instagram' />
+                                        {user?.contacts?.instagram ? (
+                                            <a href={`https://www.instagram.com/${user?.contacts?.instagram.slice(1)}`} target='_blank' rel='noreferrer'>{user?.contacts?.instagram}</a>
+                                        ) : (
+                                            <p>Não Adicionado</p>
+                                        )}
+                                    </li>
+                                </ul>
+                            ) : (
+                                <form className={Styles.contacts_form} onSubmit={(e) => submitNameAddressContacts(e, 'CONTACTS')}>
+                                    <label>
+                                        <div className={Styles.heading}>
+                                            <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' />
+                                            Telefone 1
+                                        </div>
+                                        <input type='tel' id='tel1' name='tel1'
+                                            pattern='^\d.{10,10}$'
+                                            placeholder='Seu número'
+                                            defaultValue={user?.contacts?.tel1}></input>
+                                    </label>
+
+                                    <label>
+                                        <div className={Styles.heading}>
+                                            <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' />
+                                            Telefone 2
+                                        </div>
+                                        <input type='tel' id='tel2' name='tel2'
+                                            pattern='^\d.{10,10}$'
+                                            placeholder='Seu outro número'
+                                            defaultValue={user?.contacts?.tel2}></input>
+                                    </label>
+                                    <label>
+                                        <div className={Styles.heading}>
+                                            <SVG.Facebook fill='#4267B2' aria-label='Link do perfil do facebook' />
+                                            Facebook
+                                        </div>
+                                        <input type='text' id='facebook' name='facebook'
+                                            placeholder='Copie e cole aqui o link do seu perfil'
+                                            pattern='(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)'
+                                            title='Verifique se está nesse formato: https://pt-br.facebook.com/seu-nome-de-usuario'
+                                            defaultValue={user?.contacts?.facebook}></input>
+                                    </label>
+                                    <label>
+                                        <div className={Styles.heading}>
+                                            <SVG.Instagram fill='#E1306C' aria-label='Link do perfil do instagram' />
+                                            Instagram
+                                        </div>
+                                        <input type='text' id='instagram' name='instagram'
+                                            placeholder='Coloque o @ do seu perfil'
+                                            pattern='^@[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$'
+                                            title='Verifique se está nesse formato: @petfound'
+                                            defaultValue={user?.contacts?.instagram}></input>
+                                    </label>
+
+                                    <button type='submit' id='submit_contacts' >
+                                        Salvar Mudanças
+                                    </button>
+                                </form>
+                            )}
 
                         </div>
 
