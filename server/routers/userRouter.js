@@ -17,7 +17,7 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
     // checks if user has already been added on DB 
     if (user) {
 
-        return res.status(409).json({ message: 'User already created.' })
+        return res.status(409).json({ message: 'Email já cadastrado. Tente fazer login.' })
 
     }
 
@@ -61,7 +61,7 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
 
         return res.status(500).json({
             status: 500,
-            message: `Internal Error: ${err}`
+            message: `Server Error: ${err}`
         })
 
     }
@@ -169,7 +169,6 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
         }
     }
 
-
     // standardize the result for a successfull update request
     const successfullReponse = async () => {
 
@@ -233,7 +232,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
-                        { password: await bcrypt.hash(req.body.password, passwordSalt) },
+                        { password: await bcrypt.hash(req.body.newPassword, passwordSalt) },
                         async function (err, result) {
 
                             if (err) {
@@ -329,12 +328,12 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                     return res.status(202).json(await successfullReponse())
 
                 default:
-                    return res.status(400).json({ message: 'Error with update request method' })
+                    return res.status(400).json({ message: 'Server Error. Provided method do not match.' })
 
             }
         }
         else {
-            return res.status(400).json({ message: 'No method received' })
+            return res.status(400).json({ message: 'Server Error. No method received' })
         }
 
     }

@@ -263,7 +263,7 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                 return
         }
 
-        const { data } = await Axios({
+        const res = await Axios({
             url: `${DB_URL}/update-profile`,
             method: 'PUT',
             headers: {
@@ -273,14 +273,18 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
             },
             data: dataToBeSend
+
         })
 
-        return { status: 200, data: data };
-
+        return { success: true, status: res.status, data: res.data };
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message };
+        return {
+            success: false,
+            status: error.response.status,
+            message: error.response.data.message
+        };
 
     }
 

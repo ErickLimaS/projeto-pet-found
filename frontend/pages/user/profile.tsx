@@ -10,29 +10,7 @@ import profile from '../../public/imgs/profile-icon.png'
 import { getAccountInfo, updateAccountData } from '../api/userRoutes'
 import * as SVG from '../../public/imgs/svg'
 import Link from 'next/link'
-
-interface userRegisterTypes {
-    email: string,
-    password: string,
-    name: string,
-    address: {
-        state: string,
-        county: string,
-        street: string | null // null is for the optional inputs
-    },
-    contacts: {
-        tel1: {
-            ddd: string | null,
-            tel: string | null
-        },
-        tel2: {
-            ddd: string | null,
-            tel: string | null
-        },
-        facebook: string | null,
-        instagram: string | null
-    }
-}
+import NotificationMessage from '../../components/NotificationMessage'
 
 const Profile: NextPage = () => {
 
@@ -40,13 +18,14 @@ const Profile: NextPage = () => {
     const [editable, setEditable] = useState<boolean>(false)
     const [editContacts, setEditContacts] = useState<boolean>(false)
     const [tabIndex, setTabIndex] = useState<number>(1)
+    const [responseForNotification, setResponseForNotification] = useState<{} | any>(null)
 
     const userState: any = useSelector((state: RootState) => state.currentUser)
 
     const router = useRouter()
 
     // submit data from form
-    const submitChangesForm = async (e: FormEvent, method: string) => {
+    const submitEmailPasswordForm = async (e: FormEvent, method: string) => {
 
         e.preventDefault()
 
@@ -59,11 +38,27 @@ const Profile: NextPage = () => {
 
         if (newPasswordCheck1 !== newPasswordCheck2) {
 
-            return alert('dont match')
+
+            // erases notification data after 5.5 seconds
+            setTimeout(() => { setResponseForNotification(null) }, 5500)
+
+            // sets what the server responded to be notified on screen
+            return setResponseForNotification(
+                {
+                    success: false,
+                    message: 'As Senhas não são iguais. Tente novamente.'
+                }
+            )
 
         }
 
-        updateAccountData(method, email, newPasswordCheck1, currentPassword)
+        const result = await updateAccountData(method, email, newPasswordCheck1, currentPassword)
+
+        // sets what the server responded to be notified on screen
+        setResponseForNotification(result)
+
+        // erases notification data after 5.5 seconds
+        setTimeout(() => { setResponseForNotification(null) }, 5500)
 
     }
 
@@ -82,8 +77,6 @@ const Profile: NextPage = () => {
                 const state: string | undefined = form.state.value || undefined
                 const password: string = form.current_password.value
 
-                // console.log(name, street, county, state)
-
                 if (name && !street && !county && !state) {
                     const result = await updateAccountData(
                         'CHANGE_NAME',
@@ -92,11 +85,10 @@ const Profile: NextPage = () => {
                         password, // current password
                         name, undefined, undefined, undefined
                     )
-                    if (result?.status === 200) {
 
-                        // 
+                    // sets what the server responded to be notified on screen
+                    setResponseForNotification(result)
 
-                    }
                 }
                 else if (name && street && county && state) {
                     const result = await updateAccountData(
@@ -106,11 +98,10 @@ const Profile: NextPage = () => {
                         password, // current password
                         name, street, county, state
                     )
-                    if (result?.status === 200) {
 
-                        // 
+                    // sets what the server responded to be notified on screen
+                    setResponseForNotification(result)
 
-                    }
                 }
                 else {
                     const result = await updateAccountData(
@@ -120,11 +111,10 @@ const Profile: NextPage = () => {
                         password, // current password
                         undefined, street, county, state
                     )
-                    if (result?.status === 200) {
 
-                        // 
+                    // sets what the server responded to be notified on screen
+                    setResponseForNotification(result)
 
-                    }
                 }
 
                 break;
@@ -148,14 +138,15 @@ const Profile: NextPage = () => {
                     tel1, tel2, facebook, instagram
                 )
 
-                if (result?.status === 200) {
-
-                    // 
-
-                }
+                // sets what the server responded to be notified on screen
+                setResponseForNotification(result)
 
         }
 
+        // erases notification data after 5.5 seconds
+        setTimeout(() => { setResponseForNotification(null) }, 5500)
+
+        // Close edit form
         setEditable(!editable)
     }
 
@@ -198,6 +189,11 @@ const Profile: NextPage = () => {
                 title='Perfil'
                 description='Página de perfil do usuário, onde você poderá editar algumas das suas informações já adicionadas antes.'
             />
+
+            {/* SHOWS NOTIFICATION WITH THE RESULT AFTER A FORM IS SENT */}
+            {responseForNotification && (
+                <NotificationMessage props={responseForNotification} />
+            )}
 
             <div className={Styles.container}>
 
@@ -580,7 +576,7 @@ const Profile: NextPage = () => {
 
                             <h3>Configurações da Conta</h3>
 
-                            <form onSubmit={(e) => submitChangesForm(e, 'EMAIL_OR_PASSWORD')}>
+                            <form onSubmit={(e) => submitEmailPasswordForm(e, 'EMAIL_OR_PASSWORD')}>
 
                                 <div className={Styles.input_wrapper}>
 
