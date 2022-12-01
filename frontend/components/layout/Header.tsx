@@ -93,13 +93,6 @@ function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link href='/user/profile?nav=4'>
-                                                    <a>
-                                                        <SVG.GearFill /> Configurações
-                                                    </a>
-                                                </Link>
-                                            </li>
-                                            <li>
                                                 <button type='button'
                                                     onClick={() => logoutUser()}>
                                                     <SVG.BoxArrowLeft /> Sair da Conta
@@ -173,13 +166,6 @@ function Header() {
                                                     <Link href='/my-pets'>
                                                         <a>
                                                             <SVG.PawIcon /> Meus Pets
-                                                        </a>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link href='/user/profile?nav=4'>
-                                                        <a>
-                                                            <SVG.GearFill /> Configurações
                                                         </a>
                                                     </Link>
                                                 </li>

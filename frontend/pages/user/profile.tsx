@@ -11,12 +11,14 @@ import { getAccountInfo, updateAccountData } from '../api/userRoutes'
 import * as SVG from '../../public/imgs/svg'
 import Link from 'next/link'
 import NotificationMessage from '../../components/NotificationMessage'
+import PageLoading from '../../components/PageLoading'
 
 const Profile: NextPage = () => {
 
     const [user, setUser] = useState<any>([])
     const [editable, setEditable] = useState<boolean>(false)
     const [editContacts, setEditContacts] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const [tabIndex, setTabIndex] = useState<number>(1)
     const [responseForNotification, setResponseForNotification] = useState<{} | any>(null)
 
@@ -159,8 +161,12 @@ const Profile: NextPage = () => {
 
         }
         else {
+
             // gets user info from server
             (async function allAccountInfo() {
+
+                setLoading(true)
+
                 const res = await getAccountInfo()
 
                 setUser(userState)
@@ -171,14 +177,9 @@ const Profile: NextPage = () => {
 
                 }
 
+                setLoading(false)
             }())
 
-            // if user is redirect through a query, sets tab to be shown 
-            if (router.query.nav) {
-
-                setTabIndex(4)
-
-            }
         }
 
     }, [router.query.nav, userState])
@@ -193,6 +194,10 @@ const Profile: NextPage = () => {
             {/* SHOWS NOTIFICATION WITH THE RESULT AFTER A FORM IS SENT */}
             {responseForNotification && (
                 <NotificationMessage props={responseForNotification} />
+            )}
+
+            {loading && (
+                <PageLoading />
             )}
 
             <div className={Styles.container}>

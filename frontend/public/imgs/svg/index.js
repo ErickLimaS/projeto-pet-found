@@ -18,6 +18,7 @@ export { default as FemaleSymbol } from "./FemaleSymbol";
 export { default as GearFill } from "./GearFill";
 export { default as Instagram } from "./Instagram";
 export { default as List } from "./List";
+export { default as Loading } from "./Loading";
 export { default as Logo } from "./Logo";
 export { default as MaleSymbol } from "./MaleSymbol";
 export { default as MaleSymbol2 } from "./MaleSymbol2";

@@ -1,34 +1,24 @@
-.grey_block {
+.loading_container {
 
-    margin: 1rem 0;
+    position: fixed;
 
-    background-color: var(--grey);
-    border-radius: 8px;
+    display: flex;
 
-    height: 40vh;
-    width: 80vw;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 
-}
+    background-color: rgba(255, 255, 255, 0.90);
 
-@media(max-width: 720px) {
-
-    .grey_block {
-        height: 40vh;
-        width: 80vw;
-    }
+    z-index: 99999;
 
 }
 
-.grey_block:first-child {
+.loading_container svg {
 
-    height: 20vh;
+    position: relative;
 
-}
-
-@media(max-width: 720px) {
-
-    .grey_block:first-child {
-        height: 20vh;
-    }
+    margin: auto;
 
 }

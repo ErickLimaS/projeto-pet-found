@@ -9,12 +9,14 @@ import Image from 'next/image'
 import ResultItem from '../../components/found/ResultItem'
 import { getAllPetsByQuery } from '../api/petRoutes'
 import { useRouter } from 'next/router'
+import PageLoading from '../../components/PageLoading'
 
 const Found: NextPage = () => {
 
   const [states, setStates] = useState<any>([])
   const [county, setCounty] = useState<any>([])
 
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [adressQueried, setAdressQueried] = useState<string>('')
 
@@ -43,8 +45,12 @@ const Found: NextPage = () => {
   // get all pets data registered on DB
   const getAllPetsData = async () => {
 
+    setLoading(true)
+
     const petsData = await getAllPetsByQuery()
     setPetsRegisteredData(petsData)
+
+    setLoading(false)
 
   }
 
@@ -53,7 +59,7 @@ const Found: NextPage = () => {
     e.preventDefault()
 
     const pets = document.querySelectorAll('form.sort_pets_address input[type=checkbox]:checked') as NodeList
-    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(1,3)
+    const state = (document.getElementById('state') as HTMLSelectElement).value.slice(1, 3)
     const county = (document.getElementById('county') as HTMLSelectElement).value ?
       (document.getElementById('county') as HTMLSelectElement).value : ''
 
@@ -96,7 +102,7 @@ const Found: NextPage = () => {
       else if ((document.getElementById('has_no_disability') as HTMLInputElement).checked) {
 
         // return 'hasDisability=false'
-        
+
         return [false]
 
       }
@@ -142,6 +148,10 @@ const Found: NextPage = () => {
   return (
     <>
       <Meta title='Achei Um Pet' />
+
+      {loading && (
+        <PageLoading />
+      )}
 
       <div className={FoundStyles.container}>
 
@@ -341,7 +351,7 @@ const Found: NextPage = () => {
             ) : (
 
               <div className={FoundStyles.no_results_container}>
-                
+
                 <h3>Nenhum resultado encontrado</h3>
 
                 <p>Nenhum item postado aqui está dentro dos parâmetros usados.</p>

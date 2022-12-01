@@ -1,17 +1,13 @@
 import React from 'react'
 import LoadingStyles from '../styles/Loading.module.css'
+import { Loading } from '../public/imgs/svg'
 
 function PageLoading() {
 
   return (
-    <>
-      temporary
-      <div className={LoadingStyles.grey_block}></div>
-      <div className={LoadingStyles.grey_block}></div>
-      <div className={LoadingStyles.grey_block}></div>
-      <div className={LoadingStyles.grey_block}></div>
-      <div className={LoadingStyles.grey_block}></div>
-    </>
+    <div role='' className={LoadingStyles.loading_container}>
+      <Loading alt='Carregando a página'/>
+    </div>
   )
 
 }
