@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { data } from './api/templateData'
 import PetPageStyles from '../styles/PetPage/PetPage.module.css'
 import Meta from '../components/Meta'
 import PageLoading from '../components/PageLoading'
 import Image from 'next/image'
 import * as SVG from '../public/imgs/svg'
-import { getPetInfo } from './api/petRoutes'
+import { getPetInfo, notifyOwner } from './api/petRoutes'
+import NotificationMessage from '../components/NotificationMessage'
 
 const Pet: NextPage = () => {
 
@@ -15,6 +15,7 @@ const Pet: NextPage = () => {
     const [petInfo, setPetInfo] = useState<any>(null)
     const [expanded, setExpanded] = useState<boolean>(false)
     const [hasCollarInput, setHasCollarInput] = useState<boolean>(true)
+    const [responseForNotification, setResponseForNotification] = useState(null)
 
     const petImg = React.useRef<HTMLInputElement>(null)
 
@@ -33,16 +34,33 @@ const Pet: NextPage = () => {
 
     }
 
-    const submitPetFoundForm = (e: any) => {
-
-        // Send to user 'A' account whose pet is lost a notification about user 'B' found their pet. Then user 'A' will be able to contact with user 'B'.
-
-        // Server will receave a img from user B and his info contact. After that, user A will get a notification about his pet lost, and will be able to contact with user B.
+    const submitPetFoundForm = async (e: FormEvent) => {
 
         e.preventDefault()
 
-        // const img = petImg.current.value
-        // const confirm = checkboxConfirmPetFound.current.value
+        const form = e.target as HTMLFormElement;
+
+        const data = {
+            pet: {
+                _id: `${router.query.id}`
+            },
+            moreInfo: {
+                // petImg: form.petImg.value,
+                hasCollar: form.hasCollar.value,
+                collarName: form.hasCollar.value == 'true' ? form.collarName.value : null,
+                foundAddress: form.hasCollar.value
+            }
+        }
+
+        const res = await notifyOwner(data);
+
+        setResponseForNotification(res)
+
+        setExpanded(false)
+
+        setTimeout(() => {
+            setResponseForNotification(null)
+        }, 6000)
 
     }
 
@@ -63,6 +81,11 @@ const Pet: NextPage = () => {
                     'Loading' : (petInfo != null ? petInfo.name : 'Not Found')}
                 description={petInfo?.moreInfo && petInfo.moreInfo}
             />
+
+            {/* SHOWS NOTIFICATION WITH THE RESULT AFTER A FORM IS SENT */}
+            {responseForNotification && (
+                <NotificationMessage props={responseForNotification} />
+            )}
 
             {loading ? (
                 <div className={PetPageStyles.loading}>
@@ -208,7 +231,7 @@ const Pet: NextPage = () => {
                                 <label>
 
                                     Foto do Pet
-                                    <input type='file' name='photo' />
+                                    <input type='file' name='petImg' />
 
                                 </label>
                             </div>
@@ -235,7 +258,7 @@ const Pet: NextPage = () => {
                                 <label>
 
                                     O que está escrito nela?
-                                    <input type='text' name='nameOnCollar' disabled={hasCollarInput ? false : true} />
+                                    <input type='text' name='collarName' disabled={hasCollarInput ? false : true} />
 
                                 </label>
                             </div>
@@ -243,7 +266,9 @@ const Pet: NextPage = () => {
                                 <label>
 
                                     Onde Encontrou o Pet?
-                                    <input type='text' placeholder='Ex: Rua das Laranjeiras, Bairro do Limão, SP' name='addressWhenFound' />
+                                    <input type='text'
+                                        id='foundAddress' name='foundAddress'
+                                        placeholder='Ex: Rua das Laranjeiras, Bairro do Limão, SP' />
 
                                 </label>
                             </div>

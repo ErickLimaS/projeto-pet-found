@@ -1,10 +1,10 @@
 import Axios from "axios"
 import { store } from "../../store"
 
-// const DB_URL = 'https://pet-found.up.railway.app/pets'
+const DB_URL = 'https://pet-found.onrender.com/pets'
 
 // testes
-const DB_URL = 'http://localhost:9123/pets' // test
+// const DB_URL = 'http://localhost:9123/pets'
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
@@ -109,52 +109,8 @@ const config = (route: string, body?: any, query?: string) => {
 
             break;
 
-        default:
-
-            methodUsedByRoute = "GET" //fix
-
-            headerUsedByRoute = {
-                "Content-Type": "application/json"
-            }
-
-            break;
-
-    }
-
-    switch (route) {
-
-        case '/all' || '/my-pets' || '/pet':
-
-            methodUsedByRoute = "GET"
-
-            headerUsedByRoute = {
-                "Content-Type": "application/json"
-            }
-
-            break;
-
-        case '/register':
-            methodUsedByRoute = "POST"
-
-            headerUsedByRoute = {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${userToken}`
-            }
-
-            break;
-
-        case '/update-pet-status':
+        case '/notify-owner':
             methodUsedByRoute = "PUT"
-
-            headerUsedByRoute = {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${userToken}`
-            }
-
-            break;
-
-        case '/remove-pet':
-            methodUsedByRoute = "DELETE"
 
             headerUsedByRoute = {
                 "Content-Type": "application/json",
@@ -177,7 +133,7 @@ const config = (route: string, body?: any, query?: string) => {
 
     return {
         method: methodUsedByRoute,
-        url: `${DB_URL}${route}${query && query}`,
+        url: `${DB_URL}${route}${query ? query : ''}`,
         headers: headerUsedByRoute,
         data: body
     }
@@ -222,8 +178,8 @@ export const createPetPost = async (info: petDataTypes, user?: newUserDataTypes)
     }
     catch (error: any) {
 
-        console.log(error)
-
+        return { status: error.response.status, message: error.response.data.message }
+        
     }
 
 }
@@ -282,9 +238,7 @@ export const getAllPetsByQuery = async (query?: queryTypes) => {
     }
     catch (error: any) {
 
-        return {
-            message: error
-        }
+        return { status: error.response.status, message: error.response.data.message }
 
     }
 }
@@ -302,9 +256,7 @@ export const getPetInfo = async (query: string) => {
     }
     catch (error: any) {
 
-        return {
-            message: error
-        }
+        return { status: error.response.status, message: error.response.data.message }
 
     }
 
@@ -323,9 +275,7 @@ export const getPetsRegisteredByUser = async () => {
     }
     catch (error: any) {
 
-        return {
-            message: error
-        }
+        return { status: error.response.status, message: error.response.data.message }
 
     }
 
@@ -344,10 +294,7 @@ export const updatePetStatus = async () => {
     }
     catch (error: any) {
 
-        return {
-            message: error
-        }
-
+        return { status: error.response.status, message: error.response.data.message }
     }
 
 }
@@ -365,9 +312,26 @@ export const removePetFromDB = async () => {
     }
     catch (error: any) {
 
-        return {
-            message: error
-        }
+        return { status: error.response.status, message: error.response.data.message }
+
+    }
+
+}
+
+// sets a notification of pet found to owner / who found will be paired with post of the pet
+export const notifyOwner = async (info: any) => {
+
+    try {
+
+        const { data } = await Axios(
+            config('/notify-owner', info)
+        )
+
+        return data;
+    }
+    catch (error: any) {
+
+        return { status: error.response.status, message: error.response.data.message }
 
     }
 

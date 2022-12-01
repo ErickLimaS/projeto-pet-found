@@ -13,7 +13,6 @@ const headers: any = {
 
 export default {
 
-
     getCatsBreed: async () => {
 
         try {
@@ -28,8 +27,6 @@ export default {
 
         }
         catch (error: any) {
-
-            console.log(error)
 
             return { 'name': 'Erro Test' }
 
@@ -49,14 +46,11 @@ export default {
 
             return data
 
-            // return [{'name': 'Erro Test'}]
-
         }
         catch (error: any) {
 
-            console.log(error)
-
             return [{ 'name': 'Erro Test' }]
+            
         }
 
     }

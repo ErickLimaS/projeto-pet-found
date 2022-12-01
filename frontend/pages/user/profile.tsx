@@ -500,10 +500,10 @@ const Profile: NextPage = () => {
 
                             <h3>Quem eu Ajudei</h3>
 
-                            {user?.petsUserFound?.length > 0 ? (
+                            {user?.petsFound?.length > 0 ? (
                                 <ul className={Styles.list_lost_pets}>
 
-                                    {user?.petsUserFound?.map((pet: any, key: any) => (
+                                    {user?.petsFound?.map((pet: any, key: any) => (
 
                                         <li key={key} data-found={pet.wasFound ? 'true' : 'false'}>
                                             <Link href={`/pet?id=${pet._id}`} >

@@ -64,3 +64,19 @@ Content-Type: application/json
     "name": "New Name",
     "password": "test@gmail.coM123!!"
 }
+
+### 
+
+PUT http://localhost:5000/pets/notify-owner
+Content-Type: application/json
+
+{
+    "pet": {
+        "_id": "636025c0b0f16f83d17ccd10"
+    },
+    "moreInfo": {
+        "hasCollar": false,
+        "collarName": null,
+        "foundAddress": "req.body.moreInfo.foundAddress"
+    }
+}

@@ -728,4 +728,63 @@ petRouters.delete("/remove-pet", isAuth, expressAsyncHandler(async (req, res) =>
 
 }))
 
+petRouters.put("/notify-owner", isAuth, expressAsyncHandler(async (req, res) => {
+
+    // gets the user who sent this request info
+    const userWhoFound = await User.findById(req.user.userInfo._id)
+
+    // gets pet info
+    const pet = await Pet.findById(req.body.pet._id)
+
+    // gets the pet owner info
+    const petOwner = await User.findById(pet.ownerId)
+
+    try {
+
+        if (userWhoFound.email === petOwner.email) {
+
+            return res.status(403).json(
+                { success: false, message: 'Você não pode fazer isso sendo o dono desse pet. Tente ir nas configurações da sua conta para editar esse post.' }
+            )
+
+        }
+
+        // sets a notification to the owner of the lost pet
+        petOwner.notifications.push(
+            {
+                pet: pet,
+                whoFound: {
+                    _id: req.user.userInfo._id
+                },
+                infoSentByWhoFound: {
+                    // petImg,
+                    hasCollar: req.body.moreInfo.hasCollar,
+                    collarName: req.body.moreInfo.collarName || null,
+                    foundAddress: req.body.moreInfo.foundAddress
+                }
+            }
+        )
+
+        // sets info of lost pet to the user who found account 
+        userWhoFound.petsFound.push(pet)
+
+        await petOwner.save()
+        await userWhoFound.save()
+
+        return res.status(202).json(
+            {
+                success: true,
+                message: 'Dono do pet notificado. Agora ele deve retornar o contato.'
+            }
+        )
+
+    }
+    catch (error) {
+
+        return res.status(500).json({ success: false, message: `${error}` })
+
+    }
+
+}))
+
 export default petRouters;

@@ -114,7 +114,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
 
     // verifies if email exist
-    let user = await User.findById(req.user.userInfo._id, '-password -_id -updatedAt').populate('petsRegistered')
+    let user = await User.findById(req.user.userInfo._id, '-password -_id -updatedAt').populate('petsRegistered').populate('petsFound')
 
     let petsFound = user.petsRegistered.filter((pet) => pet.wasFound)
 

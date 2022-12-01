@@ -9,10 +9,14 @@ interface Props {
 
 export const Container = styled.div<Props>`
 
-    animation: disapear_after_5seconds forwards 5000ms;
+    animation: disapear_after_5seconds forwards 6000ms;
+
+    min-width: 300px; 
+    max-width: 380px; 
 
     position: fixed;
     top: 2vh;
+    margin-left: 2vw;
     right: 2vw;
 
     z-index: 100000;
@@ -28,6 +32,7 @@ export const Container = styled.div<Props>`
 
         border-left: 2px solid ${props => props.success === true ? 'var(--success)' : 'var(--error)'};
 
+        padding: 6px 0;
         padding-left: 10px;
         margin-bottom: 16px;
 
@@ -41,10 +46,10 @@ export const Container = styled.div<Props>`
         
         margin-left: 10px;
         font-size: var(--small-2);
-        line-height: 1;
+        line-height: 1.5;
 
     }
-    @keyframes disapear_after_5seconds {
+    @keyframes disapear_after_6seconds {
 
         0%{
             opacity: 1;

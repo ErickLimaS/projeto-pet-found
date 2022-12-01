@@ -34,13 +34,33 @@ const userSchema = new mongoose.Schema(
                 ref: 'Pet'
             }
         ],
-        petsUserFound: [
+        petsFound: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Pet'
             }
         ],
-        notifications: []
+        notifications: [
+            {
+                pet: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Pet'
+                },
+                whoFound: {
+                    _id: { type: mongoose.ObjectId, required: true }
+                },
+                createdAt: { type: Date, default: () => Date.now(), immutable: true, required: true },
+                notificationRead: { type: Boolean, default: false },
+                infoSentByWhoFound: {
+
+                    // petImg: { required: true },
+                    hasCollar: { type: Boolean, required: true },
+                    collarName: { type: String || null },
+                    foundAddress: { type: String }
+
+                }
+            }
+        ]
     }
 
 )
