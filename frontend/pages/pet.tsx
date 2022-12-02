@@ -8,6 +8,8 @@ import Image from 'next/image'
 import * as SVG from '../public/imgs/svg'
 import { getPetInfo, notifyOwner } from './api/petRoutes'
 import NotificationMessage from '../components/NotificationMessage'
+import { RootState } from '../store'
+import { useSelector } from 'react-redux'
 
 const Pet: NextPage = () => {
 
@@ -19,11 +21,14 @@ const Pet: NextPage = () => {
 
     const petImg = React.useRef<HTMLInputElement>(null)
 
+    const userState: any = useSelector((state: RootState) => state.currentUser)
+
     const router = useRouter()
 
     // gets current pet's data 
     const getPetData = async () => {
 
+        setLoading(true)
         if (router.query.id) {
 
             const data = await getPetInfo(`${router.query.id}`)
@@ -31,6 +36,8 @@ const Pet: NextPage = () => {
             setPetInfo(data)
 
         }
+
+        setLoading(false)
 
     }
 
@@ -42,7 +49,9 @@ const Pet: NextPage = () => {
 
         const data = {
             pet: {
-                _id: `${router.query.id}`
+                _id: `${router.query.id}`,
+                name: `${petInfo.name}`,
+                type: `${petInfo.type}`
             },
             moreInfo: {
                 // petImg: form.petImg.value,
@@ -66,11 +75,7 @@ const Pet: NextPage = () => {
 
     useEffect(() => {
 
-        setLoading(true)
-
         getPetData()
-
-        setLoading(false)
 
     }, [router])
 
@@ -189,7 +194,14 @@ const Pet: NextPage = () => {
 
                                 <div className={PetPageStyles.button}>
 
-                                    <button type='button' onClick={() => setExpanded(!expanded)}>
+                                    <button type='button' onClick={() => {
+                                        if (userState.token && userState.name) {
+                                            setExpanded(!expanded)
+                                        }
+                                        else {
+                                            router.push(`/login?redirect=/pet?id=${router.query.id}`)
+                                        }
+                                    }}>
                                         Achei Seu Pet
                                     </button>
 

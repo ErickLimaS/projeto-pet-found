@@ -1,6 +1,7 @@
 import express from 'express'
 import expressAsyncHandler from "express-async-handler";
 import User from '../models/userModel.js'
+import Pet from '../models/petModel.js'
 import bcrypt from 'bcrypt'
 import { generateToken, isAuth } from '../utils.js'
 
@@ -343,6 +344,33 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
     }
 
+}))
+
+userRouter.get('/notifications', isAuth, expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.userInfo._id, '--password')
+
+    try {
+
+        let notifications = []
+
+        // filter the notifications which was not read yet
+        user.notifications.forEach(async (item) => {
+            if (item.notificationRead === false) {
+
+                notifications.push(item)
+
+            }
+
+        })
+
+        return res.status(200).json({ success: true, notifications: notifications })
+
+    }
+
+    catch (error) {
+        return res.status(500).json({ success: false, message: `Server Error. ${error}` })
+    }
 }))
 
 export default userRouter;

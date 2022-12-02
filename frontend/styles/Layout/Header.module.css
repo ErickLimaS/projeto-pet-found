@@ -69,7 +69,8 @@ div.logo svg {
 
 }
 
-.header>nav .links, .header>nav .links ul.list {
+.header>nav .links,
+.header>nav .links ul.list {
 
     display: flex;
     flex-direction: row;
@@ -162,7 +163,8 @@ div.logo svg {
 
 }
 
-.header .login_desktop>button:hover, .header .login_desktop>a:hover {
+.header .login_desktop>button:hover,
+.header .login_desktop>a:hover {
 
     transition: all ease-in 100ms;
     filter: saturate(90%);
@@ -262,7 +264,8 @@ div.logo svg {
 }
 
 
-.login_desktop div.user_panel ul, .login_desktop div.user_panel li {
+.login_desktop div.user_panel ul,
+.login_desktop div.user_panel li {
 
     width: 100%;
 
@@ -301,11 +304,12 @@ div.logo svg {
 
 }
 
-.login_desktop div.user_panel li a, .login_desktop div.user_panel li button {
+.login_desktop div.user_panel li a,
+.login_desktop div.user_panel li button {
 
     display: flex;
     text-align: center;
-    
+
     font-weight: 500;
 
     justify-content: space-between;
@@ -324,7 +328,8 @@ div.logo svg {
 
 }
 
-.login_desktop div.user_panel li a, .login_desktop div.user_panel li button {
+.login_desktop div.user_panel li a,
+.login_desktop div.user_panel li button {
 
     padding: 8px;
 
@@ -365,7 +370,8 @@ div.logo svg {
     }
 }
 
-.list li:hover a, .drawer_sidebar_mobile ul li:hover>a {
+.list li:hover a,
+.drawer_sidebar_mobile ul li:hover>a {
     transition: all ease-in-out 60ms;
 
     color: var(--white);
@@ -463,8 +469,8 @@ div.drawer_sidebar_mobile {
 
     }
 
-    
-    .login button.user_login{
+
+    .login button.user_login {
 
         background-color: var(--secondary);
 
@@ -500,7 +506,8 @@ div.drawer_sidebar_mobile {
 
     }
 
-    .login div.user_panel ul, .login div.user_panel li {
+    .login div.user_panel ul,
+    .login div.user_panel li {
 
         width: 100%;
 
@@ -539,7 +546,8 @@ div.drawer_sidebar_mobile {
 
     }
 
-    .login div.user_panel li a, .login div.user_panel li button {
+    .login div.user_panel li a,
+    .login div.user_panel li button {
 
         display: flex;
         text-align: center;
@@ -562,7 +570,8 @@ div.drawer_sidebar_mobile {
 
     }
 
-    .login div.user_panel li a, .login div.user_panel li button {
+    .login div.user_panel li a,
+    .login div.user_panel li button {
 
         padding: 8px;
 
@@ -598,4 +607,214 @@ div.drawer_sidebar_mobile {
         border-bottom: 0;
 
     }
+}
+
+
+.mobile_wrapper {
+
+    display: flex;
+    align-items: center;
+
+    gap: 0 26px;
+
+}
+
+@media(min-width: 851px) {
+
+    .mobile_wrapper {
+
+        display: none;
+
+    }
+}
+
+.notifications_container {
+
+    position: relative;
+
+}
+
+.notifications_container button[aria-controls='notification_list'] {
+
+    transform: scale(1.2);
+
+    display: flex;
+
+    background-color: transparent;
+
+    border: none;
+
+}
+
+.notifications_container button[aria-controls='notification_list'] {
+
+    border: 2px solid transparent;
+    border-radius: 50%;
+    padding: 6px;
+
+}
+
+
+.notifications_container button[aria-expanded='true'] {
+
+    transition: all ease 150ms;
+    border: 2px solid var(--secondary);
+    transform: scale(1.08);
+
+}
+
+.notifications_container button[aria-controls='notification_list'] svg[data-notifications-available='true'] {
+
+    animation: wiggle_bell forwards 1500ms;
+
+}
+
+.notifications_container button[aria-controls='notification_list']:hover svg {
+
+    animation: wiggle_bell forwards 1500ms;
+
+}
+
+@keyframes wiggle_bell {
+
+    0% {
+        transform: rotate(45deg)
+    }
+
+    25% {
+        transform: rotate(-45deg)
+    }
+
+    50% {
+        transform: rotate(35deg)
+    }
+
+    75% {
+
+        transform: rotate(-25deg)
+    }
+
+    100% {
+
+        transform: rotate(0deg)
+    }
+
+}
+
+.notifications_container .notifications_panel {
+
+    position: absolute;
+    top: calc(100% + 13px);
+    right: -20px;
+
+    padding: 12px 8px;
+
+    background-color: var(--secondary);
+
+    border-radius: 4px;
+
+    min-width: 300px;
+    max-width: 320px;
+
+}
+
+@media(max-width: 851px) {
+
+    .notifications_container .notifications_panel {
+
+        left: -195px;
+
+    }
+}
+
+.notifications_container .notifications_panel::before {
+
+    position: absolute;
+    top: -14px;
+    left: 83%;
+
+    content: '';
+
+    height: 0px;
+    width: 0px;
+
+    border-color: var(--secondary) transparent;
+    border-style: solid;
+    border-width: 0px 15px 15px 15px;
+
+}
+
+
+@media(max-width: 851px) {
+
+    .notifications_container .notifications_panel::before {
+
+        left: 65.4%;
+
+    }
+
+}
+
+
+.notifications_panel li {
+
+
+    background-color: var(--white);
+    border-radius: 4px;
+
+}
+
+.notifications_panel li:hover {
+
+    transition: all ease 200ms;
+    transform: scale(1.01);
+
+}
+
+.notifications_panel a {
+
+    padding: 12px 16px;
+
+    display: flex;
+
+}
+
+.notifications_panel a * {
+
+    color: var(--black);
+
+}
+
+
+.notifications_panel .icon_container {
+
+    padding-top: 16px;
+    padding-right: 16px;
+
+    display: flex;
+    align-items: flex-start;
+
+}
+
+.notifications_panel .icon_container svg {
+
+    transform: scale(1.4);
+    fill: var(--secondary);
+
+}
+
+.notifications_panel a h6 {
+
+    color: var(--primary);
+
+    font-weight: 500;
+
+}
+
+.notifications_panel a p {
+
+    display: none;
+    font-size: var(--small-2);
+    text-decoration: underline;
+
 }

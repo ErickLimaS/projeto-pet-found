@@ -2,10 +2,10 @@ import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
 import { store } from '../../store'
 
-const DB_URL = 'https://pet-found.onrender.com/user'
+// const DB_URL = 'https://pet-found.onrender.com/user'
 
 // testes
-// const DB_URL = 'http://localhost:9123/user'
+const DB_URL = 'http://localhost:9123/user'
 
 interface userRegisterTypes {
     email: string,
@@ -35,60 +35,52 @@ interface userLoginTypes {
     password: string
 }
 
-interface userDataTypes {
-    email?: string,
-    newPassword?: string,
-    currentPassword?: string,
-    name?: string,
-    street?: string,
-    county?: string,
-    state?: string,
-    tel1?: string,
-    tel2?: string,
-    facebook?: string,
-    instagram?: string
-}
-
 // gets token of the user already logged in
 const reduxState = store.getState()
 const userStoredData: any = reduxState.currentUser
 
-// sets the route and config used for the intended page purpose (DISABLED)
-const config = (route: string, userInfo?: userRegisterTypes | userLoginTypes) => {
+// NOTIFICATIONS IDENTIFIES IF USER HAS A STILL VALID TOKEN. 
+// IF NOT, ITS DELETED FROM LOCAL STORAGE, FORCING A NEW LOGIN.
 
-    // gets the needed headers configs for each route
+// sets the route and config used for the intended page purpose (DISABLED)
+const config = (route: string, body?: any, query?: string) => {
+
+    let methodUsedByRoute: string = "";
+    let headerUsedByRoute: {};
 
     switch (route) {
-        case '/update-profile':
 
-            return {
-                url: `${DB_URL}${route}`,
-                method: 'PUT',
-                headers: {
+        case '/notifications':
 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userStoredData.token}`
+            methodUsedByRoute = "GET"
 
-                },
-                data: userInfo
+            headerUsedByRoute = {
+                "Authorization": `Bearer ${userStoredData.token}`,
+                "Content-Type": "application/json"
             }
-        case '/register' || '/login':
-            return {
-                url: `${DB_URL}${route}`,
-                method: 'POST',
-                headers: {
 
-                    'Content-Type': 'application/json'
+            break;
 
-                },
-                data: userInfo
+        default:
+
+            methodUsedByRoute = "PUT" //fix
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json"
             }
+
+            break;
+
     }
 
-
+    return {
+        method: methodUsedByRoute,
+        url: `${DB_URL}${route}${query ? query : ''}`,
+        headers: headerUsedByRoute,
+        data: body
+    }
 
 }
-
 export const registerUser = async (info: userRegisterTypes) => {
 
     try {
@@ -294,5 +286,31 @@ export const logoutUser = async () => {
 
     // redux dispatch
     store.dispatch(currentUser("REMOVE_USER"))
+
+}
+
+export const getNotifications = async () => {
+
+    try {
+        const { data } = await Axios(
+            config('/notifications', undefined)
+        )
+
+        return data
+    }
+    catch (error: any) {
+
+        if (error.response.status === 401 /*UNAUTHORIZED */) {
+
+            localStorage.removeItem('name')
+            localStorage.removeItem('token')
+
+            location.reload()
+
+        }
+
+        return { status: error.response.status, message: error.response.data.message }
+
+    }
 
 }

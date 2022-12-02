@@ -1,3 +1,5 @@
+export { default as BellFill } from "./BellFill";
+export { default as Bell } from "./Bell";
 export { default as Binoculars } from "./Binoculars";
 export { default as BoxArrowLeft } from "./BoxArrowLeft";
 export { default as Brand } from "./Brand";
