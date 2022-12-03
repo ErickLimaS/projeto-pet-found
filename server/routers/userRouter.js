@@ -396,9 +396,9 @@ userRouter.put('/set-notifications-read', isAuth, expressAsyncHandler(async (req
 
         user.notifications.forEach((item) => {
 
-            if (item.notificationRead === true) {
+            if (item.notificationRead === false) {
 
-                item.notificationRead = false
+                item.notificationRead = true
 
             }
 
