@@ -346,31 +346,75 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
 }))
 
+// sends notifications from user account
 userRouter.get('/notifications', isAuth, expressAsyncHandler(async (req, res) => {
 
     const user = await User.findById(req.user.userInfo._id, '--password')
+
+    const params = req.query.q || null
 
     try {
 
         let notifications = []
 
-        // filter the notifications which was not read yet
-        user.notifications.forEach(async (item) => {
-            if (item.notificationRead === false) {
+        switch (params) {
 
-                notifications.push(item)
+            // returns notifications not read
+            case ('not_read'):
 
-            }
+                // filter the notifications which was not read yet
+                user.notifications.forEach(async (item) => {
+                    if (item.notificationRead === false) {
 
-        })
+                        notifications.push(item)
 
-        return res.status(200).json({ success: true, notifications: notifications })
+                    }
+
+                })
+
+                return res.status(200).json({ success: true, notifications: notifications })
+
+            default: // all
+
+                return res.status(200).json({ success: true, notifications: user.notifications })
+
+        }
 
     }
 
     catch (error) {
         return res.status(500).json({ success: false, message: `Server Error. ${error}` })
     }
+}))
+
+// set notifications not read to read
+userRouter.put('/set-notifications-read', isAuth, expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.userInfo._id)
+
+    try {
+
+        user.notifications.forEach((item) => {
+
+            if (item.notificationRead === true) {
+
+                item.notificationRead = false
+
+            }
+
+        })
+
+        await user.save()
+
+        return res.status(200).json({ success: true, message: 'Todas as notificações lidas' })
+
+    }
+    catch (error) {
+
+        return res.status(500).json({ success: false, message: `${error}` })
+
+    }
+
 }))
 
 export default userRouter;

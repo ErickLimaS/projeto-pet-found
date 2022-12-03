@@ -755,9 +755,15 @@ div.drawer_sidebar_mobile {
 
 }
 
+.notifications_panel ul {
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px 0;
+
+}
 
 .notifications_panel li {
-
 
     background-color: var(--white);
     border-radius: 4px;
@@ -771,7 +777,7 @@ div.drawer_sidebar_mobile {
 
 }
 
-.notifications_panel a {
+.notifications_panel ul li a {
 
     padding: 12px 16px;
 
@@ -805,7 +811,9 @@ div.drawer_sidebar_mobile {
 
 .notifications_panel a h6 {
 
-    color: var(--primary);
+    margin-bottom: 8px;
+
+    color: var(--secondary);
 
     font-weight: 500;
 
@@ -813,8 +821,36 @@ div.drawer_sidebar_mobile {
 
 .notifications_panel a p {
 
-    display: none;
     font-size: var(--small-2);
+    line-height: 1.5;
+
+}
+
+.no_notifications_container {
+
+    padding: 12px 16px;
+    background-color: var(--white);
+    border-radius: 4px;
+
+}
+
+
+.no_notifications_container h6 {
+
+    color: var(--secondary);
+    font-weight: 500;
+
+}
+
+.notifications_panel>a {
+
+    margin-top: 12px;
+
+    font-size: var(--small-2);
+    font-weight: 300;
+
+    display: block;
+    text-align: center;
     text-decoration: underline;
 
 }

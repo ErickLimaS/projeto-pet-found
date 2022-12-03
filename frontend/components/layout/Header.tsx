@@ -5,7 +5,7 @@ import * as C from '../../styles/Layout/headerStyledComponents'
 import * as SVG from '../../public/imgs/svg'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
-import { getNotifications, logoutUser } from '../../pages/api/userRoutes'
+import { getNotifications, logoutUser, setNotificationsToRead } from '../../pages/api/userRoutes'
 
 function Header() {
 
@@ -20,18 +20,21 @@ function Header() {
     // get notificatinos not read by user to be displayed
     const notificationsFromServer = async () => {
 
-        const res = await getNotifications()
+        const res = await getNotifications('not_read')
 
         setNotifications(res?.notifications)
 
     }
 
+    // handle notifications from user's account
     const notificationsSettings = () => {
 
         setExpandNotifications(!expandNotifications)
 
         // set notifications received as already read
-
+        if (expandNotifications === true) {
+            setNotificationsToRead()
+        }
 
     }
 
@@ -182,8 +185,10 @@ function Header() {
                                                             <div>
 
                                                                 <h6>
-                                                                    O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}
+                                                                    Noticias d{item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}
                                                                 </h6>
+
+                                                                <p>O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}</p>
 
                                                             </div>
                                                         </a>
@@ -194,8 +199,13 @@ function Header() {
                                             ))}
                                         </ul>
                                     ) : (
-                                        <div></div>
+                                        <div className={Styles.no_notifications_container}>
+                                            <h6>Sem novas notificações</h6>
+                                        </div>
                                     )}
+                                    <Link href='/notifications/all'>
+                                        Ver notificações antigas
+                                    </Link>
                                 </div>
 
                             )}
@@ -250,8 +260,10 @@ function Header() {
                                                             <div>
 
                                                                 <h6>
-                                                                    O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}
+                                                                    Noticias d{item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}
                                                                 </h6>
+
+                                                                <p>O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}</p>
 
                                                             </div>
                                                         </a>
@@ -262,8 +274,13 @@ function Header() {
                                             ))}
                                         </ul>
                                     ) : (
-                                        <div></div>
+                                        <div className={Styles.no_notifications_container}>
+                                            <h6>Sem novas notificações</h6>
+                                        </div>
                                     )}
+                                    <Link href='/notifications/all'>
+                                        Ver notificações antigas
+                                    </Link>
                                 </div>
 
                             )}
@@ -273,16 +290,22 @@ function Header() {
 
                     <div className={Styles.drawer_sidebar_mobile}>
 
-                        <button type='button' className='aaa' onClick={() => setMobileMenu(!mobileMenu)}>
+                        <button type='button'
+                            aria-label='Abrir Menu'
+                            aria-expanded={mobileMenu ? 'true' : 'false'}
+                            aria-controls='menu'
+                            onClick={() => setMobileMenu(!mobileMenu)}>
 
                             <SVG.List />
 
                         </button>
 
-                        <C.MobileList mobileMenu={mobileMenu}>
+                        <C.MobileList mobileMenu={mobileMenu} id='menu'>
 
                             <div className='button-container'>
-                                <button type='button' className='close-panel' onClick={() => setMobileMenu(!mobileMenu)}>
+                                <button type='button' className='close-panel'
+                                    aria-label='Fechar Menu'
+                                    onClick={() => setMobileMenu(!mobileMenu)}>
 
                                     <SVG.X />
 

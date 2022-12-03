@@ -61,6 +61,17 @@ const config = (route: string, body?: any, query?: string) => {
 
             break;
 
+        case '/set-notifications-read':
+
+            methodUsedByRoute = "PUT"
+
+            headerUsedByRoute = {
+                "Authorization": `Bearer ${userStoredData.token}`,
+                "Content-Type": "application/json"
+            }
+
+            break;
+
         default:
 
             methodUsedByRoute = "PUT" //fix
@@ -81,6 +92,7 @@ const config = (route: string, body?: any, query?: string) => {
     }
 
 }
+
 export const registerUser = async (info: userRegisterTypes) => {
 
     try {
@@ -289,11 +301,11 @@ export const logoutUser = async () => {
 
 }
 
-export const getNotifications = async () => {
+export const getNotifications = async (query?: string) => {
 
     try {
         const { data } = await Axios(
-            config('/notifications', undefined)
+            config('/notifications', undefined, query && `?q=${query}`)
         )
 
         return data
@@ -302,12 +314,31 @@ export const getNotifications = async () => {
 
         if (error.response.status === 401 /*UNAUTHORIZED */) {
 
-            localStorage.removeItem('name')
-            localStorage.removeItem('token')
+            // localStorage.removeItem('name')
+            // localStorage.removeItem('token')
 
             location.reload()
 
         }
+
+        return { status: error.response.status, message: error.response.data.message }
+
+    }
+
+}
+
+export const setNotificationsToRead = async () => {
+
+    try {
+
+        const { data } = await Axios(
+            config('/set-notifications-read')
+        )
+
+        return data
+
+    }
+    catch (error: any) {
 
         return { status: error.response.status, message: error.response.data.message }
 
