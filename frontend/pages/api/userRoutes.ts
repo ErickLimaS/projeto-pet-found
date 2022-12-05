@@ -43,7 +43,7 @@ const userStoredData: any = reduxState.currentUser
 // IF NOT, ITS DELETED FROM LOCAL STORAGE, FORCING A NEW LOGIN.
 
 // sets the route and config used for the intended page purpose (DISABLED)
-const config = (route: string, body?: any, query?: string) => {
+const config = (route: string, body?: any, query?: string, token?: string) => {
 
     let methodUsedByRoute: string = "";
     let headerUsedByRoute: {};
@@ -55,7 +55,7 @@ const config = (route: string, body?: any, query?: string) => {
             methodUsedByRoute = "GET"
 
             headerUsedByRoute = {
-                "Authorization": `Bearer ${userStoredData.token}`,
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
 
@@ -301,11 +301,11 @@ export const logoutUser = async () => {
 
 }
 
-export const getNotifications = async (query?: string) => {
+export const getNotifications = async (token: string, query?: string) => {
 
     try {
         const { data } = await Axios(
-            config('/notifications', undefined, query && `?q=${query}`)
+            config('/notifications', undefined, query && `?q=${query}`, token)
         )
 
         return data
@@ -314,8 +314,8 @@ export const getNotifications = async (query?: string) => {
 
         if (error.response.status === 401 /*UNAUTHORIZED */) {
 
-            // localStorage.removeItem('name')
-            // localStorage.removeItem('token')
+            localStorage.removeItem('name')
+            localStorage.removeItem('token')
 
             location.reload()
 

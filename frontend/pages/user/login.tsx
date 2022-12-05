@@ -42,14 +42,14 @@ export const Login: NextPage = () => {
         e.preventDefault()
 
         // only gets a error message, not applied to a successful request (status 202)
-        const getloginRequestError = await loginUser(
+        const loginRequest = await loginUser(
             {
                 email: (document.getElementById('email') as HTMLInputElement).value,
                 password: (document.getElementById('current-password') as HTMLInputElement).value
             }
         )
 
-        setLoginProcess(getloginRequestError)
+        setLoginProcess(loginRequest)
 
     }
 

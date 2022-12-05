@@ -20,7 +20,7 @@ function Header() {
     // get notificatinos not read by user to be displayed
     const notificationsFromServer = async () => {
 
-        const res = await getNotifications('not_read')
+        const res = await getNotifications(userState.token, 'not_read')
 
         setNotifications(res?.notifications)
 
