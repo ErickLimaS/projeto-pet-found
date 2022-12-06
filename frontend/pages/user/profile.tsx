@@ -26,6 +26,15 @@ const Profile: NextPage = () => {
 
     const router = useRouter()
 
+    // convert date
+    const convertDate = (originalDate: string) => {
+
+        const unix = Date.parse(originalDate)
+
+        return `${new Date(unix).getDate()}/${new Date(unix).getMonth()}/${new Date(unix).getFullYear()}`
+
+    }
+
     // submit data from form
     const submitEmailPasswordForm = async (e: FormEvent, method: string) => {
 
@@ -394,7 +403,9 @@ const Profile: NextPage = () => {
                         <button type='button'
                             data-tab='1'
                             data-tab-activated={tabIndex === 1 ? 'true' : 'false'}
-                            onClick={() => { setTabIndex(1) }} aria-label='Ir para a sessão Posts Feitos'>
+                            onClick={() => { setTabIndex(1) }} aria-label='Ir para a sessão 
+                            Posts Feitos'
+                        >
                             Posts
                         </button>
                         <button type='button'
@@ -460,12 +471,21 @@ const Profile: NextPage = () => {
                                                         <div className={Styles.pet_found_by}>
 
                                                             <h4>
-                                                                <Link href='/'>Erick</Link> achou seu pet
+                                                                <Link href={pet.userWhoFound._id}>
+                                                                    {pet.userWhoFound.name}
+                                                                </Link> achou seu pet
                                                             </h4>
 
-                                                            <p>Aceitou a Recomensa</p>
-
-                                                            <p>Achou em 15/10/2022</p>
+                                                            <p>
+                                                                {pet.userWhoFound.rewardAccepted ?
+                                                                    `Aceitou a Recomensa` :
+                                                                    'Não Aceitou a recompensa'
+                                                                }
+                                                            </p>
+                                                            {/* 15/10/2022 */}
+                                                            <p>
+                                                                Achou em {convertDate(pet.dateWhenFound)}
+                                                            </p>
 
                                                         </div>
 
@@ -480,7 +500,9 @@ const Profile: NextPage = () => {
                                                                 Ainda não encontrado
                                                             </h4>
 
-                                                            <p>Criado em 15/10/2022</p>
+                                                            <p>
+                                                                Criado em {convertDate(pet.createdAt)}
+                                                            </p>
 
                                                         </div>
 
@@ -542,19 +564,21 @@ const Profile: NextPage = () => {
                                                     <div className={Styles.pet_found_by}>
 
                                                         <h4>
-                                                            <Link href='/'>pet.userWhoFound.name</Link> achou seu pet
+                                                            <Link href={`/user/${pet.userWhoFound._id}`}>{pet.userWhoFound.name}</Link> achou seu pet
                                                         </h4>
 
                                                         {pet.hasReward ? (
 
-                                                            <p>pet.userWhoFound.rewardAccepted a Recomensa</p>
+                                                            <p>
+                                                                {pet.userWhoFound.rewardAccepted ? `Aceitou` : 'Não aceitou'} a Recomensa
+                                                            </p>
 
                                                         ) : (
 
-                                                            <p>pet.userWhoFound.rewardAccepted a Recomensa</p>
+                                                            <p>Não tem Recompensa</p>
                                                         )}
 
-                                                        <p>Achou em pet.userWhoFound.dateWhenFound</p>
+                                                        <p>Achou em {convertDate(pet.dateWhenFound)}</p>
 
                                                     </div>
 

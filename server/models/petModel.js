@@ -17,16 +17,11 @@ const petSchema = new mongoose.Schema(
         createdAt: { type: Date, default: () => Date.now(), immutable: true },
         updatedAt: { type: Date, default: () => Date.now() },
         wasFound: { type: Boolean, default: false },
+        dateWhenFound: { type: Date },
         userWhoFound: {
-            user: [
-                {
-                    type: Schema.Types.ObjectId,
-                    ref: 'User'
-                }
-            ],
+            name: { type: String },
             _id: { type: mongoose.ObjectId },
-            rewardAccepted: { type: Boolean },
-            dateWhenFound: { type: Date }
+            rewardAccepted: { type: Boolean }
         },
         hasDisability: { type: Boolean, required: true },
         // photoUrl: [

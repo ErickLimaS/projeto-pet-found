@@ -115,23 +115,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
 
     // verifies if email exist
-    let user = await User.findById(req.user.userInfo._id, '-password -_id -updatedAt').populate('petsRegistered').populate('petsFound')
-
-    let petsFound = user.petsRegistered.filter((pet) => pet.wasFound)
-
-    if (petsFound) {
-
-        petsFound = petsFound.forEach(async (pet) => {
-
-            pet.userWhoFound.user = await User.findById(pet.userWhoFound._id)
-
-            return { pet }
-
-        })
-
-        user.petsRegistered = [petsFound, user.petsRegistered.filter((pet) => pet.wasFound === false)]
-
-    }
+    let user = await User.findById(req.user.userInfo._id, '-password -_id -updatedAt').populate('petsFound').populate('petsRegistered')
 
     if (!user) {
 
@@ -148,7 +132,7 @@ userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
     }
     catch (err) {
 
-        return res.status(500).json({ message: err })
+        return res.status(500).json({ message: `${err}` })
 
     }
 

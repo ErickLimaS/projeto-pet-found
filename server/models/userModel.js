@@ -36,10 +36,8 @@ const userSchema = new mongoose.Schema(
         ],
         petsFound: [
             {
-                pet: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Pet'
-                },
+                type: Schema.Types.ObjectId,
+                ref: 'Pet'
             }
         ],
         notifications: [
@@ -47,7 +45,7 @@ const userSchema = new mongoose.Schema(
                 pet: {
                     _id: { type: mongoose.ObjectId, required: true },
                     name: { type: String, required: true },
-                    genre:  { type: String, required: true },
+                    genre: { type: String, required: true },
                     type: { type: String, required: true },
                     createdAt: { type: Date, default: () => Date.now(), immutable: true, required: true },
                 },

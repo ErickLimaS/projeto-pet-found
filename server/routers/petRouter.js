@@ -612,14 +612,14 @@ petRouters.put('/set-as-found', isAuth, expressAsyncHandler(async (req, res) => 
 
         if (!petIsFromUser) {
 
-            return res.status(401).json({ message: 'User Is Not the Owner or Pet Dont Exist' });
+            return res.status(401).json({ success: false, message: 'Usuário não é o dono ou esse pet não existe.' });
 
         }
 
     }
     else {
 
-        return res.status(404).json({ message: 'User Not Found' });
+        return res.status(404).json({ success: false, message: 'Usuário não encontrado.' });
 
     }
 
@@ -628,20 +628,21 @@ petRouters.put('/set-as-found', isAuth, expressAsyncHandler(async (req, res) => 
         Pet.findOneAndUpdate({ _id: req.body.pet._id },
             {
                 wasFound: true,
+                dateWhenFound: () => Date.now(),
                 userWhoFound: {
-                    _id: req.body.userWhoFound,
+                    name: req.body.userWhoFound.name,
+                    _id: req.body.userWhoFound._id,
                     rewardAccepted: req.body.rewardAccepted,
-                    dateWhenFound: Date.now()
                 }
             },
             function (err, result) {
 
                 if (err) {
-                    return res.status(404).json({ message: `${err}` });
+                    return res.status(404).json({ success: false, message: `${err}` });
                 }
                 else {
 
-                    return res.status(200).json({ message: 'Success' });
+                    return res.status(200).json({ success: true, message: 'Concluído' });
 
                 }
 
@@ -651,7 +652,7 @@ petRouters.put('/set-as-found', isAuth, expressAsyncHandler(async (req, res) => 
     }
     catch (error) {
 
-        return res.status(500).json({ message: `${error}` })
+        return res.status(500).json({ success: false, message: `${error}` })
 
     }
 
