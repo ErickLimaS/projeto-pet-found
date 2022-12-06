@@ -663,38 +663,38 @@ div.drawer_sidebar_mobile {
 
 }
 
-.notifications_container button[aria-controls='notification_list'] svg[data-notifications-available='true'] {
-
-    animation: wiggle_bell forwards 1500ms;
-
-}
-
+.notifications_container button[aria-controls='notification_list'] svg[data-notifications-available='true'],
 .notifications_container button[aria-controls='notification_list']:hover svg {
 
-    animation: wiggle_bell forwards 1500ms;
+    animation: wiggle_bell forwards 1400ms;
 
 }
 
 @keyframes wiggle_bell {
 
     0% {
+        transform: rotate(0)
+    }
+
+    20% {
         transform: rotate(45deg)
     }
 
-    25% {
+    40% {
         transform: rotate(-45deg)
     }
 
-    50% {
+    60% {
+
         transform: rotate(35deg)
     }
 
-    75% {
+    80% {
 
         transform: rotate(-25deg)
     }
 
-    100% {
+    80% {
 
         transform: rotate(0deg)
     }
@@ -823,6 +823,19 @@ div.drawer_sidebar_mobile {
 
     font-size: var(--small-2);
     line-height: 1.5;
+
+}
+
+.notifications_panel a small {
+
+    margin-top: 12px;
+
+    display: block;
+    text-align: right;
+
+    font-size: smaller;
+    font-weight: 600;
+    color: var(--black-75);
 
 }
 

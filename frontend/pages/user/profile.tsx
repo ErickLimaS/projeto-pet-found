@@ -12,6 +12,7 @@ import * as SVG from '../../public/imgs/svg'
 import Link from 'next/link'
 import NotificationMessage from '../../components/NotificationMessage'
 import PageLoading from '../../components/PageLoading'
+import { convertDate } from '../../components/convertDate'
 
 const Profile: NextPage = () => {
 
@@ -25,15 +26,6 @@ const Profile: NextPage = () => {
     const userState: any = useSelector((state: RootState) => state.currentUser)
 
     const router = useRouter()
-
-    // convert date
-    const convertDate = (originalDate: string) => {
-
-        const unix = Date.parse(originalDate)
-
-        return `${new Date(unix).getDate()}/${new Date(unix).getMonth()}/${new Date(unix).getFullYear()}`
-
-    }
 
     // submit data from form
     const submitEmailPasswordForm = async (e: FormEvent, method: string) => {
@@ -482,7 +474,6 @@ const Profile: NextPage = () => {
                                                                     'Não Aceitou a recompensa'
                                                                 }
                                                             </p>
-                                                            {/* 15/10/2022 */}
                                                             <p>
                                                                 Achou em {convertDate(pet.dateWhenFound)}
                                                             </p>

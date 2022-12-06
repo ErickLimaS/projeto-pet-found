@@ -6,6 +6,7 @@ import * as SVG from '../../public/imgs/svg'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { getNotifications, logoutUser, setNotificationsToRead } from '../../pages/api/userRoutes'
+import { convertDate } from '../convertDate'
 
 function Header() {
 
@@ -188,7 +189,13 @@ function Header() {
                                                                     Noticias d{item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}
                                                                 </h6>
 
-                                                                <p>O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}</p>
+                                                                <p>
+                                                                    O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}.
+                                                                </p>
+
+                                                                <small>
+                                                                    Em {convertDate(item.createdAt)}
+                                                                </small>
 
                                                             </div>
                                                         </a>
@@ -263,7 +270,13 @@ function Header() {
                                                                     Noticias d{item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}
                                                                 </h6>
 
-                                                                <p>O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}</p>
+                                                                <p>
+                                                                    O usuário {item.whoFound.name} acredita que encontrou {item.pet.genre === 'male' ? 'o' : 'a'} {item.pet.name}.
+                                                                </p>
+
+                                                                <small>
+                                                                    Em {convertDate(item.createdAt)}
+                                                                </small>
 
                                                             </div>
                                                         </a>
