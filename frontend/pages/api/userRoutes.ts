@@ -305,7 +305,7 @@ export const getNotifications = async (token: string, query?: string) => {
 
     try {
         const { data } = await Axios(
-            config('/notifications', undefined, query && `?q=${query}`, token)
+            config('/notifications', undefined, query ? `?q=${query}` : '', token)
         )
 
         return data

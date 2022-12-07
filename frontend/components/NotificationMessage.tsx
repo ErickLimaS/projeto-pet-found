@@ -13,7 +13,8 @@ function NotificationMessage({ props }: any) {
             </h1>
 
             <p>
-                {props.success ? 'Deu tudo certo!' : props.message}
+                {props.success ?
+                    'Deu tudo certo!' : props.message || 'Algo deu errado! Tente novamente mais tarde.'}
             </p>
 
         </C.Container>

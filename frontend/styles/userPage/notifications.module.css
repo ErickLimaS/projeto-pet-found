@@ -1,0 +1,182 @@
+.container {
+
+    max-width: 780px;
+
+    margin: 0 8px;
+    padding: 8px 0;
+
+}
+
+.container a:hover {
+
+    text-decoration: underline;
+
+}
+
+@media(min-width: 768px) {
+
+    .container {
+
+        margin: 0 auto;
+
+    }
+
+}
+
+.container>h1 {
+
+    font-size: var(--fs-heading2);
+    color: var(--black-50);
+
+}
+
+.container>p {
+
+    margin-bottom: 16px;
+    color: var(--black-75);
+
+}
+
+.notifications ul {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+.notifications>ul>li {
+
+    padding: 8px;
+
+    background-color: var(--white);
+    border-radius: 4px;
+
+}
+
+@media(min-width: 360px) {
+
+    .notifications>ul>li {
+
+        padding: 16px;
+
+    }
+
+}
+
+.notifications>ul>li {
+
+    box-shadow: 3px 3px 9px 1px var(--black-25);
+    
+}
+
+.notifications .heading {
+
+    display: flex;
+    align-items: center;
+
+}
+
+
+.notifications .heading svg {
+
+    margin-right: 16px;
+
+    width: 40px;
+    height: 40px;
+
+}
+
+.notifications .heading a {
+
+    color: var(--secondary);
+
+}
+
+.notifications .body {
+
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+
+.notifications .body h3 {
+
+    color: var(--secondary);
+    font-size: var(--fs-heading4);
+    line-height: 1.5;
+
+}
+
+
+.notifications .body li {
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 8px 0;
+
+}
+
+.notifications .body li b {
+
+    color: var(--secondary);
+
+}
+
+.notifications .body button {
+
+    padding: 8px 0;
+
+    border-radius: 4px;
+    border: 2px solid;
+
+    background-color: var(--white);
+    color: var(--primary);
+
+    font-size: var(--small-1);
+    font-weight: 500;
+
+}
+
+.notifications .body button:hover {
+
+    transition: all ease 150ms;
+
+    background-color: var(--secondary);
+    color: var(--white);
+
+}
+
+.notifications .body button#cancel_button {
+
+    color: var(--error);
+
+}
+
+.notifications .body button#cancel_button:hover {
+
+    transition: all ease 150ms;
+
+    background-color: var(--error);
+    color: var(--white);
+
+}
+
+.notifications ul li small {
+
+    margin-top: 16px;
+    margin-right: 16px;
+
+    color: var(--black-50);
+    font-weight: 600;
+
+    display: block;
+    text-align: right;
+
+}

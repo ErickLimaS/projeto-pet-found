@@ -5,6 +5,6 @@ export const convertDate = (originalDate: string) => {
     const unix = Date.parse(originalDate)
 
     // returns formated date
-    return `${new Date(unix).getDate()}/${new Date(unix).getMonth()}/${new Date(unix).getFullYear()}`
+    return `${new Date(unix).getDate()}/${new Date(unix).getMonth() + 1}/${new Date(unix).getFullYear()}`
 
 }

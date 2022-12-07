@@ -5,8 +5,8 @@ import { Loading } from '../public/imgs/svg'
 function PageLoading() {
 
   return (
-    <div role='' className={LoadingStyles.loading_container}>
-      <Loading alt='Carregando a página'/>
+    <div role='progressbar' className={LoadingStyles.loading_container}>
+      <Loading alt='Carregando a página' />
     </div>
   )
 

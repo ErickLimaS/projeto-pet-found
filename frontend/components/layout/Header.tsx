@@ -172,7 +172,7 @@ function Header() {
                                                 <li key={item._id}>
 
                                                     <Link
-                                                        href={`/notification?id=${item._id}`} className={Styles.notification}
+                                                        href={`/user/notifications?id=${item._id}`} className={Styles.notification}
                                                     >
                                                         <a>
                                                             <div
@@ -210,7 +210,7 @@ function Header() {
                                             <h6>Sem novas notificações</h6>
                                         </div>
                                     )}
-                                    <Link href='/notifications/all'>
+                                    <Link href='/user/notifications'>
                                         Ver notificações antigas
                                     </Link>
                                 </div>
@@ -253,7 +253,7 @@ function Header() {
                                                 <li key={item._id}>
 
                                                     <Link
-                                                        href={`/notification?id=${item._id}`} className={Styles.notification}
+                                                        href={`/user/notifications?id=${item._id}`} className={Styles.notification}
                                                     >
                                                         <a>
                                                             <div
@@ -291,7 +291,7 @@ function Header() {
                                             <h6>Sem novas notificações</h6>
                                         </div>
                                     )}
-                                    <Link href='/notifications/all'>
+                                    <Link href='/user/notifications'>
                                         Ver notificações antigas
                                     </Link>
                                 </div>
