@@ -68,7 +68,7 @@
 .notifications>ul>li {
 
     box-shadow: 3px 3px 9px 1px var(--black-25);
-    
+
 }
 
 .notifications .heading {
@@ -78,6 +78,12 @@
 
 }
 
+
+.notifications .heading h2 {
+
+    font-size: var(--fs-heading3);
+
+}
 
 .notifications .heading svg {
 
@@ -107,8 +113,10 @@
 
 .notifications .body h3 {
 
+    margin-top: 16px;
+
     color: var(--secondary);
-    font-size: var(--fs-heading4);
+    font-size: var(--fs-heading5);
     line-height: 1.5;
 
 }
@@ -133,6 +141,10 @@
 
     padding: 8px 0;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border-radius: 4px;
     border: 2px solid;
 
@@ -144,26 +156,97 @@
 
 }
 
-.notifications .body button:hover {
+.notifications .body button svg {
 
-    transition: all ease 150ms;
+    margin-left: 8px;
+
+}
+
+.notifications .body button[aria-expanded='true'] {
+
+    transform: scale(1.02);
 
     background-color: var(--secondary);
     color: var(--white);
 
 }
 
-.notifications .body button#cancel_button {
+.notifications .body button:hover {
+
+    transition: all ease 150ms;
+
+    border-color: var(--secondary);
+
+    background-color: var(--secondary);
+    color: var(--white);
+
+}
+
+.notifications .body button.ignore_button {
 
     color: var(--error);
 
 }
 
-.notifications .body button#cancel_button:hover {
+.notifications .body button.ignore_button:hover {
 
     transition: all ease 150ms;
 
+    border-color: var(--error);
     background-color: var(--error);
+    color: var(--white);
+
+}
+
+.notifications .body button.ignore_button[aria-expanded='true'] {
+
+    background-color: var(--error);
+    color: var(--white);
+
+}
+
+.notifications .body .ignore_notification_panel {
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px 8px;
+
+    border-radius: 8px;
+
+}
+
+
+.notifications .body .ignore_notification_panel h4 {
+
+    margin-bottom: 16px;
+
+    font-size: var(--small-1);
+    color: var(--error);
+
+}
+
+
+.notifications .body .ignore_notification_panel button.confirm_button {
+
+    margin-bottom: 16px;
+
+    border-color: var(--error);
+    color: var(--error);
+
+}
+
+.notifications .body .ignore_notification_panel button.confirm_button:hover {
+
+    background-color: var(--error);
+    color: var(--white);
+
+}
+
+.notifications .body .ignore_notification_panel button.cancel_button {
+
+    border-color: var(--secondary);
+    background-color: var(--secondary);
     color: var(--white);
 
 }
@@ -178,5 +261,74 @@
 
     display: block;
     text-align: right;
+
+}
+
+/*  CONTACTS PANEL */
+
+.body ul.who_found_contacts {
+
+    animation: slow_apear forwards 1100ms;
+    position: relative;
+    top: 0;
+
+    padding: 8px 16px;
+
+    background-color: var(--black-5);
+    border-radius: 8px;
+
+}
+
+@keyframes slow_apear {
+
+    0% {
+        opacity: 0;
+        top: -250px;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+        top: 0;
+    }
+
+}
+
+
+.body ul.who_found_contacts li {
+
+    margin: 0;
+
+}
+
+.body ul.who_found_contacts a {
+
+    padding: 8px 0;
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-weight: 500;
+
+}
+
+
+.body ul.who_found_contacts a:hover svg {
+
+    transition: all ease 150ms;
+    transform: scale(1.5);
+
+}
+
+.body ul.who_found_contacts svg {
+
+    margin-right: 16px;
+
+    display: block;
+    transform: scale(1.3);
 
 }

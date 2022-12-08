@@ -72,6 +72,17 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
 
             break;
 
+        case '/another-user-contacts':
+
+            methodUsedByRoute = "GET"
+
+            headerUsedByRoute = {
+                "Authorization": `Bearer ${userStoredData.token}`,
+                "Content-Type": "application/json"
+            }
+
+            break;
+
         default:
 
             methodUsedByRoute = "PUT" //fix
@@ -344,4 +355,20 @@ export const setNotificationsToRead = async () => {
 
     }
 
+}
+
+export const getContactInfoFromUser = async (id: string) => {
+
+    try {
+        const { data } = await Axios(
+            config(`/another-user-contacts`, undefined, `?id=${id}`)
+        )
+
+        return data
+    }
+    catch (error: any) {
+
+        return { status: error.response.status, message: error.response.data.message }
+
+    }
 }

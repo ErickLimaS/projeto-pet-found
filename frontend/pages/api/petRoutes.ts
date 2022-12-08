@@ -179,7 +179,7 @@ export const createPetPost = async (info: petDataTypes, user?: newUserDataTypes)
     catch (error: any) {
 
         return { status: error.response.status, message: error.response.data.message }
-        
+
     }
 
 }

@@ -401,4 +401,45 @@ userRouter.put('/set-notifications-read', isAuth, expressAsyncHandler(async (req
 
 }))
 
+// send contact info from USER who found the current user pet
+userRouter.get('/another-user-contacts', isAuth, expressAsyncHandler(async (req, res) => {
+
+    const userWhoFound = await User.findById(req.query.id, '--password')
+
+    try {
+
+        return res.status(200).json({ success: true, contacts: userWhoFound.contacts })
+
+    }
+
+    catch (error) {
+        return res.status(500).json({ success: false, message: `Server Error. ${error}` })
+    }
+
+}))
+
+userRouter.delete('/delete-notification', isAuth, expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.userInfo._id)
+
+    try {
+        user.notifications.deleteOne({
+            _id: req.body.notification.id
+
+        })
+
+        // await user.save()
+
+        return res.status(200).json({ success: true, message: 'Notificação Apagada.' })
+
+
+    }
+    catch (error) {
+
+        return res.status(500).json({ success: false, message: `Server Error. ${error}` })
+
+    }
+
+}))
+
 export default userRouter;

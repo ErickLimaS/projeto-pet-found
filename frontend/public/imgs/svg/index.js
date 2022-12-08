@@ -36,6 +36,7 @@ export { default as Search } from "./Search";
 export { default as SlashCoin } from "./SlashCoin";
 export { default as Target } from "./Target";
 export { default as Telephone } from "./Telephone";
+export { default as ThreeDots } from "./ThreeDots";
 export { default as Twitter } from "./Twitter";
 export { default as Whatsapp } from "./Whatsapp";
 export { default as X } from "./X";
