@@ -1,4 +1,4 @@
-<h1 align='center'>Projeto Pet Found <br>🚧 (Em Andamento) 🚧 </h1>
+<h1 align='center'>Projeto Pet Found - Ajuda a Pets Perdidos<br>🚧 (Em Andamento) 🚧 </h1>
 
 Projeto de Site de Auxílio para Encontrar Pets Perdidos, fazendo com que a pessoa que perdeu ou a pessoa que encontrou possa cadastra o pet perdido no site e aguardar o dono encontrar seu post ou alguem que tenha encontrado te notificar que foi encontrado.
 
