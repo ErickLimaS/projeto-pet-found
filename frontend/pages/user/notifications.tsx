@@ -11,8 +11,7 @@ import NotificationCard from '../../components/user/notificationCard'
 
 const Notifications: NextPage = () => {
 
-  const [notifications, setNotifications] = useState<[]>()
-  const [userWhoFoundContacts, setUserWhoFoundContacts] = useState<any>()
+  const [notifications, setNotifications] = useState<any>()
 
   const state: any = store.getState()
   const user = state.currentUser
@@ -70,15 +69,26 @@ const Notifications: NextPage = () => {
 
           {notifications ? (
 
-            <ul>
+            notifications?.length > 0 ? (
 
-              {notifications.map((item: any) => (
+              <ul>
 
-                <NotificationCard props={item} key={item._id} />
+                {notifications.map((item: any) => (
 
-              ))}
+                  <NotificationCard props={item} key={item._id} />
 
-            </ul>
+                ))}
+
+              </ul>
+
+            ) : (
+
+              <div id={Styles.no_notifications}>
+
+                <p>Nenhuma notificação encontrada.</p>
+
+              </div>
+            )
 
           ) : (
 

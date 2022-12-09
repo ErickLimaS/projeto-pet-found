@@ -8,12 +8,14 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { useRouter } from 'next/router'
 import { loginUser } from '../api/userRoutes'
+import PageLoading from '../../components/PageLoading'
 
 export const Login: NextPage = () => {
 
     const user: any = useSelector((state: RootState) => state.currentUser)
     const router = useRouter()
 
+    const [loading, setLoading] = useState<boolean>(false)
     const [loginProcess, setLoginProcess] = useState<any>(undefined)
 
     useEffect(() => {
@@ -41,6 +43,8 @@ export const Login: NextPage = () => {
 
         e.preventDefault()
 
+        setLoading(true)
+
         // only gets a error message, not applied to a successful request (status 202)
         const loginRequest = await loginUser(
             {
@@ -48,6 +52,8 @@ export const Login: NextPage = () => {
                 password: (document.getElementById('current-password') as HTMLInputElement).value
             }
         )
+
+        setLoading(false)
 
         setLoginProcess(loginRequest)
 
@@ -57,6 +63,10 @@ export const Login: NextPage = () => {
         <>
 
             <Meta title='Login' description='Faça o login na sua conta e tenha acesso ao site por completo.' />
+
+            {loading && (
+                <PageLoading />
+            )}
 
             {/* if email or password doesnt match with server's, shows a error message */}
             {loginProcess && (

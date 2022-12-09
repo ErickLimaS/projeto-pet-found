@@ -3,9 +3,12 @@ import Link from 'next/link'
 import * as SVG from '../../public/imgs/svg'
 import Styles from '../../styles/userPage/notifications.module.css'
 import { convertDate } from '../convertDate'
-import { getContactInfoFromUser } from '../../pages/api/userRoutes'
+import { deleteNotification, getContactInfoFromUser } from '../../pages/api/userRoutes'
+import NotificationMessage from '../NotificationMessage'
 
 function NotificationCard({ props }: any) {
+
+    const [responseForNotification, setResponseForNotification] = useState<any>()
 
     const [userWhoFoundContacts, setUserWhoFoundContacts] = useState<any>()
     const [ignoreButtonClicked, setIgnoreButtonClicked] = useState<boolean>()
@@ -15,129 +18,141 @@ function NotificationCard({ props }: any) {
     const ramdonElementId2 = useId()
 
     return (
-        <li >
+        <>
 
-            <div className={Styles.heading}>
+            {/* SHOWS NOTIFICATION WITH THE RESULT AFTER A FORM IS SENT */}
+            {responseForNotification && (
+                <NotificationMessage props={responseForNotification} />
+            )}
 
-                {props.pet.type === "DOG" && <SVG.Dog2 alt='Ícone de Cachorro' />}
-                {props.pet.type === "CAT" && <SVG.Cat2 alt='Ícone de Gato' />}
-                {props.pet.type === "OTHER" && <SVG.Dog2 alt='Ícone de Cachorro' />}
+            <li >
 
-                <h2><Link href={`/pet?id=${props.pet._id}`}>{props.pet.name}</Link></h2>
+                <div className={Styles.heading}>
 
-            </div>
+                    {props.pet.type === "DOG" && <SVG.Dog2 alt='Ícone de Cachorro' />}
+                    {props.pet.type === "CAT" && <SVG.Cat2 alt='Ícone de Gato' />}
+                    {props.pet.type === "OTHER" && <SVG.Dog2 alt='Ícone de Cachorro' />}
 
-            <div className={Styles.body}>
+                    <h2><Link href={`/pet?id=${props.pet._id}`}>{props.pet.name}</Link></h2>
 
-                <p>
-                    <b><Link href={`/user/${props.whoFound._id}`}>{props.whoFound.name}</Link></b> acredita que encontrou seu pet!
-                </p>
+                </div>
 
-                <h3>Informações dada por quem achou</h3>
+                <div className={Styles.body}>
 
-                <ul>
+                    <p>
+                        <b><Link href={`/user/${props.whoFound._id}`}>{props.whoFound.name}</Link></b> acredita que encontrou seu pet!
+                    </p>
 
-                    <li>
-                        <b>Onde foi encontrado</b> {props.infoSentByWhoFound.foundAddress}
-                    </li>
+                    <h3>Informações dada por quem achou</h3>
 
-                    <li>
-                        <b>Está com Coleira</b> {props.infoSentByWhoFound.hasCollar ? 'Sim' : 'Não'}
-                    </li>
-
-                    <li data-hascollar={props.infoSentByWhoFound.hasCollar}>
-                        <b>O que está escrito na coleira</b> {props.infoSentByWhoFound.hasCollar ? props.infoSentByWhoFound.collarName : 'Não tem coleira'}
-                    </li>
-
-                </ul>
-
-                <p>Acha que é mesmo o {props.pet.name}? Entre em contato com quem achou!</p>
-
-                <button type='button'
-                    aria-expanded={userWhoFoundContacts ? 'true' : 'false'}
-                    aria-controls={ramdonElementId1}
-                    onClick={async () => {
-                        if (!userWhoFoundContacts) {
-
-                            const res = await getContactInfoFromUser(props.whoFound._id)
-                            setUserWhoFoundContacts(res.contacts)
-
-                        }
-                        else {
-                            setUserWhoFoundContacts(null)
-                        }
-                    }}
-                >
-                    Entrar em contato com {props.whoFound.name} <SVG.ThreeDots />
-                </button>
-
-                {userWhoFoundContacts && (
-                    <ul id={ramdonElementId1} className={Styles.who_found_contacts}>
+                    <ul>
 
                         <li>
-                            <a href={'tel:' + userWhoFoundContacts?.tel1}>
-                                <SVG.Telephone fill='var(--primary)' alt='Ícone de Telefone' />({userWhoFoundContacts?.tel1.slice(0, 2)}) {userWhoFoundContacts?.tel1.slice(2, 7)} - {userWhoFoundContacts?.tel1.slice(6)}
-                            </a>
+                            <b>Onde foi encontrado</b> {props.infoSentByWhoFound.foundAddress}
                         </li>
+
                         <li>
-                            <a href={'tel:' + userWhoFoundContacts?.tel2} >
-                                <SVG.Telephone fill='var(--primary)' alt='Ícone de Telefone' />({userWhoFoundContacts?.tel2.slice(0, 2)}) {userWhoFoundContacts?.tel2.slice(2, 7)} - {userWhoFoundContacts?.tel2.slice(6)}
-                            </a>
+                            <b>Está com Coleira</b> {props.infoSentByWhoFound.hasCollar ? 'Sim' : 'Não'}
                         </li>
-                        <li>
-                            <a href={'https://www.instagram.com/' + userWhoFoundContacts?.instagram.slice(1)} target='_blank' rel='noreferrer'>
-                                <SVG.Instagram fill='#E1306C' alt='Ícone do Instagram' />{userWhoFoundContacts?.instagram}
-                            </a>
-                        </li>
-                        <li>
-                            <a href={userWhoFoundContacts?.facebook} target='_blank' rel='noreferrer'>
-                                <SVG.Facebook fill='#4267B2' alt='Ícone do Facebook' /> Perfil do Facebook
-                            </a>
+
+                        <li data-hascollar={props.infoSentByWhoFound.hasCollar}>
+                            <b>O que está escrito na coleira</b> {props.infoSentByWhoFound.hasCollar ? props.infoSentByWhoFound.collarName : 'Não tem coleira'}
                         </li>
 
                     </ul>
-                )}
 
-                <p>As informações estão erradas ou acha que é um engano? </p>
+                    <p>Acha que é mesmo o {props.pet.name}? Entre em contato com quem achou!</p>
 
-                <button type='button'
-                    className={Styles.ignore_button}
-                    onClick={() => { setIgnoreButtonClicked(!ignoreButtonClicked) }}
-                    aria-expanded={ignoreButtonClicked ? 'true' : 'false'}
-                    aria-controls={ramdonElementId2}
-                >
-                    Marca como engano <SVG.ThreeDots />
-                </button>
+                    <button type='button'
+                        aria-expanded={userWhoFoundContacts ? 'true' : 'false'}
+                        aria-controls={ramdonElementId1}
+                        onClick={async () => {
+                            if (!userWhoFoundContacts) {
 
-                {ignoreButtonClicked && (
+                                const res = await getContactInfoFromUser(props.whoFound._id)
+                                setUserWhoFoundContacts(res.contacts)
 
-                    <div id={ramdonElementId2} className={Styles.ignore_notification_panel}>
+                            }
+                            else {
+                                setUserWhoFoundContacts(null)
+                            }
+                        }}
+                    >
+                        Entrar em contato com {props.whoFound.name} <SVG.ThreeDots />
+                    </button>
 
-                        <h4>Tem certeza que quer descartar essa notificação?</h4>
+                    {userWhoFoundContacts && (
+                        <ul id={ramdonElementId1} className={Styles.who_found_contacts}>
 
-                        <button
-                            onClick={() => { }}
-                            className={Styles.confirm_button}
-                        >
-                            Sim, quero apagar e ignorar
-                        </button>
+                            <li>
+                                <a href={`tel: ${userWhoFoundContacts?.tel1.ddd}${userWhoFoundContacts?.tel1.tel}`}>
+                                    <SVG.Telephone fill='var(--primary)' alt='Ícone de Telefone' />({userWhoFoundContacts?.tel1.ddd}) {userWhoFoundContacts?.tel1.tel.slice(0, 5)} - {userWhoFoundContacts?.tel1.tel.slice(5)}
+                                </a>
+                            </li>
+                            <li>
+                                <a href={`tel: ${userWhoFoundContacts?.tel2.ddd}${userWhoFoundContacts?.tel2.tel}`} >
+                                    <SVG.Telephone fill='var(--primary)' alt='Ícone de Telefone' />({userWhoFoundContacts?.tel2.ddd}) {userWhoFoundContacts?.tel2.tel.slice(0, 5)} - {userWhoFoundContacts?.tel2.tel.slice(5)}
+                                </a>
+                            </li>
+                            <li>
+                                <a href={'https://www.instagram.com/' + userWhoFoundContacts?.instagram.slice(1)} target='_blank' rel='noreferrer'>
+                                    <SVG.Instagram fill='#E1306C' alt='Ícone do Instagram' />{userWhoFoundContacts?.instagram}
+                                </a>
+                            </li>
+                            <li>
+                                <a href={userWhoFoundContacts?.facebook} target='_blank' rel='noreferrer'>
+                                    <SVG.Facebook fill='#4267B2' alt='Ícone do Facebook' /> Perfil do Facebook
+                                </a>
+                            </li>
 
-                        <button
-                            onClick={() => { setIgnoreButtonClicked(false) }}
-                            className={Styles.cancel_button}
-                        >
-                            Não, mantenha essa por enquanto
-                        </button>
+                        </ul>
+                    )}
 
-                    </div>
+                    <p>As informações estão erradas ou acha que é um engano? </p>
 
-                )}
+                    <button type='button'
+                        className={Styles.ignore_button}
+                        onClick={() => { setIgnoreButtonClicked(!ignoreButtonClicked) }}
+                        aria-expanded={ignoreButtonClicked ? 'true' : 'false'}
+                        aria-controls={ramdonElementId2}
+                    >
+                        Marca como engano <SVG.ThreeDots />
+                    </button>
 
-            </div>
+                    {ignoreButtonClicked && (
 
-            <small>{convertDate(props.createdAt)}</small>
+                        <div id={ramdonElementId2} className={Styles.ignore_notification_panel}>
 
-        </li>
+                            <h4>Tem certeza que quer descartar essa notificação?</h4>
+
+                            <button
+                                onClick={async () => {
+                                    const res = await deleteNotification(props._id)
+                                    console.log(res)
+                                    setResponseForNotification(res)
+                                }}
+                                className={Styles.confirm_button}
+                            >
+                                Sim, quero apagar e ignorar
+                            </button>
+
+                            <button
+                                onClick={() => { setIgnoreButtonClicked(false) }}
+                                className={Styles.cancel_button}
+                            >
+                                Não, mantenha essa por enquanto
+                            </button>
+
+                        </div>
+
+                    )}
+
+                </div>
+
+                <small>{convertDate(props.createdAt)}</small>
+
+            </li>
+        </>
     )
 }
 

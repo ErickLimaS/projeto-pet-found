@@ -83,6 +83,17 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
 
             break;
 
+        case '/delete-notification':
+
+            methodUsedByRoute = "DELETE"
+
+            headerUsedByRoute = {
+                "Authorization": `Bearer ${userStoredData.token}`,
+                "Content-Type": "application/json"
+            }
+
+            break;
+
         default:
 
             methodUsedByRoute = "PUT" //fix
@@ -360,6 +371,7 @@ export const setNotificationsToRead = async () => {
 export const getContactInfoFromUser = async (id: string) => {
 
     try {
+
         const { data } = await Axios(
             config(`/another-user-contacts`, undefined, `?id=${id}`)
         )
@@ -371,4 +383,27 @@ export const getContactInfoFromUser = async (id: string) => {
         return { status: error.response.status, message: error.response.data.message }
 
     }
+}
+
+export const deleteNotification = async (id: string) => {
+
+    try {
+
+        const { data } = await Axios(
+            config(`/delete-notification`, {
+                notification: {
+                    _id: id
+                }
+            })
+        )
+
+        return data
+
+    }
+    catch (error: any) {
+
+        return { sucess: error.response.data.success, status: error.response.status, message: error.response.data.message }
+
+    }
+
 }

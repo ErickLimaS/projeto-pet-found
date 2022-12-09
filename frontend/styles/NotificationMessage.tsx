@@ -9,7 +9,7 @@ interface Props {
 
 export const Container = styled.div<Props>`
 
-    animation: disapear_after_5seconds forwards 6000ms;
+    animation: disapear_after_6seconds forwards 6000ms;
 
     min-width: 300px; 
     max-width: 380px; 

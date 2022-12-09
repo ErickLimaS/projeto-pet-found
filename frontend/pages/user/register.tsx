@@ -7,15 +7,29 @@ import { RootState, store } from '../../store'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
+import PageLoading from '../../components/PageLoading'
+import API from '../api/IBGE_API'
 
 const Register: NextPage = () => {
 
     const [loading, setLoading] = useState<Boolean>(false)
     const [addContactsChecked, setAddContactsChecked] = useState<Boolean>(true)
 
+    const [states, setStates] = useState<any>()
+    const [counties, setCounties] = useState<any>()
+
     const router = useRouter()
 
     const user: any = useSelector((state: RootState) => state.currentUser)
+
+    // get all brazilian states 
+    const getStates = async () => {
+
+        const res = await API.getBrazilianStates()
+
+        setStates(res)
+
+    }
 
     useEffect(() => {
 
@@ -25,14 +39,17 @@ const Register: NextPage = () => {
             router.push('/')
 
         }
+        else {
+            getStates()
+        }
 
         // if successful, returns to home 
-        if (user.success === true) {
+        // if (user.success === true) {
 
-            setLoading(false)
-            setTimeout(() => router.push('/'), 4000)
+        //     setLoading(false)
+        //     setTimeout(() => router.push('/'), 4000)
 
-        }
+        // }
 
     }, [loading, user, addContactsChecked])
 
@@ -48,43 +65,36 @@ const Register: NextPage = () => {
 
         e.preventDefault()
 
+        const form = e.target as HTMLFormElement
+
         setLoading(true)
 
-        const password = document.getElementById('password') as HTMLInputElement
-        const confirmPassword = document.getElementById('confirm-password') as HTMLInputElement
-
-        if (password.value !== confirmPassword.value) {
+        if (form.password.value !== form.confirm_password.value) {
             alert('Senhas diferentes. Tente novamente.') // fix
             return console.log('diffent')
         }
 
         const formValues = {
-            name: (document.getElementById('name') as HTMLInputElement).value,
-            email: (document.getElementById('email') as HTMLInputElement).value,
-            password: (document.getElementById('password') as HTMLInputElement).value,
+            name: form.name.value,
+            email: form.email.value,
+            password: form.password.value,
             address: {
-                state: (document.getElementById('state') as HTMLInputElement).value,
-                county: (document.getElementById('county') as HTMLInputElement).value,
-                street: (document.getElementById('street') as HTMLInputElement).value ?
-                    (document.getElementById('street') as HTMLInputElement).value : ''
+                state: form.state.value.slice(3),
+                state_abbrev: form.state.value.slice(0, 2),
+                county: form.county.value,
+                street: form.street.value ? form.street.value : ''
             },
             contacts: {
                 tel1: {
-                    ddd: (document.getElementById('ddd-tel1') as HTMLInputElement) ?
-                        (document.getElementById('ddd-tel1') as HTMLInputElement).value : '',
-                    tel: (document.getElementById('tel1') as HTMLInputElement) ?
-                        (document.getElementById('tel1') as HTMLInputElement).value : ''
+                    ddd: form.ddd_tel1 ? form.ddd_tel1.value : '',
+                    tel: form.tel1 ? form.tel1.value : ''
                 },
                 tel2: {
-                    ddd: (document.getElementById('ddd-tel2') as HTMLInputElement) ?
-                        (document.getElementById('ddd-tel2') as HTMLInputElement).value : '',
-                    tel: (document.getElementById('tel2') as HTMLInputElement) ?
-                        (document.getElementById('tel2') as HTMLInputElement).value : ''
+                    ddd: form.ddd_tel2 ? form.ddd_tel2.value : '',
+                    tel: form.ddd_tel2 ? form.tel2.value : ''
                 },
-                facebook: (document.getElementById('facebook') as HTMLInputElement) ?
-                    (document.getElementById('facebook') as HTMLInputElement).value : '',
-                instagram: (document.getElementById('instagram') as HTMLInputElement) ?
-                    (document.getElementById('instagram') as HTMLInputElement).value : ''
+                facebook: form.facebook ? form.facebook.value : '',
+                instagram: form.instagram ? form.instagram.value : ''
             }
         }
 
@@ -97,23 +107,7 @@ const Register: NextPage = () => {
             <Meta title='Criar Conta' description='Crie sua conta e tenha acesso ao site por completo.' />
 
             {loading && (
-                <div data-active={loading ? "true" : "false"} className={RegisterPageStyles.loading_container}>
-                    <p>loading...</p>
-                </div>)
-            }
-
-            {user?.success === true && (
-
-                <div data-active={user?.success === true ? "true" : "false"} className={RegisterPageStyles.warning_absolute}>
-
-                    <h1>Conta Criada!</h1>
-
-                    <p>Voltar para a página inicial?</p>
-
-                    <Link href='/' >Voltar</Link>
-
-                </div>
-
+                <PageLoading />
             )}
 
             <div className={RegisterPageStyles.container}>
@@ -156,12 +150,48 @@ const Register: NextPage = () => {
 
                             <label>
                                 Estado onde vive
-                                <input type='text' name='state' id='state' required></input>
+                                {states && (
+                                    <select name='state' id='state' required onChange={async (e) => {
+
+                                        const res = await API.getBrazilianMunicipies(e.target.value.slice(0, 2))
+
+                                        setCounties(res)
+
+                                    }}>
+
+                                        <option value='undefined' disabled selected>
+                                            Selecione um estado
+                                        </option>
+
+                                        {states.map((item: any) => (
+
+                                            <option key={item.id} value={[item.sigla, item.nome]}>
+                                                {item.nome}
+                                            </option>
+
+                                        ))}
+
+                                    </select>
+                                )}
                             </label>
 
                             <label>
                                 Cidade ou Município
-                                <input type='text' name='county' id='county' required></input>
+                                <select name='county' id='county' required data-state-selected={states ? 'true' : 'false'}>
+
+                                    <option value='undefined' disabled selected>
+                                        Selecione a cidade / município
+                                    </option>
+
+                                    {counties?.map((item: any) => (
+
+                                        <option key={item.id} value={item.nome}>
+                                            {item.nome}
+                                        </option>
+
+                                    ))}
+
+                                </select>
                             </label>
 
                             <label>
@@ -195,7 +225,7 @@ const Register: NextPage = () => {
                             <label>
                                 Confirmar Senha
                                 <input type='password'
-                                    name='confirm-password' id='confirm-password'
+                                    name='confirm_password' id='confirm_password'
                                     pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
                                     title='Precisa conter letras maiúsculas, números e caracteres especiais.'
                                 ></input>
@@ -238,7 +268,7 @@ const Register: NextPage = () => {
                                     <div>
                                         <label>
                                             DDD - Telefone 1 <small>opcinal</small>
-                                            <input type='text' name='ddd-tel1' id='ddd-tel1'
+                                            <input type='text' name='ddd_tel1' id='ddd_tel1'
                                                 pattern='^\d.{1}$'
                                             ></input>
                                         </label>
@@ -260,7 +290,7 @@ const Register: NextPage = () => {
                                     <div>
                                         <label>
                                             DDD - Telefone 2 <small>opcinal</small>
-                                            <input type='tel' name='ddd-tel2' id='ddd-tel2'
+                                            <input type='tel' name='ddd_tel2' id='ddd_tel2'
                                                 pattern='^\d.{1}$'
                                             ></input>
                                         </label>

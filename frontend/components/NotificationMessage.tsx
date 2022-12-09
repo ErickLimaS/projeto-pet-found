@@ -3,12 +3,14 @@ import * as C from '../styles/NotificationMessage'
 
 function NotificationMessage({ props }: any) {
 
+    setTimeout(() => props = null, 6000)
+
     return (
         <C.Container success={props.success}>
 
             <h1>
                 {props.success ?
-                    'Mudanças Concluídas!' :
+                    'Concluído!' :
                     'Um erro aconteceu!' + ` ${props.status !== undefined ? `(${props.status})` : ''}`}
             </h1>
 

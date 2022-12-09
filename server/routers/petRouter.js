@@ -742,15 +742,14 @@ petRouters.put("/notify-owner", isAuth, expressAsyncHandler(async (req, res) => 
 
     try {
 
-        // if (userWhoFound.email === petOwner.email) {
+        // verify if pet owner account is the same of who found
+        if (userWhoFound.email === petOwner.email) {
 
-        //     return res.status(403).json(
-        //         { success: false, message: 'Você não pode fazer isso sendo o dono desse pet. Tente ir nas configurações da sua conta para editar esse post.' }
-        //     )
+            return res.status(403).json(
+                { success: false, message: 'Você não pode fazer isso sendo o dono desse pet. Tente ir nas configurações da sua conta para editar esse post.' }
+            )
 
-        // }
-
-        console.log(pet)
+        }
 
         // sets a notification to the owner of the lost pet
         petOwner.notifications.push(

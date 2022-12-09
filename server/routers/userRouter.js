@@ -27,28 +27,30 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
         // hashes the plain password from body
         const hashedPassword = await bcrypt.hash(req.body.password, passwordSalt)
 
-        const newUser = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword,
-            address: {
-                state: req.body.address.state,
-                county: req.body.address.county,
-                street: req.body.address.street,
-            },
-            contacts: {
-                tel1: {
-                    ddd: req.body.contacts.tel1.ddd,
-                    tel: req.body.contacts.tel1.tel
-                },
-                tel2: {
-                    ddd: req.body.contacts.tel2.ddd,
-                    tel: req.body.contacts.tel2.tel
-                },
-                instagram: req.body.contacts.instagram,
-                facebook: req.body.contacts.facebook
-            },
-        })
+        // const newUser = new User({
+        //     name: req.body.name,
+        //     email: req.body.email,
+        //     password: hashedPassword,
+        //     address: {
+        //         state: req.body.address.state,
+        //         county: req.body.address.county,
+        //         street: req.body.address.street,
+        //     },
+        //     contacts: {
+        //         tel1: {
+        //             ddd: req.body.contacts.tel1.ddd,
+        //             tel: req.body.contacts.tel1.tel
+        //         },
+        //         tel2: {
+        //             ddd: req.body.contacts.tel2.ddd,
+        //             tel: req.body.contacts.tel2.tel
+        //         },
+        //         instagram: req.body.contacts.instagram,
+        //         facebook: req.body.contacts.facebook
+        //     },
+        // })
+
+        const newUser = new User(req.body)
 
         await newUser.save()
 
@@ -418,20 +420,18 @@ userRouter.get('/another-user-contacts', isAuth, expressAsyncHandler(async (req,
 
 }))
 
+// delete the notification from user's account
 userRouter.delete('/delete-notification', isAuth, expressAsyncHandler(async (req, res) => {
 
     const user = await User.findById(req.user.userInfo._id)
 
     try {
-        user.notifications.deleteOne({
-            _id: req.body.notification.id
 
-        })
+        await user.notifications.find(item => item._id == req.body.notification._id).remove()
 
-        // await user.save()
+        await user.save()
 
         return res.status(200).json({ success: true, message: 'Notificação Apagada.' })
-
 
     }
     catch (error) {

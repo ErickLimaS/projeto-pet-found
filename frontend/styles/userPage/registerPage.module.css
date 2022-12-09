@@ -315,7 +315,9 @@ div.warning_absolute[data-active="true"]>a:hover {
 
 }
 
-.form_container form input {
+.form_container form input, .form_container form select {
+
+    line-height: 1.2;
 
     padding: 12px 8px;
     font-size: 0.9rem;

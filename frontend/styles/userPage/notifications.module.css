@@ -71,6 +71,18 @@
 
 }
 
+.notifications div#no_notifications {
+
+    margin-top: 24px;
+    padding: 16px;
+
+    background-color: var(--black-10);
+    border-radius: 8px;
+
+}
+
+.notifications div#no_notifications p {}
+
 .notifications .heading {
 
     display: flex;
