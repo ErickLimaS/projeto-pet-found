@@ -214,7 +214,7 @@ export const getAccountInfo = async () => {
 
 }
 
-export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string, tel1?: string, tel2?: string, facebook?: string, instagram?: string) => {
+export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string, tel1?: object, tel2?: object, facebook?: string, instagram?: string) => {
 
     try {
 

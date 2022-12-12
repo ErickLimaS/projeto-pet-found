@@ -1,7 +1,7 @@
 import Styles from '../../styles/userPage/profilePage.module.css'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useId, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Meta from '../../components/Meta'
 import { RootState } from '../../store'
@@ -24,6 +24,11 @@ const Profile: NextPage = () => {
     const [responseForNotification, setResponseForNotification] = useState<{} | any>(null)
 
     const userState: any = useSelector((state: RootState) => state.currentUser)
+
+    const tabId1 = useId()
+    const tabId2 = useId()
+    const tabId3 = useId()
+    const tabId4 = useId()
 
     const router = useRouter()
 
@@ -65,6 +70,7 @@ const Profile: NextPage = () => {
 
     }
 
+    // submits all data about name, address and contact info
     const submitNameAddressContacts = async (e: FormEvent, method: string) => {
 
         e.preventDefault()
@@ -124,8 +130,8 @@ const Profile: NextPage = () => {
 
             case 'CONTACTS':
 
-                const tel1: string | undefined = form.tel1.value || undefined
-                const tel2: string | undefined = form.tel2.value || undefined
+                const tel1: object | undefined = { ddd: form.tel1.value.slice(0, 2), tel: form.tel1.value.slice(3) } || undefined
+                const tel2: object | undefined = { ddd: form.tel2.value.slice(0, 2), tel: form.tel2.value.slice(3) } || undefined
                 const facebook: string | undefined = form.facebook.value || undefined
                 const instagram: string | undefined = form.instagram.value || undefined
 
@@ -150,7 +156,8 @@ const Profile: NextPage = () => {
         setTimeout(() => { setResponseForNotification(null) }, 5500)
 
         // Close edit form
-        setEditable(!editable)
+        setEditable(false)
+        setEditContacts(false)
     }
 
     useEffect(() => {
@@ -174,7 +181,7 @@ const Profile: NextPage = () => {
 
                 if (res.status === 200) {
 
-                    setUser(res.data)
+                    setUser(res.data.user)
 
                 }
 
@@ -307,11 +314,17 @@ const Profile: NextPage = () => {
                         {!editContacts ? (
                             <ul>
                                 <li>
-                                    <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' /> {user?.contacts?.tel1}
+                                    <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' />
+                                    {user?.contacts?.tel1 ? (
+                                        `${user?.contacts?.tel1.ddd} ${user?.contacts?.tel1.tel}`
+                                    ) : (
+                                        <p>Não Adicionado</p>
+                                    )}
                                 </li>
                                 <li>
-                                    <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' /> {user?.contacts?.tel2 ? (
-                                        user?.contacts?.tel2
+                                    <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' />
+                                    {user?.contacts?.tel2 ? (
+                                        `${user?.contacts?.tel2.ddd} ${user?.contacts?.tel2.tel}`
                                     ) : (
                                         <p>Não Adicionado</p>
                                     )}
@@ -341,9 +354,9 @@ const Profile: NextPage = () => {
                                         Telefone 1
                                     </div>
                                     <input type='tel' id='tel1' name='tel1'
-                                        pattern='^\d.{10,10}$'
+                                        pattern='^\d.{10,11}$'
                                         placeholder='Seu número'
-                                        defaultValue={user?.contacts?.tel1}></input>
+                                        defaultValue={`${user?.contacts?.tel1.ddd}${user?.contacts?.tel1.tel}`}></input>
                                 </label>
 
                                 <label>
@@ -352,9 +365,9 @@ const Profile: NextPage = () => {
                                         Telefone 2
                                     </div>
                                     <input type='tel' id='tel2' name='tel2'
-                                        pattern='^\d.{10,10}$'
+                                        pattern='^\d.{10,11}$'
                                         placeholder='Seu outro número'
-                                        defaultValue={user?.contacts?.tel2}></input>
+                                        defaultValue={`${user?.contacts?.tel2.ddd}${user?.contacts?.tel2.tel}`}></input>
                                 </label>
                                 <label>
                                     <div className={Styles.heading}>
@@ -391,9 +404,12 @@ const Profile: NextPage = () => {
 
                 <section className={Styles.user_activity}>
 
-                    <nav className={Styles.tab_container}>
+                    <nav className={Styles.tab_container} role='tablist'>
                         <button type='button'
+                            role='tab'
                             data-tab='1'
+                            aria-selected={tabIndex === 1 ? 'true' : 'false'}
+                            aria-controls={tabId1}
                             data-tab-activated={tabIndex === 1 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(1) }} aria-label='Ir para a sessão 
                             Posts Feitos'
@@ -401,118 +417,143 @@ const Profile: NextPage = () => {
                             Posts
                         </button>
                         <button type='button'
+                            role='tab'
                             data-tab='2'
+                            aria-selected={tabIndex === 2 ? 'true' : 'false'}
+                            aria-controls={tabId2}
                             data-tab-activated={tabIndex === 2 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(2) }} aria-label='Ir para a sessão de pessoas ajudadas'>
                             Ajudados
                         </button>
                         <button type='button'
+                            role='tab'
                             data-tab='3'
+                            aria-selected={tabIndex === 3 ? 'true' : 'false'}
+                            aria-controls={tabId3}
                             data-tab-activated={tabIndex === 3 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(3) }} aria-label='Ir para a sessão de mais opções'>
                             Mais
                         </button>
                         <button type='button'
+                            role='tab'
                             data-tab='4'
+                            aria-selected={tabIndex === 4 ? 'true' : 'false'}
+                            aria-controls={tabId4}
                             data-tab-activated={tabIndex === 4 ? 'true' : 'false'}
                             onClick={() => { setTabIndex(4) }} aria-label='Ir para a sessão de meus contatos'>
                             Contatos
                         </button>
                     </nav>
 
-                    <div aria-expanded={tabIndex === 1 ? 'true' : 'false'} className={Styles.navigation_index_selected}>
+                    <div
+                        role='tabpanel'
+                        className={Styles.navigation_index_selected}
+                        id={tabId1}
+                        data-expanded={tabIndex === 1 ? 'true' : 'false'}
+                    >
 
                         <div className={Styles.activity_field_container}>
 
                             <h3>Posts sobre Meus Pets</h3>
 
-                            <ul className={Styles.list_lost_pets}>
+                            {user?.petsRegistered.length > 0 ? (
+                                <ul className={Styles.list_lost_pets}>
 
-                                {user?.petsRegistered?.map((pet: any, key: any) => (
+                                    {user?.petsRegistered?.map((pet: any, key: any) => (
 
-                                    <li key={key} data-found={pet.wasFound ? 'true' : 'false'}>
-                                        <Link href={`/pet?id=${pet._id}`} >
-                                            <a className={Styles.link_pet_page}>
-                                                <Image
-                                                    src={profile}
-                                                    alt={`Foto do anúncio de ${pet?.name}`}
-                                                    layout='responsive'
-                                                    height={160}
-                                                    width={300}
-                                                    className={Styles.pet_img}
-                                                />
+                                        <li key={key} data-found={pet.wasFound ? 'true' : 'false'}>
+                                            <Link href={`/pet?id=${pet._id}`} >
+                                                <a className={Styles.link_pet_page}>
+                                                    <Image
+                                                        src={profile}
+                                                        alt={`Foto do anúncio de ${pet?.name}`}
+                                                        layout='responsive'
+                                                        height={160}
+                                                        width={300}
+                                                        className={Styles.pet_img}
+                                                    />
 
-                                                <div className={Styles.pet_info}>
-                                                    <h4>
-                                                        {pet.name}
-                                                    </h4>
+                                                    <div className={Styles.pet_info}>
+                                                        <h4>
+                                                            {pet.name}
+                                                        </h4>
 
-                                                    <p>{pet.breed}</p>
-                                                    {pet.hasReward ? (
-                                                        <p className={Styles.reward_paragraph}>R$ {pet.rewardAmount},00</p>
+                                                        <p>{pet.breed}</p>
+                                                        {pet.hasReward ? (
+                                                            <p className={Styles.reward_paragraph}>R$ {pet.rewardAmount},00</p>
+                                                        ) : (
+                                                            <p className={Styles.reward_paragraph}>Sem recompensa</p>
+                                                        )}
+
+                                                    </div>
+
+                                                    {pet.wasFound ? (
+                                                        <>
+                                                            <span className={Styles.custom_border}></span>
+
+                                                            <div className={Styles.pet_found_by}>
+
+                                                                <h4>
+                                                                    <Link href={pet.userWhoFound._id}>
+                                                                        {pet.userWhoFound.name}
+                                                                    </Link> achou seu pet
+                                                                </h4>
+
+                                                                <p>
+                                                                    {pet.userWhoFound.rewardAccepted ?
+                                                                        `Aceitou a Recomensa` :
+                                                                        'Não Aceitou a recompensa'
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    Achou em {convertDate(pet.dateWhenFound)}
+                                                                </p>
+
+                                                            </div>
+
+                                                        </>
                                                     ) : (
-                                                        <p className={Styles.reward_paragraph}>Sem recompensa</p>
+                                                        <>
+                                                            <span className={Styles.custom_border}></span>
+
+                                                            <div className={Styles.pet_found_by}>
+
+                                                                <h4>
+                                                                    Ainda não encontrado
+                                                                </h4>
+
+                                                                <p>
+                                                                    Criado em {convertDate(pet.createdAt)}
+                                                                </p>
+
+                                                            </div>
+
+                                                        </>
                                                     )}
 
-                                                </div>
+                                                </a>
+                                            </Link>
+                                        </li>
 
-                                                {pet.wasFound ? (
-                                                    <>
-                                                        <span className={Styles.custom_border}></span>
+                                    ))}
 
-                                                        <div className={Styles.pet_found_by}>
+                                </ul>
+                            ) : (
 
-                                                            <h4>
-                                                                <Link href={pet.userWhoFound._id}>
-                                                                    {pet.userWhoFound.name}
-                                                                </Link> achou seu pet
-                                                            </h4>
+                                <p>Nenhum post feito.</p>
 
-                                                            <p>
-                                                                {pet.userWhoFound.rewardAccepted ?
-                                                                    `Aceitou a Recomensa` :
-                                                                    'Não Aceitou a recompensa'
-                                                                }
-                                                            </p>
-                                                            <p>
-                                                                Achou em {convertDate(pet.dateWhenFound)}
-                                                            </p>
-
-                                                        </div>
-
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <span className={Styles.custom_border}></span>
-
-                                                        <div className={Styles.pet_found_by}>
-
-                                                            <h4>
-                                                                Ainda não encontrado
-                                                            </h4>
-
-                                                            <p>
-                                                                Criado em {convertDate(pet.createdAt)}
-                                                            </p>
-
-                                                        </div>
-
-                                                    </>
-                                                )}
-
-                                            </a>
-                                        </Link>
-                                    </li>
-
-                                ))}
-
-                            </ul>
+                            )}
 
                         </div>
 
                     </div>
 
-                    <div aria-expanded={tabIndex === 2 ? 'true' : 'false'} className={Styles.navigation_index_selected}>
+                    <div
+                        role='tabpanel'
+                        className={Styles.navigation_index_selected}
+                        id={tabId2}
+                        data-expanded={tabIndex === 2 ? 'true' : 'false'}
+                    >
 
                         <div className={Styles.activity_field_container}>
 
@@ -590,7 +631,12 @@ const Profile: NextPage = () => {
 
                     </div>
 
-                    <div aria-expanded={tabIndex === 3 ? 'true' : 'false'} className={`${Styles.navigation_index_selected} ${Styles.form_container}`}>
+                    <div
+                        role='tabpanel'
+                        className={`${Styles.navigation_index_selected} ${Styles.form_container}`}
+                        id={tabId3}
+                        data-expanded={tabIndex === 3 ? 'true' : 'false'}
+                    >
 
                         <div className={Styles.activity_field_container}>
 
@@ -660,7 +706,13 @@ const Profile: NextPage = () => {
 
                     </div>
 
-                    <div aria-expanded={tabIndex === 4 ? 'true' : 'false'} className={`${Styles.navigation_index_selected} ${Styles.form_container}`}>
+                    {/* MOBILE ONLY TAB  */}
+                    <div
+                        role='tabpanel'
+                        className={`${Styles.navigation_index_selected} ${Styles.form_container}`}
+                        id={tabId4}
+                        data-expanded={tabIndex === 4 ? 'true' : 'false'}
+                    >
 
                         <div className={Styles.activity_field_container}>
 
@@ -677,20 +729,20 @@ const Profile: NextPage = () => {
                                 <ul className={Styles.contacts_list}>
                                     <li>
                                         <SVG.Telephone fill='#FD9600' aria-label='Primeiro número de Telefone' />
-                                        ({user?.contacts?.tel1.slice(0, 2)})
-                                        {user?.contacts?.tel1.slice(2, 7)}
+                                        ({user?.contacts?.tel1?.ddd})
+                                        {user?.contacts?.tel1?.tel.slice(0, 5)}
                                         -
-                                        {user?.contacts?.tel1.slice(7)}
+                                        {user?.contacts?.tel1?.tel.slice(5)}
 
                                     </li>
                                     <li>
                                         <SVG.Telephone fill='#FD9600' aria-label='Segundo número de Telefone' />
                                         {user?.contacts?.tel2 ? (
                                             <>
-                                                ({user?.contacts?.tel2.slice(0, 2)})
-                                                {user?.contacts?.tel2.slice(2, 7)}
+                                                ({user?.contacts?.tel2?.ddd})
+                                                {user?.contacts?.tel2?.tel.slice(0, 5)}
                                                 -
-                                                {user?.contacts?.tel2.slice(7)}
+                                                {user?.contacts?.tel2?.tel.slice(5)}
                                             </>
                                         ) : (
                                             <p>Não Adicionado</p>
@@ -723,7 +775,7 @@ const Profile: NextPage = () => {
                                         <input type='tel' id='tel1' name='tel1'
                                             pattern='^\d.{10,10}$'
                                             placeholder='Seu número'
-                                            defaultValue={user?.contacts?.tel1}></input>
+                                            defaultValue={`${user?.contacts?.tel1.ddd} ${user?.contacts?.tel1.tel}`}></input>
                                     </label>
 
                                     <label>
@@ -734,7 +786,7 @@ const Profile: NextPage = () => {
                                         <input type='tel' id='tel2' name='tel2'
                                             pattern='^\d.{10,10}$'
                                             placeholder='Seu outro número'
-                                            defaultValue={user?.contacts?.tel2}></input>
+                                            defaultValue={`${user?.contacts?.tel2.ddd} ${user?.contacts?.tel2.tel}`}></input>
                                     </label>
                                     <label>
                                         <div className={Styles.heading}>

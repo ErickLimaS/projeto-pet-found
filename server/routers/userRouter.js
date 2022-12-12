@@ -109,7 +109,7 @@ userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
 
     try {
 
-        return res.status(200).json(user, { success: true })
+        return res.status(200).json({ success: true, user })
 
     }
     catch (err) {

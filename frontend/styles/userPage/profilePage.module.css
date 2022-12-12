@@ -657,7 +657,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 }
 
-.user_activity .navigation_index_selected[aria-expanded='true'] {
+.user_activity .navigation_index_selected[data-expanded='true'] {
 
     display: block;
 
@@ -667,7 +667,7 @@ nav.tab_container button[data-tab-activated='true'] {
 
 @media(min-width: 1020px) {
 
-    .user_activity .navigation_index_selected[aria-expanded='true'] {
+    .user_activity .navigation_index_selected[data-expanded='true'] {
 
         margin-top: 24px;
     }
@@ -679,6 +679,19 @@ nav.tab_container button[data-tab-activated='true'] {
     text-align: center;
     font-size: var(--fs-heading5);
     color: var(--primary);
+
+}
+
+.activity_field_container>p {
+
+    margin: 0 16px;
+    margin-top: 16px;
+    padding: 12px 0;
+    padding-left: 8px;
+
+    background-color: var(--black-10);
+    border-radius: 4px;
+
 
 }
 
