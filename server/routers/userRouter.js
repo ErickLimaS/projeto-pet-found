@@ -27,28 +27,7 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
         // hashes the plain password from body
         const hashedPassword = await bcrypt.hash(req.body.password, passwordSalt)
 
-        // const newUser = new User({
-        //     name: req.body.name,
-        //     email: req.body.email,
-        //     password: hashedPassword,
-        //     address: {
-        //         state: req.body.address.state,
-        //         county: req.body.address.county,
-        //         street: req.body.address.street,
-        //     },
-        //     contacts: {
-        //         tel1: {
-        //             ddd: req.body.contacts.tel1.ddd,
-        //             tel: req.body.contacts.tel1.tel
-        //         },
-        //         tel2: {
-        //             ddd: req.body.contacts.tel2.ddd,
-        //             tel: req.body.contacts.tel2.tel
-        //         },
-        //         instagram: req.body.contacts.instagram,
-        //         facebook: req.body.contacts.facebook
-        //     },
-        // })
+        req.body.password = hashedPassword
 
         const newUser = new User(req.body)
 
@@ -80,7 +59,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
     if (!userRegisted) {
 
         return res.status(404).json(
-            { message: 'Dados incorretos. Verique sua senha e email.' }
+            { success: false, message: 'Dados incorretos. Verique sua senha e email.' }
         )
 
     }
@@ -93,12 +72,13 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
         if (!correctPassword) {
 
             return res.status(401).json(
-                { message: 'Dados incorretos. Verique sua senha e email.' }
+                { success: false, message: 'Dados incorretos. Verique sua senha e email.' }
             )
 
         }
 
         return res.status(202).json({
+            success: true,
             name: userRegisted.name,
             token: generateToken(userRegisted)
         })
@@ -107,7 +87,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
     }
     catch (err) {
 
-        return res.status(500).json({ message: err })
+        return res.status(500).json({ success: false, message: `Server Error. ${err}` })
 
     }
 
@@ -122,19 +102,19 @@ userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
     if (!user) {
 
         return res.status(404).json(
-            { message: 'User not found' }
+            { success: false, message: 'User not found' }
         )
 
     }
 
     try {
 
-        return res.status(200).json(user)
+        return res.status(200).json(user, { success: true })
 
     }
     catch (err) {
 
-        return res.status(500).json({ message: `${err}` })
+        return res.status(500).json({ success: false, message: `Server Error. ${err}` })
 
     }
 
@@ -151,7 +131,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
         if (!passwordIsCorrect) {
 
-            return res.status(401).json({ message: 'Incorrect User Info Received' })
+            return res.status(401).json({ success: false, message: 'Incorrect User Info Received' })
 
         }
     }
@@ -162,6 +142,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
         const user = await User.findById(req.user.userInfo._id)
 
         return {
+            success: true,
             message: 'Success',
             name: user.name,
             token: generateToken(user)
@@ -188,7 +169,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
 
                         }
@@ -206,7 +187,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
                         }
                     )
@@ -223,7 +204,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
 
                         }
@@ -241,7 +222,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
 
                         }
@@ -266,7 +247,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
 
                         }
@@ -290,7 +271,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
 
                         }
@@ -306,7 +287,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         async function (err, result) {
 
                             if (err) {
-                                return res.status(404).json({ message: `${err}` })
+                                return res.status(404).json({ success: false, message: `${err}` })
                             }
 
                         }
@@ -315,18 +296,18 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                     return res.status(202).json(await successfullReponse())
 
                 default:
-                    return res.status(400).json({ message: 'Server Error. Provided method do not match.' })
+                    return res.status(400).json({ success: false, message: 'Server Error. Provided method do not match.' })
 
             }
         }
         else {
-            return res.status(400).json({ message: 'Server Error. No method received' })
+            return res.status(400).json({ success: false, message: 'Server Error. No method received' })
         }
 
     }
     catch (err) {
 
-        return res.status(500).json({ message: `${err}` })
+        return res.status(500).json({ success: false, message: `Server Error. ${err}` })
 
     }
 
