@@ -1,0 +1,339 @@
+.container {
+
+    padding: 16px 0;
+    margin: 0 auto;
+
+    max-width: 1000px;
+
+}
+
+.container::before {
+
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    background-color: var(--secondary);
+    height: 45%;
+    width: 100%;
+
+    max-height: 270px;
+
+}
+
+section.user_main_info_wrapper {
+
+    position: relative;
+    top: 0;
+
+    margin: 0 8px;
+    margin-bottom: 32px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+section.user_main_info_wrapper img {
+
+    background-color: rgb(191, 255, 139) !important;
+
+    border: 2px solid var(--white-50) !important;
+    border-radius: 50% !important;
+
+}
+
+section.user_main_info_wrapper .account_info {
+
+    margin-top: 16px;
+
+    display: grid;
+    gap: 0 8px;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+
+section.user_main_info_wrapper .account_info .badge {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    text-align: center;
+
+}
+
+section.user_main_info_wrapper .account_info .badge svg {
+
+    margin-bottom: 12px;
+
+    height: 25px;
+    width: 25px;
+    transform: scale(1.4);
+
+}
+
+.badge svg:not([data-no-increase-size='true']) path {
+
+    transform: scale(1.3);
+
+}
+
+
+section.user_main_info_wrapper .account_info .badge h6 {
+
+    font-size: var(--small-1);
+
+}
+
+section.user_main_info_wrapper .account_info .badge p {
+
+    font-size: var(--fs-heading5);
+    font-weight: 600;
+
+}
+
+section.more_info_wrapper {
+
+    margin: 16px 8px;
+
+}
+
+.info_panel.contacts ul {
+
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+
+}
+
+@media(min-width: 620px) {
+
+    .info_panel.contacts ul {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: var(--secondary);
+        filter: sepia(0.1);
+
+    }
+
+    .info_panel.contacts ul * {
+
+        fill: var(--white);
+        color: var(--white);
+
+    }
+
+}
+
+.info_panel.pets_found ul {
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+
+}
+
+@media((min-width: 620px) and (max-width: 720px)) {
+    .info_panel.pets_found ul {
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 16px;
+
+    }
+}
+
+@media(min-width: 721px) {
+    .info_panel.pets_found ul {
+
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px 16px;
+
+    }
+}
+
+.info_panel.contacts ul li, .info_panel.contacts ul li a {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+@media(max-width: 620px) {
+    .info_panel.contacts ul li a {
+
+        font-weight: 600;
+
+    }
+}
+
+.info_panel.pets_found ul li {
+
+    align-items: flex-start;
+
+}
+
+.info_panel:not(:last-child) {
+
+    margin-bottom: 32px;
+
+}
+
+.info_panel h2 {
+
+    color: var(--secondary);
+    font-size: var(--fs-heading3);
+
+}
+
+.info_panel.pets_found .pet_info {
+
+    width: 100%;
+
+}
+
+.info_panel.pets_found .pet_info h3, .info_panel.pets_found .pet_info h3 a {
+
+    font-size: var(--fs-heading5);
+    color: var(--secondary) !important;
+
+}
+
+
+.info_panel.pets_found .pet_info p {
+
+    padding: 8px 0;
+
+    background-color: var(--black-10);
+    border-radius: 8px;
+
+}
+
+.info_panel.pets_found .pet_info h3 small {
+
+    color: var(--black);
+    font-size: var(--small-1);
+
+}
+
+.info_panel.pets_found .pet_info>small {
+
+    margin-top: 8px;
+
+    display: block;
+    float: right;
+
+    font-weight: 600;
+
+}
+
+.info_panel ul {
+
+    padding: 16px;
+
+    background-color: var(--black-10);
+    border-radius: 8px;
+
+}
+
+.info_panel.pets_found ul {
+
+    background-color: var(--black-5);
+
+}
+
+.info_panel ul li {
+
+    margin: 4px 0;
+    padding: 4px 0;
+
+    display: flex;
+    align-items: center;
+
+}
+
+.info_panel ul li svg {
+
+    transform: scale(1.2);
+
+    margin-right: 12px;
+
+}
+
+.info_panel.contacts ul li svg {
+
+    transform: scale(1.8);
+
+    margin-right: 0;
+    margin-bottom: 14px;
+
+}
+
+.info_panel.pets_found ul svg {
+
+    margin-top: 16px;
+
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+
+}
+
+.info_panel ul li p {
+
+    padding-left: 10px;
+    text-align: center;
+
+}
+
+.info_panel.contacts ul li p {
+
+    padding-left: 0;
+
+}
+
+.info_panel ul li a:hover {
+
+    text-decoration: underline;
+
+}
+
+.info_panel.pets_found button {
+
+    margin-top: 16px;
+
+    padding: 16px;
+    width: 100%;
+
+    background-color: var(--white);
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+
+    color: var(--secondary);
+    font-size: var(--small-1);
+    font-weight: 600;
+
+}
+
+@media(min-width: 800px) {
+
+    .info_panel.pets_found button {
+
+        width: 30%;
+
+    }
+}

@@ -39,9 +39,6 @@ interface userLoginTypes {
 const reduxState = store.getState()
 const userStoredData: any = reduxState.currentUser
 
-// NOTIFICATIONS IDENTIFIES IF USER HAS A STILL VALID TOKEN. 
-// IF NOT, ITS DELETED FROM LOCAL STORAGE, FORCING A NEW LOGIN.
-
 // sets the route and config used for the intended page purpose (DISABLED)
 const config = (route: string, body?: any, query?: string, token?: string) => {
 
@@ -49,6 +46,17 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
     let headerUsedByRoute: {};
 
     switch (route) {
+
+        case '/profile-info':
+
+            methodUsedByRoute = "GET"
+
+            headerUsedByRoute = {
+                "Content-Type": "application/json"
+            }
+
+            break;
+
 
         case '/notifications':
 
@@ -214,6 +222,25 @@ export const getAccountInfo = async () => {
 
 }
 
+export const getAnotherUserInfo = async (id: string) => {
+
+    try {
+
+        const { data } = await Axios(
+            config('/profile-info', undefined, `?id=${id}`)
+        )
+
+        return data;
+
+    }
+    catch (error: any) {
+
+        return { status: error.response.status, message: error.response.data.message };
+
+    }
+
+}
+
 export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string, tel1?: object, tel2?: object, facebook?: string, instagram?: string) => {
 
     try {
@@ -349,6 +376,8 @@ export const getNotifications = async (token: string, query?: string) => {
 
 }
 
+// NOTIFICATIONS IDENTIFIES IF USER HAS A STILL VALID TOKEN. 
+// IF NOT, ITS DELETED FROM LOCAL STORAGE, FORCING A NEW LOGIN.
 export const setNotificationsToRead = async () => {
 
     try {

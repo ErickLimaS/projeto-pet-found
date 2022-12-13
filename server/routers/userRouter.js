@@ -93,7 +93,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 
 }))
 
-// all user data
+// all user data (WHILE LOGGED IN)
 userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
 
     // verifies if email exist
@@ -120,6 +120,31 @@ userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
 
 }))
 
+userRouter.get('/profile-info', expressAsyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.query.id, '-password -email -_id -createdAt -notifications').populate('petsFound')
+
+    try {
+
+        if (user) {
+
+            return res.status(200).json({ success: true, profile: user, message: `Dados do Usuário Envidados.` })
+        }
+        else {
+
+            return res.status(404).json({ success: false, message: `Esse usuário não existe.` })
+
+        }
+
+    }
+    catch (error) {
+
+        return res.status(500).json({ success: false, message: `Server Error. ${error}` })
+
+    }
+
+}))
+
 // updates user profile data 
 userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) => {
 
@@ -137,9 +162,13 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
     }
 
     // standardize the result for a successfull update request
-    const successfullReponse = async () => {
+    const successfullReponse = async (logTitle, logType) => {
 
         const user = await User.findById(req.user.userInfo._id)
+
+        user.activityLog.push({ title: logTitle, type: logType })
+
+        await user.save()
 
         return {
             success: true,
@@ -175,7 +204,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou a Foto de Perfil', 'CHANGE_PROFILE_IMAGE'))
 
                 case 'CHANGE_EMAIL':
 
@@ -192,7 +221,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou o Email', 'CHANGE_EMAIL'))
 
                 case 'CHANGE_PASSWORD':
 
@@ -210,7 +239,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou a Senha', 'CHANGE_PASSWORD'))
 
                 case 'CHANGE_NAME':
 
@@ -228,7 +257,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou o Nome', 'CHANGE_NAME'))
 
                 case 'CHANGE_NAME_AND_ADDRESS':
 
@@ -253,7 +282,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou o Nome e Endereço', 'CHANGE_NAME_AND_ADDRESS'))
 
                 case 'CHANGE_ADDRESS':
 
@@ -277,7 +306,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou o Endereço', 'CHANGE_ADDRESS'))
 
                 case 'CHANGE_CONTACTS':
 
@@ -293,7 +322,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                         }
                     )
 
-                    return res.status(202).json(await successfullReponse())
+                    return res.status(202).json(await successfullReponse('Trocou os Contatos', 'CHANGE_CONTACTS'))
 
                 default:
                     return res.status(400).json({ success: false, message: 'Server Error. Provided method do not match.' })

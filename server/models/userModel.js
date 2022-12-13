@@ -28,6 +28,24 @@ const userSchema = new mongoose.Schema(
             instagram: { type: String },
             facebook: { type: String }
         },
+        settings: {
+            showContacts: { type: Boolean, default: true },
+            showActivityLog: { type: Boolean, default: true },
+            showPetsHelped: { type: Boolean, default: true },
+            showProfileImg: { type: Boolean, default: true },
+        },
+        moreInfo: {
+            thanksReceived: { type: Number, default: 0 },
+            petsHelped: { type: Number, default: 0 },
+            petsStillLost: { type: Number, default: 0 },
+        },
+        activityLog: [
+            {
+                title: { type: String, required: true },
+                type: { type: String, required: true },
+                date: { type: Date, default: () => Date.now(), immutable: true }
+            }
+        ],
         petsRegistered: [
             {
                 type: Schema.Types.ObjectId,

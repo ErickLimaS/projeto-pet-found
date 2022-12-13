@@ -179,10 +179,13 @@ const Profile: NextPage = () => {
 
                 setUser(userState)
 
-                if (res.status === 200) {
+                if (res.data.success) {
 
                     setUser(res.data.user)
 
+                }
+                else{
+                    alert('Erro')
                 }
 
                 setLoading(false)
@@ -456,7 +459,7 @@ const Profile: NextPage = () => {
 
                             <h3>Posts sobre Meus Pets</h3>
 
-                            {user?.petsRegistered.length > 0 ? (
+                            {user?.petsRegistered?.length > 0 ? (
                                 <ul className={Styles.list_lost_pets}>
 
                                     {user?.petsRegistered?.map((pet: any, key: any) => (
@@ -596,7 +599,7 @@ const Profile: NextPage = () => {
                                                     <div className={Styles.pet_found_by}>
 
                                                         <h4>
-                                                            <Link href={`/user/${pet.userWhoFound._id}`}>{pet.userWhoFound.name}</Link> achou seu pet
+                                                            <Link href={`${pet.userWhoFound._id}`}>{pet.userWhoFound.name}</Link> achou seu pet
                                                         </h4>
 
                                                         {pet.hasReward ? (

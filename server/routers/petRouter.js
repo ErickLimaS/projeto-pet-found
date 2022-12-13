@@ -731,7 +731,7 @@ petRouters.delete("/remove-pet", isAuth, expressAsyncHandler(async (req, res) =>
 
 petRouters.put("/notify-owner", isAuth, expressAsyncHandler(async (req, res) => {
 
-    // gets the user who sent this request info
+    // gets the user info from who sent this request 
     const userWhoFound = await User.findById(req.user.userInfo._id)
 
     // gets pet info
@@ -765,6 +765,14 @@ petRouters.put("/notify-owner", isAuth, expressAsyncHandler(async (req, res) => 
                     collarName: req.body.moreInfo.collarName || null,
                     foundAddress: req.body.moreInfo.foundAddress
                 }
+            }
+        )
+
+        // sets on activityLog 
+        petOwner.activityLog.push(
+            {
+                title: `Notificou um Usuário sobre ${pet.genre === 'male' ? 'seu' : 'sua'} ${pet.typeTranslated.slice(0, pet.typeTranslated.length - 1)}${pet.genre === 'male' ? 'o' : 'a'} perdid${pet.genre === 'male' ? 'o' : 'a'}.`,
+                type: 'NOTIFY-OWNER'
             }
         )
 
