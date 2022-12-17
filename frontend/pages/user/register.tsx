@@ -75,7 +75,7 @@ const Register: NextPage = () => {
         }
 
         const formValues = {
-            name: form.name.value,
+            name: (form.name as any).value,
             email: form.email.value,
             password: form.password.value,
             address: {

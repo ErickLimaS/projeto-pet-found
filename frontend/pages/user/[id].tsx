@@ -287,7 +287,9 @@ const User: NextPage = ({ userProfile }: any) => {
                                     aria-controls={petsFoundId}
                                     onClick={() => setPetsFoundExpanded(!petsFoundExpanded)}
                                 >
-                                    Mostrar todos os pets
+                                    {petsFoundExpanded ?
+                                        'Mostrar menos' : 'Mostrar todos os pets'
+                                    }
                                 </button>
                             )}
 

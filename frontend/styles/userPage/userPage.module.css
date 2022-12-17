@@ -106,9 +106,12 @@ section.more_info_wrapper {
 
 .info_panel.contacts ul {
 
-
     display: grid;
     grid-template-columns: 1fr 1fr;
+
+    border-radius: 8px;
+
+    border: none;
 
     gap: 16px;
 
@@ -194,8 +197,15 @@ section.more_info_wrapper {
 
 .info_panel h2 {
 
-    color: var(--secondary);
-    font-size: var(--fs-heading3);
+    padding: 8px 16px;
+    padding-left: 32px;
+
+    color: var(--white);
+    font-size: var(--fs-heading4);
+    line-height: 1.4;
+
+    border-radius: 8px 8px 0 0;
+    background-color: var(--secondary);
 
 }
 
@@ -244,16 +254,14 @@ section.more_info_wrapper {
 
     padding: 16px;
 
-    background-color: var(--black-10);
-    border-radius: 8px;
-
-}
-
-.info_panel.pets_found ul {
-
     background-color: var(--black-5);
 
+    border: 2px solid var(--secondary);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+
 }
+
 
 .info_panel ul li {
 
