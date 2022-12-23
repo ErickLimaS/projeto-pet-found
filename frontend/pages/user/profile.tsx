@@ -80,32 +80,33 @@ const Profile: NextPage = () => {
         switch (method) {
             case 'NAME_AND_ADDRESS':
 
-                const name: string | undefined = (form.name as any).value || undefined
+                const firstName: string | undefined = (form.first_name as any).value || undefined
+                const surname: string | undefined = (form.surname as any).value || undefined
                 const street: string | undefined = form.street.value || undefined
                 const county: string | undefined = form.county.value || undefined
                 const state: string | undefined = form.state.value || undefined
                 const password: string = form.current_password.value
 
-                if (name && !street && !county && !state) {
+                if (firstName && !street && !county && !state) {
                     const result = await updateAccountData(
                         'CHANGE_NAME',
                         undefined, // not sent by this function 
                         undefined, // not sent by this function 
                         password, // current password
-                        name, undefined, undefined, undefined
+                        firstName, surname, undefined, undefined, undefined
                     )
 
                     // sets what the server responded to be notified on screen
                     setResponseForNotification(result)
 
                 }
-                else if (name && street && county && state) {
+                else if (firstName && street && county && state) {
                     const result = await updateAccountData(
                         'CHANGE_NAME_AND_ADDRESS',
                         undefined, // not sent by this function 
                         undefined, // not sent by this function 
                         password, // current password
-                        name, street, county, state
+                        firstName, surname, street, county, state
                     )
 
                     // sets what the server responded to be notified on screen
@@ -118,7 +119,7 @@ const Profile: NextPage = () => {
                         undefined, // not sent by this function 
                         undefined, // not sent by this function 
                         password, // current password
-                        undefined, street, county, state
+                        undefined, undefined, street, county, state
                     )
 
                     // sets what the server responded to be notified on screen
@@ -144,9 +145,10 @@ const Profile: NextPage = () => {
                     undefined, // not sent by this function 
                     undefined, // not sent by this function 
                     undefined, // not sent by this function 
+                    undefined, // not sent by this function 
                     tel1, tel2, facebook, instagram
                 )
-
+                
                 // sets what the server responded to be notified on screen
                 setResponseForNotification(result)
 
@@ -184,7 +186,7 @@ const Profile: NextPage = () => {
                     setUser(res.data.user)
 
                 }
-                else{
+                else {
                     alert('Erro')
                 }
 
@@ -233,9 +235,18 @@ const Profile: NextPage = () => {
                             >
 
                                 <input type='text'
-                                    id='name' name='name'
+                                    id='name' name='first_name'
                                     placeholder='Seu Nome'
-                                    aria-label='Edite o nome de usuário' defaultValue={user?.name}></input>
+                                    aria-label='Edite o primeiro nome de usuário' defaultValue={user?.firstName}>
+
+                                </input>
+
+                                <input type='text'
+                                    id='name' name='surname'
+                                    placeholder='Seu Nome'
+                                    aria-label='Edite o sobrenome de usuário' defaultValue={user?.surname}>
+
+                                </input>
 
                                 <div className={Styles.user_address_inputs}>
                                     <input type='text'
@@ -273,7 +284,7 @@ const Profile: NextPage = () => {
                             </form>
                         ) : (
                             <>
-                                <h2>{user?.name}</h2>
+                                <h2>{user?.firstName} {user?.surname}</h2>
 
                                 <p>{user.address?.street}</p>
                                 <p><b>{user.address?.county}, {user.address?.state}</b></p>
@@ -498,7 +509,7 @@ const Profile: NextPage = () => {
 
                                                                 <h4>
                                                                     <Link href={pet.userWhoFound._id}>
-                                                                        {pet.userWhoFound.name}
+                                                                        {pet.userWhoFound.firstName}
                                                                     </Link> achou seu pet
                                                                 </h4>
 
@@ -599,7 +610,7 @@ const Profile: NextPage = () => {
                                                     <div className={Styles.pet_found_by}>
 
                                                         <h4>
-                                                            <Link href={`${pet.userWhoFound._id}`}>{pet.userWhoFound.name}</Link> achou seu pet
+                                                            <Link href={`${pet.userWhoFound._id}`}>{pet.userWhoFound.firstName}</Link> achou seu pet
                                                         </h4>
 
                                                         {pet.hasReward ? (

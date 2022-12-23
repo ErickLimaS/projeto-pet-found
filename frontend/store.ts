@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { changeCreateLostPetPostStepsReducer, chooseWhichAnimalReducer, setCaracteristicasPetReducer, setOwnerAndPetInfoTogetherReducer, setPetGenreReducer, setPetInfoReducer, setPetMoreInfoReducer, setPetNameReducer, setPetRaceReducer } from './redux/reducers/lostPetPostStepsReducer'
+import { changeCreateLostPetPostStepsReducer, chooseWhichAnimalReducer, setCaracteristicasPetReducer, setPetInfoReducer, } from './redux/reducers/lostPetPostStepsReducer'
 import { currentUserReducer } from './redux/reducers/userReducer'
 
 const initialState: any = {
@@ -23,13 +23,8 @@ export const store = configureStore({
         // pets related
         changeCreateLostPetPostSteps: changeCreateLostPetPostStepsReducer,
         chooseWhichAnimal: chooseWhichAnimalReducer,
-        setPetName: setPetNameReducer,
-        setPetGenre: setPetGenreReducer,
-        setPetRace: setPetRaceReducer,
         setCaracteristicasPet: setCaracteristicasPetReducer,
-        setPetMoreInfo: setPetMoreInfoReducer,
-        setPetInfo: setPetInfoReducer,
-        setOwnerAndPetInfoTogether: setOwnerAndPetInfoTogetherReducer
+        setPetInfo: setPetInfoReducer
 
     },
     preloadedState: initialState

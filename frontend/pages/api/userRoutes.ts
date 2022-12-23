@@ -2,15 +2,16 @@ import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
 import { store } from '../../store'
 
-const DB_URL = 'https://pet-found.onrender.com/user'
+// const DB_URL = 'https://pet-found.onrender.com/user'
 
 // testes
-// const DB_URL = 'http://localhost:9123/user'
+const DB_URL = 'http://localhost:9123/user'
 
 interface userRegisterTypes {
     email: string,
     password: string,
-    name: string,
+    firstName: string,
+    surname: string,
     address: {
         state: string,
         county: string,
@@ -70,6 +71,17 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
             break;
 
         case '/set-notifications-read':
+
+            methodUsedByRoute = "PUT"
+
+            headerUsedByRoute = {
+                "Authorization": `Bearer ${userStoredData.token}`,
+                "Content-Type": "application/json"
+            }
+
+            break;
+
+        case '/update-profile':
 
             methodUsedByRoute = "PUT"
 
@@ -241,7 +253,7 @@ export const getAnotherUserInfo = async (id: string) => {
 
 }
 
-export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, name?: string, street?: string, county?: string, state?: string, tel1?: object, tel2?: object, facebook?: string, instagram?: string) => {
+export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, firstName?: string, surname?: string, street?: string, county?: string, state?: string, tel1?: object, tel2?: object, facebook?: string, instagram?: string) => {
 
     try {
 
@@ -265,7 +277,8 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                 dataToBeSend = {
 
                     updateMethod: 'CHANGE_NAME',
-                    name: name,
+                    firstName: firstName,
+                    surname: surname,
                     currentPassword: currentPassword
 
                 }
@@ -276,7 +289,8 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                 dataToBeSend = {
 
                     updateMethod: 'CHANGE_NAME_AND_ADDRESS',
-                    name: name,
+                    firstName: firstName,
+                    surname: surname,
                     street: street,
                     county: county,
                     state: state,
@@ -316,18 +330,19 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                 return
         }
 
-        const res = await Axios({
-            url: `${DB_URL}/update-profile`,
-            method: 'PUT',
-            headers: {
+        // const res = await Axios({
+        //     url: `${DB_URL}/update-profile`,
+        //     method: 'PUT',
+        //     headers: {
 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userStoredData.token}`
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${userStoredData.token}`
 
-            },
-            data: dataToBeSend
+        //     },
+        //     data: dataToBeSend
 
-        })
+        // })
+        const res = await Axios(config('/update-profile', dataToBeSend))
 
         return { success: true, status: res.status, data: res.data };
     }

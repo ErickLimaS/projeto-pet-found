@@ -40,7 +40,7 @@ function NotificationCard({ props }: any) {
                 <div className={Styles.body}>
 
                     <p>
-                        <b><Link href={`/user/${props.whoFound._id}`}>{props.whoFound.name}</Link></b> acredita que encontrou seu pet!
+                        <b><Link href={`/user/${props.whoFound._id}`}>{props.whoFound.firstName}</Link></b> acredita que encontrou seu pet!
                     </p>
 
                     <h3>Informações dada por quem achou</h3>
@@ -78,7 +78,7 @@ function NotificationCard({ props }: any) {
                             }
                         }}
                     >
-                        Entrar em contato com {props.whoFound.name} <SVG.ThreeDots />
+                        Entrar em contato com {props.whoFound.firstName} <SVG.ThreeDots />
                     </button>
 
                     {userWhoFoundContacts && (

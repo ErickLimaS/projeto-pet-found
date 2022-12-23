@@ -116,7 +116,8 @@ form.step2_form>div.genre_flex_row {
     border-radius: 4px;
 
 }
-div.genre_flex_row div.genre_wrapper{
+
+div.genre_flex_row div.genre_wrapper {
 
     display: flex;
     align-items: center;
@@ -125,29 +126,86 @@ div.genre_flex_row div.genre_wrapper{
 
 }
 
-div.genre_flex_row div.genre_wrapper svg{
+div.genre_flex_row div.genre_wrapper svg {
 
     height: 32px;
 
 }
 
-div.genre_flex_row div.genre_wrapper:first-child svg{
+div.genre_flex_row div.genre_wrapper:first-child svg {
 
     fill: rgb(107, 107, 255);
 
 }
 
-div.genre_flex_row div.genre_wrapper:last-child svg{
+div.genre_flex_row div.genre_wrapper:last-child svg {
 
     fill: rgb(255, 146, 164);
 
 }
 
-div.genre_flex_row div.genre_wrapper input{
+div.genre_flex_row div.genre_wrapper input {
 
+    cursor: pointer;
     accent-color: var(--secondary);
+    width: 20px;
+    height: 20px;
 
-} 
+}
+
+
+div.genre_flex_row div.genre_wrapper label{
+
+    align-items: center;
+
+}
+
+div.has_disability_selector {
+
+    padding: 16px;
+
+    border: 2px solid var(--black-25);
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 32px;
+
+
+}
+
+div.has_disability_selector label {
+
+    font-weight: 500;
+
+}
+
+div.has_disability_selector input {
+
+    cursor: pointer;
+    accent-color: var(--secondary);
+    width: 20px;
+    height: 20px;
+
+}
+
+div.disability {
+
+    padding: 16px;
+
+    background-color: var(--secondary);
+    border-radius: 8px;
+
+}
+
+
+div.disability label {
+
+    color: var(--white) !important;
+
+}
 
 form.step2_form>div label {
 

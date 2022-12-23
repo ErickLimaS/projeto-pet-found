@@ -1,55 +1,36 @@
 import Axios from "axios"
 import { store } from "../../store"
 
-const DB_URL = 'https://pet-found.onrender.com/pets'
+// const DB_URL = 'https://pet-found.onrender.com/pets'
 
 // testes
-// const DB_URL = 'http://localhost:9123/pets'
+const DB_URL = 'http://localhost:9123/pets'
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
 
 interface petDataTypes {
-    type: string,
-    typeTranslated: string,
-    name: string,
-    age: number,
-    breed: string,
+    type: String,
+    typeTranslated: String,
+    name: String,
+    genre: String,
+    age: Number,
+    size: Number,
+    hasDisability: Boolean,
+    disability: String,
+    breed: String,
+    particulars: [String],
     lastSeen: {
-        state: string,
-        state_abbrev: string,
-        county: string,
-        street: string
+        whereOwnerLives: Boolean,
+        state: String,
+        state_abbrev: String,
+        county: String,
+        street: String
     },
-    hasReward: boolean,
-    rewardAmount: number,
-    moreInfo: string
-}
-
-interface newUserDataTypes {
-
-    email: string,
-    password: string,
-    name: string,
-    address: {
-        state: string,
-        state_abbrev: string,
-        county: string,
-        street: string | null // null is for the optional inputs
-    },
-    contacts: {
-        tel1: {
-            ddd: string | null,
-            tel: string | null
-        },
-        tel2: {
-            ddd: string | null,
-            tel: string | null
-        },
-        facebook: string | null,
-        instagram: string | null
-    }
-
+    hasReward: Boolean,
+    rewardAmount: Number,
+    moreInfo: String,
+    postDetails: String
 }
 
 interface queryTypes {
@@ -62,7 +43,7 @@ interface queryTypes {
 
 }
 
-const config = (route: string, body?: any, query?: string) => {
+const config = (route: string, body?: any, query?: string, token?: string) => {
 
     let methodUsedByRoute: string = "";
     let headerUsedByRoute: {};
@@ -84,7 +65,7 @@ const config = (route: string, body?: any, query?: string) => {
 
             headerUsedByRoute = {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${userToken}`
+                "Authorization": `Bearer ${userToken || token && token}`
             }
 
             break;
@@ -141,44 +122,27 @@ const config = (route: string, body?: any, query?: string) => {
 }
 
 // makes POST request to register a new lost pet post and relate it with his owner
-export const createPetPost = async (info: petDataTypes, user?: newUserDataTypes) => {
+export const createPetPost = async (info: petDataTypes, token?: string) => {
 
     try {
 
-        let response: any
-        await Axios(
+        const res = await Axios(
 
-            config('/register', { createUser: user ? true : false, user, info }, '')
+            config('/register', info, undefined, token && token)
 
-        ).then(res => {
+        )
 
-            response = res
-
-        })
-
-        if (response.status === 201) {
-
-            return {
-                data: response.data,
-                status: response.status,
-                message: 'Success'
-            }
-
-        }
-        else {
-
-            return {
-                data: response.data,
-                status: response.status,
-                message: 'Error'
-            };
-
+        return {
+            status: res.status,
+            message: res.data.message,
+            success: res.data.success
         }
 
     }
+
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message }
+        return error.response.data
 
     }
 

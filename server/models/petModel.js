@@ -7,7 +7,8 @@ const petSchema = new mongoose.Schema(
         ownerName: { type: String, required: true },
         name: { type: String, required: true },
         genre: { type: String, required: true },
-        // age: { type: Number, required: true },
+        age: { type: Number, required: true },
+        size: {type: String, required: true},
         breed: { type: String, required: true },
         type: { type: String, required: true },
         typeTranslated: { type: String },
@@ -19,11 +20,12 @@ const petSchema = new mongoose.Schema(
         wasFound: { type: Boolean, default: false },
         dateWhenFound: { type: Date },
         userWhoFound: {
-            name: { type: String },
+            firstName: { type: String },
             _id: { type: mongoose.ObjectId },
             rewardAccepted: { type: Boolean }
-        },
+        },                              
         hasDisability: { type: Boolean, required: true },
+        disability: { type: String, default: null},
         // photoUrl: [
         //     { type: String, required: true } //fix it
         // ],
@@ -35,8 +37,8 @@ const petSchema = new mongoose.Schema(
         },
         hasReward: { type: Boolean, required: true },
         rewardAmount: { type: Number },
-        moreInfo: { type: String, required: true },
-        postDetails: { type: String } // owner providing details on the post
+        moreInfo: { type: String },
+        postDetails: { type: String }
     }
 
 )

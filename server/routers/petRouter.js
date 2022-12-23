@@ -502,78 +502,28 @@ petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
 
 }))
 
-// register a pet (user logged in)
+// register a pet
 petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
-    let user;
-
-    // if user has a account, it will be stored here
-    if (req.body.createUser === false) {
-
-        user = await User.findById(req.user.userInfo._id);
-
-    }
+    const user = await User.findById(req.user.userInfo._id);
 
     try {
 
-        // if user don't exist, it will create a new account
-        if (req.body.createUser === true) {
+        // if pet was lost on same location as owner lives, rewrite lastSeen location
+        if (req.body.lastSeen.whereOwnerLives) {
 
-            // hashes the plain password from body
-            const hashedPassword = await bcrypt.hash(req.body.user.password, passwordSalt)
-
-            user = new User({
-                name: req.body.user.name,
-                email: req.body.user.email,
-                password: hashedPassword,
-                address: {
-                    state: req.body.user.address.state,
-                    county: req.body.user.address.county,
-                    street: req.body.user.address.street || null,
-                },
-                contacts: {
-                    tel1: {
-                        ddd: req.body.user.contacts.tel1.ddd || null,
-                        tel: req.body.user.contacts.tel1.tel || null
-                    },
-                    tel2: {
-                        ddd: req.body.user.contacts.tel2.ddd || null,
-                        tel: req.body.user.contacts.tel2.tel || null
-                    },
-                    instagram: req.body.user.contacts.instagram || null,
-                    facebook: req.body.user.contacts.facebook || null
-                },
-            })
-
-            await user.save()
+            req.body.lastSeen.state = user.address.state
+            req.body.lastSeen.state_abbrev = user.address.state_abbrev
+            req.body.lastSeen.county = user.address.county
+            req.body.lastSeen.street = user.address.street
 
         }
 
-        const pet = new Pet({
-            ownerId: user._id,
-            ownerName: user.name,
-            type: req.body.info.type,
-            typeTranslated: req.body.info.typeTranslated,
-            name: req.body.info.name,
-            // age: req.body.info.age,
-            breed: req.body.info.breed,
-            particulars: req.body.info.particulars,
-            // photoUrl: [
-            //     req.body.info.name //fix it
-            // ],
-            lastSeen: {
-                state: req.body.info.lastSeen.whereOwnerLives ?
-                    user.address.state : req.body.info.lastSeen.state,
-                county: req.body.info.lastSeen.whereOwnerLives ?
-                    user.address.county : req.body.info.lastSeen.county,
-                street: req.body.info.lastSeen.whereOwnerLives ?
-                    (user.address.street || null) : req.body.info.lastSeen.street
-            },
-            hasReward: req.body.info.hasReward,
-            rewardAmount: req.body.info.rewardAmount,
-            moreInfo: req.body.info.moreInfo,
-            postDetails: req.body.info.postDetails
-        })
+        // sets owner name and id
+        req.body.ownerId = user._id
+        req.body.ownerName = user.firstName
+
+        const pet = new Pet(req.body)
 
         await pet.save();
 
@@ -582,20 +532,12 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
         await user.save();
 
-        if (req.body.createUser === true) {
-            return res.status(201).json({
-                name: user.name,
-                token: generateToken(user),
-                pet
-            })
-        }
-        else {
-            return res.status(201).send(pet)
-        }
+        return res.status(201).json({ success: true, message: `Post do Pet Criado com Sucesso!` })
+
 
     }
     catch (error) {
-        return res.status(500).json({ message: `${error}` })
+        return res.status(500).json({ success: false, message: `${error}` })
     }
 
 }))
@@ -630,7 +572,7 @@ petRouters.put('/set-as-found', isAuth, expressAsyncHandler(async (req, res) => 
                 wasFound: true,
                 dateWhenFound: () => Date.now(),
                 userWhoFound: {
-                    name: req.body.userWhoFound.name,
+                    firstName: req.body.userWhoFound.firstName,
                     _id: req.body.userWhoFound._id,
                     rewardAccepted: req.body.rewardAccepted,
                 }
@@ -757,7 +699,7 @@ petRouters.put("/notify-owner", isAuth, expressAsyncHandler(async (req, res) => 
                 pet: pet,
                 whoFound: {
                     _id: req.user.userInfo._id,
-                    name: req.user.userInfo.name
+                    firstName: req.user.userInfo.firstName
                 },
                 infoSentByWhoFound: {
                     // petImg,

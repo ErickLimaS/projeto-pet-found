@@ -1,7 +1,6 @@
 import express from 'express'
 import expressAsyncHandler from "express-async-handler";
 import User from '../models/userModel.js'
-import Pet from '../models/petModel.js'
 import bcrypt from 'bcrypt'
 import { generateToken, isAuth } from '../utils.js'
 
@@ -34,7 +33,8 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
         await newUser.save()
 
         return res.status(201).json({
-            name: newUser.name,
+            success: true,
+            name: newUser.firstName,
             token: generateToken(newUser)
         })
 
@@ -42,6 +42,7 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
     catch (err) {
 
         return res.status(500).json({
+            success: false,
             status: 500,
             message: `Server Error: ${err}`
         })
@@ -79,7 +80,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 
         return res.status(202).json({
             success: true,
-            name: userRegisted.name,
+            name: userRegisted.firstName,
             token: generateToken(userRegisted)
         })
 
@@ -173,7 +174,7 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
         return {
             success: true,
             message: 'Success',
-            name: user.name,
+            name: user.firstName,
             token: generateToken(user)
         }
 
@@ -247,7 +248,10 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
 
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
-                        { name: req.body.name },
+                        {
+                            firstName: req.body.firstName,
+                            surname: req.body.surname
+                        },
                         async function (err, result) {
 
                             if (err) {
@@ -266,7 +270,8 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
                     User.findOneAndUpdate(
                         { _id: req.user.userInfo._id },
                         {
-                            name: req.body.name,
+                            firstName: req.body.firstName,
+                            surname: req.body.surname,
                             address: {
                                 street: req.body.street,
                                 county: req.body.county,

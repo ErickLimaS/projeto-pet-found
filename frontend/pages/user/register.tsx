@@ -34,22 +34,19 @@ const Register: NextPage = () => {
     useEffect(() => {
 
         // if user name is already stored, returns to home
-        if (user.name != null && user.token != null) {
+        if ((user.name && user.token) && router.query.redirect) {
 
-            router.push('/')
+            router.push(`/${router.query.redirect}`)
 
+        }
+        else if (user.name && user.token) {
+
+            router.push(`/`)
+            
         }
         else {
             getStates()
         }
-
-        // if successful, returns to home 
-        // if (user.success === true) {
-
-        //     setLoading(false)
-        //     setTimeout(() => router.push('/'), 4000)
-
-        // }
 
     }, [loading, user, addContactsChecked])
 
@@ -66,16 +63,17 @@ const Register: NextPage = () => {
         e.preventDefault()
 
         const form = e.target as HTMLFormElement
-
         setLoading(true)
 
         if (form.password.value !== form.confirm_password.value) {
             alert('Senhas diferentes. Tente novamente.') // fix
+            setLoading(false)
             return console.log('diffent')
         }
 
         const formValues = {
-            name: (form.name as any).value,
+            firstName: (form.firstName as any).value,
+            surname: (form.surname as any).value,
             email: form.email.value,
             password: form.password.value,
             address: {
@@ -139,11 +137,19 @@ const Register: NextPage = () => {
 
                     <form onSubmit={(e) => submitForm(e)}>
 
-                        <div>
-                            <label>
-                                Seu nome
-                                <input type='text' name='name' id='name' required></input>
-                            </label>
+                        <div className={RegisterPageStyles.name_wrapper}>
+                            <div>
+                                <label>
+                                    Primeiro nome
+                                    <input type='text' name='firstName' id='firstName' required></input>
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    Sobrenome
+                                    <input type='text' name='surname' id='surname' required></input>
+                                </label>
+                            </div>
                         </div>
 
                         <div className={RegisterPageStyles.address_wrapper}>

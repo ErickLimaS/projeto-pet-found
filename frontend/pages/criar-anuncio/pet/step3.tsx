@@ -7,8 +7,7 @@ import Step3FormStyles from '../../../styles/FoundPage/steps/Step3Form.module.cs
 import ButtonsStyles from '../../../styles/FoundPage/Index.module.css'
 import API from '../../api/IBGE_API'
 import * as SVG from '../../../public/imgs/svg'
-import { changeCreateLostPetPostSteps, setOwnerAndPetInfoTogether } from '../../../redux/actions/lostPetPostStepsActions'
-import Link from 'next/link'
+import { changeCreateLostPetPostSteps } from '../../../redux/actions/lostPetPostStepsActions'
 import { createPetPost } from '../../api/petRoutes'
 
 function Step3() {
@@ -23,9 +22,6 @@ function Step3() {
   // user data (name, token)
   const user: any = useSelector((state: RootState) => state.currentUser)
 
-  // has all pet's data after this form has been submited 
-  const petInfoAssembled: any = useSelector((state: RootState) => state.setOwnerAndPetInfoTogether)
-
   const { currentStep }: any = stepsProgress
   const { animal }: any = choseAnimal
 
@@ -33,23 +29,6 @@ function Step3() {
   const [counties, setCounties] = useState([])
   const [lostOnSameLocation, setLostOnSameLocation] = useState<boolean>(false)
   const [reward, setReward] = useState<boolean>(false)
-
-  const ownerName = React.useRef<HTMLInputElement>(null)
-  const ownerEmail = React.useRef<HTMLInputElement>(null)
-  const ownerPassword = React.useRef<HTMLInputElement>(null)
-  const ownerConfirmPassword = React.useRef<HTMLInputElement>(null)
-  const ownerContactDdd = React.useRef<HTMLInputElement>(null)
-  const ownerContactFull = React.useRef<HTMLInputElement>(null)
-  const ownerState = React.useRef<HTMLSelectElement>(null)
-  const ownerCounty = React.useRef<HTMLSelectElement>(null)
-  const ownerStreet = React.useRef<HTMLSelectElement>(null)
-  const ownerPostMoreDetails = React.useRef<HTMLTextAreaElement>(null)
-
-  const ownerRewardWhenPetFound = React.useRef<HTMLInputElement>(null)
-
-  const petLostLocationState = React.useRef<HTMLSelectElement>(null)
-  const petLostLocationCounty = React.useRef<HTMLSelectElement>(null)
-  const petLostLocationStreet = React.useRef<HTMLInputElement>(null)
 
   const router = useRouter()
 
@@ -63,6 +42,7 @@ function Step3() {
     setStates(data)
 
   }
+  
   const getCounties = async (choseState: string) => {
 
     const data = await API.getBrazilianMunicipies(choseState)
@@ -81,122 +61,45 @@ function Step3() {
 
     e.preventDefault()
 
-    // if user is already logged in
-    if (isLogged === true) {
+    const form = e.target as HTMLFormElement
 
-      dispatch(setOwnerAndPetInfoTogether(
-        {
-          type: petInfo.info.type,
-          typeTranslated: 'Cachorro',
-          name: petInfo.info.name,
-          genre: petInfo.info.genre,
-          // age: 20,
-          breed: petInfo.info.breed,
-          // photoUrl: [
-          //   req.body.name //fix it
-          // ],
-          particulars: petCaracteristicas.particulars || null,
-          lastSeen: {
-            whereOwnerLives: lostOnSameLocation,
-            state: petLostLocationState.current?.value.slice(5),
-            state_abbrev: petLostLocationState.current?.value.slice(1, 3),
-            county: petLostLocationCounty.current?.value,
-            street: petLostLocationStreet.current?.value || null
-          },
-          hasReward: reward,
-          rewardAmount: reward ? ownerRewardWhenPetFound.current?.value : null,
-          moreInfo: petInfo.info.moreInfo || null,
-          postDetails: ownerPostMoreDetails.current?.value || null
-        }
-      ))
+    // saves pet post on Server and awaits response
+    const responseFromServer: any = await createPetPost(
+      {
+        type: petInfo.info.type,
+        typeTranslated: (petInfo.info.type == 'DOG' && 'Cachorro' || petInfo.info.type == 'CAT' && 'Gato' || petInfo.info.type == 'OTHER' && 'Outro' as any),
+        name: petInfo.info.name,
+        genre: petInfo.info.genre,
+        age: petInfo.info.age as Number,
+        size: petInfo.info.size,
+        hasDisability: petInfo.info.disability ? true : false,
+        disability: petInfo.info.disability || null,
+        breed: petInfo.info.breed,
+        // photoUrl: [
+        //   req.body.name //fix it
+        // ],
+        particulars: petCaracteristicas.particulars || null,
+        lastSeen: {
+          whereOwnerLives: lostOnSameLocation,
+          state: lostOnSameLocation ? null : form.address_lost_state.value.slice(5),
+          state_abbrev: lostOnSameLocation ? null : form.address_lost_state.value.slice(1, 3),
+          county: lostOnSameLocation ? null : form.address_lost_county.value,
+          street: lostOnSameLocation ? null : form.address_lost_street.value
+        },
+        hasReward: reward,
+        rewardAmount: reward ? form.reward_value.value : null,
+        moreInfo: petInfo.info.moreInfo || null,
+        postDetails: form.more_info_owner.value || null
+      },
+      user.token
+    )
 
-      if (petInfoAssembled.success === true) {
+    // redirects to Complete Page
+    if (responseFromServer.status === 201) {
 
-        // waiting for server reponse about the saving pet post
-        const responseFromServer: any = await createPetPost(petInfoAssembled.info)
+      dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
+      router.push(`/pet/complete`)
 
-        if (responseFromServer.status === 201) {
-
-          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
-          router.push(`/pet/complete`)
-
-        }
-
-      }
-
-    }
-    else {
-
-      dispatch(setOwnerAndPetInfoTogether(
-        {
-          type: petInfo.info.type,
-          typeTranslated: 'Cachorro',
-          name: petInfo.info.name,
-          genre: petInfo.info.genre,
-          // age: 20,
-          breed: petInfo.info.breed,
-          // photoUrl: [
-          //   req.body.name //fix it
-          // ],
-          particulars: petCaracteristicas.particulars || null,
-          lastSeen: {
-            whereOwnerLives: lostOnSameLocation,
-            state: petLostLocationState.current?.value.slice(5),
-            state_abbrev: petLostLocationState.current?.value.slice(1, 3),
-            county: petLostLocationCounty.current?.value,
-            street: petLostLocationStreet.current?.value || null
-          },
-          hasReward: reward,
-          rewardAmount: reward ? ownerRewardWhenPetFound.current?.value : null,
-          moreInfo: petInfo.info.moreInfo,
-          postDetails: ownerPostMoreDetails.current?.value || null
-        }
-      ))
-
-      if (ownerPassword.current!.value !== ownerConfirmPassword.current!.value) {
-        alert('Senhas diferentes. Tente novamente.') // fix
-        return console.log('diffent')
-      }
-
-      if (petInfoAssembled.success === true) {
-
-        // new user account 
-        const createUserToSubmit = {
-          email: ownerEmail.current!.value,
-          password: ownerPassword.current!.value,
-          name: ownerName.current!.value,
-          address: {
-            state: ownerState.current!.value.slice(1,3),
-            state_abbrev: ownerState.current!.value.slice(5),
-            county: ownerCounty.current!.value,
-            street: null // null is for the optional inputs
-          },
-          contacts: {
-            tel1: {
-              ddd: ownerContactDdd.current!.value || null,
-              tel: ownerContactFull.current!.value || null
-            },
-            tel2: {
-              ddd: null,
-              tel: null
-            },
-            facebook: null,
-            instagram: null
-
-          }
-        }
-
-        // waiting for server response about saving the user account and pet post
-        const responseFromServer: any = await createPetPost(petInfoAssembled.info, createUserToSubmit)
-
-        if (responseFromServer.status === 201) {
-
-          dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
-          router.push(`/criar-anuncio/pet/complete`)
-
-        }
-
-      }
     }
 
   }
@@ -211,6 +114,13 @@ function Step3() {
 
     }
 
+    // if user dont have a account, it will redirect to register page
+    if (animal && currentStep == 3 && !user.token) {
+
+      router.push(`/user/register?redirect=${router.pathname}`)
+
+    }
+
     getBrazilianStates()
 
   }, [])
@@ -220,259 +130,37 @@ function Step3() {
 
       <div className={Step3FormStyles.form_container} data-pet={`${animal}`}>
 
-        {/* if USER IS logged in, shows form to choose witch contacts to be displayed on post */}
-        {/* if USER IS NOT logged in, shows form to create a account*/}
-        {user.name ? (
-          <form className={Step3FormStyles.step3_form} onSubmit={(e) => submitForm(e, true)}>
+        <form className={Step3FormStyles.step3_form} onSubmit={(e) => submitForm(e, true)}>
 
-            <p>Onde Perdi Meu Pet ?</p>
+          <p>Onde Perdi Meu Pet ?</p>
 
-            <div className={Step3FormStyles.checkbox_lost_pet}>
-              <label htmlFor='pet_lost_on_location'>
-                Meu Pet se perdeu na mesma localização que moro
+          <div className={Step3FormStyles.checkbox_lost_pet}>
+            <label htmlFor='pet_lost_on_location'>
+              Meu Pet se perdeu na mesma localização que moro
 
-                <input type='checkbox'
-                  id='pet_lost_on_location' name='pet_lost_on_same_location_owner_lives' value='true'
-                  onChange={(e) => {
-                    e.target.checked ?
-                      setLostOnSameLocation(true) : setLostOnSameLocation(false)
-                  }}
-                >
-                </input>
-
-              </label>
-            </div>
-
-            {lostOnSameLocation === false && (
-
-              <section>
-
-                <div>
-                  <label htmlFor='estado-lost-pet'>
-                    Estado onde Aconteceu
-
-                    <select ref={petLostLocationState} id='estado-lost-pet' name='estado_onde_perdi_meu_pet'
-                      onChange={(e) => getCounties(e.target.value)}
-                    >
-
-                      {states.map((item: any) => (
-
-                        <option value={`(${item.sigla}) ${item.nome}`} key={item.id}>{item.nome}</option>
-
-                      ))}
-
-                    </select>
-
-                  </label>
-                </div>
-
-                {counties.length > 0 && (
-                  <>
-                    <div>
-                      <label htmlFor='municipio-lost-pet'>
-                        Município
-
-                        <select
-                          ref={petLostLocationCounty} id='municipio-lost-pet' name='municipio_onde_perdi_meu_pet' required
-                        >
-
-                          {counties.map((item: any) => (
-
-                            <option value={item.nome} key={item.id}>{item.nome}</option>
-
-                          ))}
-
-                        </select>
-
-                      </label>
-                    </div>
-
-                    <div>
-                      <label htmlFor='rua-lost-pet'>
-                        Rua onde aconteceu
-
-                        <input type='text'
-                          ref={petLostLocationStreet} id='rua-lost-pet' name='rua_onde_perdi_meu_pet'
-                          required
-                        >
-                        </input>
-
-                      </label>
-                    </div>
-                  </>
-                )}
-              </section>
-
-            )}
-
-            <p>Oferecer Recompensa ?</p>
-
-            <section>
-              <div className={Step3FormStyles.reward_flex_row}>
-
-                <SVG.SackMoney />
-                <label htmlFor='recompensa_sim'>
-                  Sim
-                  <input type='radio' id='recompensa_sim' name='oferecer_recompensa' value='true'
-                    onChange={(e) => setReward(true)}
-                  ></input>
-                </label>
-
-                <label htmlFor='recompensa_nao'>
-                  Não
-                  <input type='radio' id='recompensa_nao' name='oferecer_recompensa' value='false'
-                    onChange={(e) => setReward(false)}
-                  ></input>
-                </label>
-                <SVG.NoMoney />
-              </div>
-            </section>
-
-            {reward && (
-              <div className={Step3FormStyles.set_reward}>
-                <label htmlFor='valor_recompensa'>
-                  Oferecer como Recompensa...
-
-                  <small>Insira o valor em Reais(R$) que deseja oferecer abaixo</small>
-
-                  <input type='text'
-                    ref={ownerRewardWhenPetFound} id='valor-recompensa' name='valor_recompensa'
-                    required
-                  >
-                  </input>
-
-                </label>
-              </div>
-            )}
-
-            <div className={Step3FormStyles.more_info}>
-              <label htmlFor='mais_informacoes2'>
-                Algo mais que queira dizer nesse post?
-                <textarea
-                  ref={ownerPostMoreDetails} rows={5} id='mais_informacoes2' name='mais_informacoes_dono'
-                  cols={40}
-                  placeholder='Ex: "Não posso atender chamadas no final de semana." ou "Se acharem, me liguem a qualquer momento!"'
-                >
-                </textarea>
-              </label>
-            </div>
-
-            <div className={ButtonsStyles.next_page} data-qty-buttons='2'>
-
-              <button type='button'
-                onClick={() => returnStep()}
+              <input type='checkbox'
+                id='pet_lost_on_location' name='pet_lost_on_same_location_owner_lives' value='true'
+                onChange={(e) => {
+                  e.target.checked ?
+                    setLostOnSameLocation(true) : setLostOnSameLocation(false)
+                }}
               >
-                <SVG.ChevronLeft /> Voltar
-              </button>
+              </input>
 
-              <button type='submit' >
-                Finalizar <SVG.ChevronRight />
-              </button>
+            </label>
+          </div>
 
-            </div>
-
-          </form>
-        ) : (
-          <form className={Step3FormStyles.step3_form} onSubmit={(e) => submitForm(e, false)}>
-
-            <p>Agora, crie sua conta!</p>
-
-            <Link href={`/user/login?redirect=${router.pathname.slice(1)}`}>
-              Ou logue nela clicando aqui!
-            </Link>
-
-            <div className={Step3FormStyles.pet_photo}>
-              <label htmlFor='owner_photo'>
-                <span className={Step3FormStyles.img_placeholder}></span>
-                <input type='file' id='owner_photo' name='foto_do_dono'></input>
-              </label>
-            </div>
-
-            <div>
-              <label htmlFor='name'>
-                Seu Nome
-                <input type='text'
-                  ref={ownerName} id='name' name='nome'
-                  required
-                  placeholder=''
-                  onBlur={(e) => console.log('test' + ownerName.current?.value)}
-                ></input>
-              </label>
-            </div>
-
-            <div>
-              <label htmlFor='email'>
-                Email
-                <input type='email' ref={ownerEmail} id='email' name='email' required
-                ></input>
-              </label>
-            </div>
-
-            <div>
-              <label htmlFor='password'>
-                Senha
-
-                <small>Necessária para Criar Conta na Pet Found</small>
-
-                <input type='password'
-                  ref={ownerPassword} id='password' name='password'
-                  pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
-                  title='Precisa conter letras maiúsculas, números (0-9) e caracteres especiais (@, !, $, etc.).'
-                  required
-                ></input>
-              </label>
-            </div>
-
-            <div>
-              <label htmlFor='confirm-password'>
-                Confirme a senha que você criou acima
-
-                <small>Necessária para Criar Conta na Pet Found</small>
-
-                <input type='password'
-                  ref={ownerConfirmPassword} id='confirm-password' name='confirm-password'
-                  pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
-                  title='Precisa conter letras maiúsculas, números (0-9) e caracteres especiais (@, !, $, etc.).'
-                  required
-                ></input>
-              </label>
-            </div>
-
-            <div className={Step3FormStyles.number_contact}>
-              <div>
-                <label htmlFor='ddd-number'>
-                  DDD
-                  <input type='text'
-                    ref={ownerContactDdd} id='ddd-number' name='ddd-numero_contato'
-                    pattern='^\d.{1}$'
-                    title='DDD do número sem o zero.'
-                    placeholder='11' required
-                  ></input>
-
-                </label>
-              </div>
-              <div>
-                <label htmlFor='number'>
-                  Número Para Contato
-                  <input type='text'
-                    ref={ownerContactFull} id='number' name='numero_contato'
-                    pattern='^\d.{7,8}$'
-                    title='Apenas números, sem o DDD.'
-                    placeholder='912341234' required
-                  ></input>
-                </label>
-              </div>
-            </div>
-
-            <p>Onde Mora</p>
+          {lostOnSameLocation === false && (
 
             <section>
-              <div>
-                <label htmlFor='estado'>
-                  Estado de Residência
 
-                  <select id='estado' ref={ownerState} name='estado' required
-                    onChange={(e) => getCounties(e.target.value)}
+              <div>
+                <label htmlFor='address_lost_state'>
+                  Estado onde Aconteceu
+
+                  <select
+                    id='address_lost_state' name='address_lost_state'
+                    onChange={(e) => getCounties(e.target.value.slice(1, 3))}
                   >
 
                     {states.map((item: any) => (
@@ -487,169 +175,109 @@ function Step3() {
               </div>
 
               {counties.length > 0 && (
-                <div>
-                  <label htmlFor='municipio'>
-                    Município
+                <>
+                  <div>
+                    <label htmlFor='address_lost_county'>
+                      Município
 
-                    <select ref={ownerCounty} id='municipio' name='municipio' required
+                      <select
+                        id='address_lost_county' name='address_lost_county' required
+                      >
 
-                    >
+                        {counties.map((item: any) => (
 
-                      {counties.map((item: any) => (
+                          <option value={item.nome} key={item.id}>{item.nome}</option>
 
-                        <option value={item.nome} key={item.id}>{item.nome}</option>
+                        ))}
 
-                      ))}
+                      </select>
 
-                    </select>
+                    </label>
+                  </div>
 
-                  </label>
-                </div>
+                  <div>
+                    <label htmlFor='address_lost_street'>
+                      Rua onde aconteceu
+
+                      <input type='text'
+                        id='address_lost_street' name='address_lost_street'
+                        required
+                      >
+                      </input>
+
+                    </label>
+                  </div>
+                </>
               )}
             </section>
 
-            <p>Onde Perdi Meu Pet ?</p>
+          )}
 
-            <div className={Step3FormStyles.checkbox_lost_pet}>
-              <label htmlFor='pet_lost_on_location'>
-                Meu Pet se perdeu na mesma localização que moro
+          <p>Oferecer Recompensa ?</p>
 
-                <input type='checkbox' id='pet_lost_on_location' name='pet_lost_on_same_location_owner_lives' value='true'
-                  onChange={(e) => {
-                    e.target.checked ?
-                      setLostOnSameLocation(true) : setLostOnSameLocation(false)
-                  }}
-                >
+          <section>
+            <div className={Step3FormStyles.reward_flex_row}>
+
+              <SVG.SackMoney />
+              <label htmlFor='recompensa_sim'>
+                Sim
+                <input type='radio' id='has_reward_false' name='has_reward' value='true'
+                  onChange={() => setReward(true)}
+                ></input>
+              </label>
+
+              <label htmlFor='recompensa_nao'>
+                Não
+                <input type='radio' id='has_reward_true' name='has_reward' value='false'
+                  onChange={() => setReward(false)}
+                ></input>
+              </label>
+              <SVG.NoMoney />
+            </div>
+          </section>
+
+          {reward && (
+            <div className={Step3FormStyles.set_reward}>
+              <label htmlFor='valor_recompensa'>
+                Oferecer como Recompensa...
+
+                <small>Insira o valor em Reais(R$) que deseja oferecer abaixo</small>
+
+                <input type='text' id='reward_value' name='reward_value' required>
                 </input>
 
               </label>
             </div>
+          )}
 
-            {lostOnSameLocation === false && (
-
-              <section>
-
-                <div>
-                  <label htmlFor='estado-lost-pet'>
-                    Estado onde Aconteceu
-
-                    <select ref={petLostLocationState} id='estado-lost-pet' name='estado_onde_perdi_meu_pet'
-                      onChange={(e) => getCounties(e.target.value)}
-                    >
-
-                      {states.map((item: any) => (
-
-                        <option value={`(${item.sigla}) ${item.nome}`} key={item.id}>{item.nome}</option>
-
-                      ))}
-
-                    </select>
-
-                  </label>
-                </div>
-
-                {counties.length > 0 && (
-                  <>
-                    <div>
-                      <label htmlFor='municipio-lost-pet'>
-                        Município
-
-                        <select ref={petLostLocationCounty} id='municipio-lost-pet' name='municipio_onde_perdi_meu_pet' required
-
-                        >
-
-                          {counties.map((item: any) => (
-
-                            <option value={item.nome} key={item.id}>{item.nome}</option>
-
-                          ))}
-
-                        </select>
-
-                      </label>
-                    </div>
-
-                    <div>
-                      <label htmlFor='rua-lost-pet'>
-                        Rua onde aconteceu
-
-                        <input type='text' ref={petLostLocationStreet} id='rua-lost-pet' name='rua_onde_perdi_meu_pet' required
-
-                        >
-                        </input>
-
-                      </label>
-                    </div>
-                  </>
-                )}
-              </section>
-
-            )}
-
-            <p>Oferecer Recompensa ?</p>
-
-            <section>
-              <div className={Step3FormStyles.reward_flex_row}>
-
-                <SVG.SackMoney />
-                <label htmlFor='recompensa_sim'>
-                  Sim
-                  <input type='radio' id='recompensa_sim' name='oferecer_recompensa' value='true'
-                    onChange={(e) => setReward(true)}
-                  ></input>
-                </label>
-
-                <label htmlFor='recompensa_nao'>
-                  Não
-                  <input type='radio' id='recompensa_nao' name='oferecer_recompensa' value='false'
-                    onChange={(e) => setReward(false)}
-                  ></input>
-                </label>
-                <SVG.NoMoney />
-              </div>
-            </section>
-
-            {reward && (
-              <div className={Step3FormStyles.set_reward}>
-                <label htmlFor='valor_recompensa'>
-                  Oferecer como Recompensa...
-
-                  <small>Insira o valor que deseja oferecer abaixo</small>
-
-                  <input type='number' ref={ownerRewardWhenPetFound} id='valor-recompensa' name='valor_recompensa' required
-
-                  >
-                  </input>
-
-                </label>
-              </div>
-            )}
-
-            <div className={Step3FormStyles.more_info}>
-              <label htmlFor='mais_informacoes2'>
-                Algo mais que queira dizer nesse post?
-                <textarea ref={ownerPostMoreDetails} cols={40} rows={5} id='mais_informacoes2' name='mais_informacoes_dono' placeholder='Ex: "Não posso atender chamadas no final de semana." ou "Se acharem, me liguem a qualquer momento!"'
-                >
-                </textarea>
-              </label>
-            </div>
-
-            <div className={ButtonsStyles.next_page} data-qty-buttons='2'>
-
-              <button type='button'
-                onClick={() => returnStep()}
+          <div className={Step3FormStyles.more_info}>
+            <label htmlFor='mais_informacoes2'>
+              Algo mais que queira dizer nesse post?
+              <textarea rows={5}
+                id='more_info_owner' name='more_info_owner'
+                cols={40}
+                placeholder='Ex: "Não posso atender chamadas no final de semana." ou "Se acharem, me liguem a qualquer momento!"'
               >
-                <SVG.ChevronLeft /> Voltar
-              </button>
+              </textarea>
+            </label>
+          </div>
 
-              <button type='submit' >
-                Finalizar <SVG.ChevronRight />
-              </button>
+          <div className={ButtonsStyles.next_page} data-qty-buttons='2'>
 
-            </div>
+            <button type='button'
+              onClick={() => returnStep()}
+            >
+              <SVG.ChevronLeft /> Voltar
+            </button>
 
-          </form>
-        )}
+            <button type='submit' >
+              Finalizar <SVG.ChevronRight />
+            </button>
+
+          </div>
+
+        </form>
+
 
       </div >
     </CriarAnuncio >

@@ -260,7 +260,7 @@ div.warning_absolute[data-active="true"]>a:hover {
 
         width: initial;
         min-height: auto;
-
+        margin: 0 auto;
 
     }
 }
@@ -334,6 +334,22 @@ div.warning_absolute[data-active="true"]>a:hover {
     font-size: 0.8rem;
     color: var(--black-75);
 
+}
+
+.form_container form .name_wrapper {
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+}
+
+@media(min-width: 768px) {
+    .form_container form .name_wrapper {
+
+        grid-template-columns: 1fr 2fr;
+        gap: 0 8px;
+
+    }
 }
 
 .form_container form .address_wrapper {

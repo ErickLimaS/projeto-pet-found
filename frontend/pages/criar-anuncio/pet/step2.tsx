@@ -13,6 +13,7 @@ import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions
 function Step2() {
 
   const [petBreed, setPetBreed] = useState<any>([])
+  const [hasDisabilities, setHasDisabilities] = useState<boolean>()
 
   const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
   const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
@@ -21,11 +22,6 @@ function Step2() {
   const { caracteristicas }: any = petCaracteristicas
   const { currentStep }: any = stepsProgress
   const { animal }: any = choseAnimal
-
-  const petName = React.useRef<HTMLInputElement>(null)
-  const petGenre = React.useRef<HTMLInputElement>(null)
-  const petRace = React.useRef<HTMLSelectElement>(null)
-  const petMoreInfo = React.useRef<HTMLTextAreaElement>(null)
 
   const router = useRouter()
 
@@ -49,6 +45,7 @@ function Step2() {
 
   }
 
+  // previous page
   const returnStep = () => {
 
     router.push('/criar-anuncio/step1')
@@ -59,24 +56,26 @@ function Step2() {
 
     e.preventDefault()
 
-    if ((petName.current?.value != null || undefined || ``) || (petGenre.current?.value != null || undefined || ``) || (petRace.current?.value != null || undefined || ``) || (caracteristicas != null || undefined || ``)) {
+    const form = e.target as HTMLFormElement
 
-      dispatch(setPetInfo(
-        {
-          name: petName.current?.value,
-          type: animal,
-          genre: petGenre.current?.value,
-          breed: petRace.current?.value,
-          caracteristicas: caracteristicas,
-          moreInfo: petMoreInfo.current?.value,
-        }
-      ))
+    dispatch(
+      setPetInfo({
+        name: (form.name as any).value,
+        type: animal,
+        genre: form.genre.value,
+        age: form.age.value,
+        size: form.size.value,
+        disability: hasDisabilities ? form.disability.value : null,
+        breed: form.breed.value,
+        caracteristicas: caracteristicas,
+        moreInfo: form.more_info.value,
+      })
+    )
 
-      dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
+    dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
 
-      router.push(`/criar-anuncio/pet/step3`)
+    router.push(`/criar-anuncio/pet/step3`)
 
-    }
 
   }
 
@@ -109,35 +108,53 @@ function Step2() {
           <div>
             <label htmlFor='name'>
               Nome do Pet
-              <input type='text' ref={petName} id='name' name='nome_do_pet' placeholder='' required={true}></input>
+              <input type='text' id='name' name='name' required={true}></input>
             </label>
           </div>
 
           <div className={Step2FormStyles.genre_flex_row} aria-label='Escolha o gênero do pet'>
 
             <div className={Step2FormStyles.genre_wrapper}>
-              <SVG.MaleSymbol aria-label='Simbolo de Masculino'/>
+              <SVG.MaleSymbol aria-label='Simbolo de Masculino' />
               <label htmlFor='macho'>
                 Macho
-                <input type='radio' ref={petGenre} id='macho' name='genre' value='male'></input>
+                <input type='radio' id='macho' name='genre' value='male'></input>
               </label>
             </div>
 
             <div className={Step2FormStyles.genre_wrapper}>
               <label htmlFor='femea'>
                 Fêmea
-                <input type='radio' ref={petGenre} id='femea' name='genre' value='female' ></input>
+                <input type='radio' id='femea' name='genre' value='female' ></input>
               </label>
-              <SVG.FemaleSymbol aria-label='Simbolo de Feminino'/>
+              <SVG.FemaleSymbol aria-label='Simbolo de Feminino' />
             </div>
 
+          </div>
+
+          <div>
+            <label htmlFor='age'>
+              Idade
+              <input type='text' id='age' name='age' placeholder='Ex: 4' required></input>
+            </label>
+            <small>Apenas números.</small>
+          </div>
+
+          <div>
+            <label htmlFor='size'>
+              Tamanho do Pet (centímetros)
+              <input type='text' id='size' name='size' placeholder='Ex: 89' required></input>
+            </label>
+            <small>Escreva em centimetros (e apenas números).</small>
           </div>
 
           <div>
             <label htmlFor='race'>
               Raça
 
-              <select id='race' ref={petRace} name='caracteristicas' required >
+              <select id='breed' name='breed' required >
+
+                <option disabled selected>Escolha a raça</option>
 
                 {petBreed.map((item: any) => (
 
@@ -150,12 +167,49 @@ function Step2() {
             </label>
           </div>
 
+          <div className={Step2FormStyles.has_disability_selector}>
+            <label htmlFor='hasDisabilities'>
+              Tem deficiência
+              <input type='radio'
+                id='hasDisabilities' name='hasDisabilities'
+                value='true'
+                onClick={() => { setHasDisabilities(true) }}
+              ></input>
+            </label>
+
+            <label htmlFor='hasDisabilities'>
+              Não tem deficiência
+              <input type='radio'
+                id='hasDisabilities' name='hasDisabilities'
+                value='false'
+                onClick={() => { setHasDisabilities(false) }}
+              ></input>
+            </label>
+          </div>
+
+          {hasDisabilities && (
+
+            <div className={Step2FormStyles.disability}>
+              <label htmlFor='disability'>
+                Deficiência do meu Pet
+                <input type='text'
+                  id='disability' name='disability'
+                  placeholder='Escreva a deficiência. Pode ser mais de uma.'
+                ></input>
+              </label>
+            </div>
+
+          )}
+
           <PetCaracteristicas />
 
           <div className={Step2FormStyles.more_info}>
             <label htmlFor='mais_informacoes'>
               Mais Informações
-              <textarea ref={petMoreInfo} cols={40} rows={5} id='mais_informacoes' name='mais_informacoes' placeholder='Ex: "Ele tem o rabo cortado!" ou "A patinha da esquerda da parte de trás dele tem uma mancha branca."'
+              <textarea 
+                cols={40} rows={5}
+                id='more_info' name='more_info'
+                placeholder='Ex: "Ele tem o rabo cortado!" ou "A patinha da esquerda da parte de trás dele tem uma mancha branca."'
               >
               </textarea>
             </label>
@@ -176,8 +230,8 @@ function Step2() {
           </div>
 
         </form>
-      </div>
-    </CriarAnuncio>
+      </div >
+    </CriarAnuncio >
   )
 }
 

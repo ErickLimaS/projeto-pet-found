@@ -11,7 +11,8 @@ import { convertDate } from '../../components/convertDate'
 const User: NextPage = ({ userProfile }: any) => {
 
     interface profileType {
-        name: string,
+        firstName: string,
+        surname: string,
         profileImg: string,
         updatedAt: string,
         activityLog: [{
@@ -66,17 +67,17 @@ const User: NextPage = ({ userProfile }: any) => {
         <>
 
             <Meta
-                title={`${profileData.name} - Perfil`}
-                description={`Perfil do usuário ${profileData.name}`}
+                title={`${profileData.firstName} - Perfil`}
+                description={`Perfil do usuário ${profileData.firstName}`}
             />
 
             <div className={Styles.container}>
 
                 <section className={Styles.user_main_info_wrapper}>
 
-                    <Image src={profileData.settings.showProfileImg ? '' : ''} alt={`Foto de perfil do usuário ${profileData.name}`} width={220} height={220} />
+                    <Image src={profileData.settings.showProfileImg ? '' : ''} alt={`Foto de perfil do usuário ${profileData.firstName} ${profileData.surname}`} width={220} height={220} />
 
-                    <h1>{profileData.name}</h1>
+                    <h1>{profileData.firstName} {profileData.surname}</h1>
 
                     <div className={Styles.account_info}>
 
