@@ -1,7 +1,5 @@
 .main {
 
-  min-height: 100vh;
-  flex: 1;
   background-color: var(--black-5);
 
 }

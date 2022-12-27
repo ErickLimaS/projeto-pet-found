@@ -14,9 +14,9 @@ const Animais = [
     },
     {
         name: 'OTHER',
-        alt: 'Template de Anúncio de animal desaparecido.',
+        alt: 'Qualquer outro anúncio de animal desaparecido.',
         title: 'Outro Animal Perdido',
-        img: '/imgs/lost-pets/lost-template.jpg'
+        img: '/imgs/svg/question-lg.svg'
     }
 ]
 

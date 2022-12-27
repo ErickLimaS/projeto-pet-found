@@ -214,7 +214,6 @@ export const ItemRewardIconMobile = styled.div<Props>`
     }
 
 `
-
 // desktop icon
 export const ItemRewardIcon = styled.div<Props>`
 

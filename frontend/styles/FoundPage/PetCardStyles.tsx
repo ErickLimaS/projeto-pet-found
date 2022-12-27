@@ -34,7 +34,7 @@ export const AnimalItem = styled.li<Props>`
 
         h2{
             
-            color: ${props => props.animal === 'CAT' ? 'var(--white)' : 'var(--black)'};
+            color: ${props => props.animal === 'CAT' && 'var(--white)'};
 
         }
 
@@ -52,7 +52,8 @@ export const AnimalItem = styled.li<Props>`
 
         h2{
             
-            color: ${props => props.animal === 'DOG' ? 'var(--white)' : 'var(--black)'};
+            color: ${props => props.animal === 'DOG' && 'var(--white)'};
+
         }
 
     }
@@ -69,9 +70,10 @@ export const AnimalItem = styled.li<Props>`
         
         h2{
             
-            color: ${props => props.animal === 'OTHER' ? 'var(--white)' : 'var(--black)'};
+            color: ${props => props.animal === 'OTHER' && 'var(--white)'};
 
         }
+
     }
 
     button {
@@ -139,9 +141,9 @@ export const AnimalItem = styled.li<Props>`
 
         margin-top: 16px;
 
-        font-size: 24px;
-
-        /* font-weight: 400; */
+        line-height: 1;
+        color: var(--primary); 
+        font-size: var(--small-1);
 
     }
 

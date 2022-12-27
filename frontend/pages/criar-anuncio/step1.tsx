@@ -1,16 +1,23 @@
 import React from 'react'
 import CriarAnuncio from './index'
-import Animal from '../../components/criar-anuncio/animal'
+import PetCard from '../../components/criar-anuncio/PetCard'
 import Step1Styles from '../../styles/FoundPage/steps/Step1Form.module.css'
-import AnimalsAvailableToChoose from '../api/animals'
 import ButtonStyles from '../../styles/FoundPage/Index.module.css'
 import * as SVG from '../../public/imgs/svg'
 import { useRouter } from 'next/dist/client/router'
 import { RootState } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
+import Animais from '../api/animals'
 
-const Step1 = () => {
+interface PetProps{
+    name: String, 
+    alt: String, 
+    title: String, 
+    img: String, 
+}
+
+const Step1 = ({ petsAvailable }: any) => {
 
     const stepsProgress = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
 
@@ -22,31 +29,45 @@ const Step1 = () => {
     const nextStep = () => {
 
         dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
-        router.push(`/criar-anuncio/pet/step2`)
+        router.push(`/criar-anuncio/step2`)
 
     }
 
     return (
         <CriarAnuncio>
-            <nav className={Step1Styles.nav_options}>
-                <ul>
+            <>
+                <nav className={Step1Styles.nav_options}>
+                    <ul>
 
-                    {AnimalsAvailableToChoose.map((item: any) => (
-                        <Animal info={item} key={item.name} />
-                    ))}
+                        {petsAvailable.map((item: PetProps) => (
+                            <PetCard info={item} key={item.name} />
+                        ))}
 
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
 
-            <div className={ButtonStyles.next_page} data-qty-buttons='1'>
+                <div className={ButtonStyles.next_page} data-qty-buttons='1'>
 
-                <button type='button' onClick={() => nextStep()}>
-                    Próxima Etapa <SVG.ChevronRight />
-                </button>
+                    <button type='button' onClick={() => nextStep()}>
+                        Próxima Etapa <SVG.ChevronRight />
+                    </button>
 
-            </div>
+                </div>
+            </>
         </CriarAnuncio>
     )
 }
 
 export default Step1
+
+export async function getServerSideProps() {
+
+    const res = Animais
+
+    return {
+        props: {
+            petsAvailable: res
+        }
+    }
+
+}

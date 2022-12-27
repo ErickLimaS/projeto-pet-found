@@ -16,22 +16,28 @@ export const Container = styled.div<Props>`
     ol {
 
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: flex-start;
         justify-content: center;
-        align-items: center;
 
         border: 2px solid var(--black-10);
         border-radius: 4px;
 
-        @media(max-width: 620px){
+        svg{
 
-            flex-direction: column;
-            align-items: flex-start;
+            display: none;
+
+        }
+
+        @media(min-width: 620px){
+
+            flex-direction: row;
+            align-items: center;
 
             svg{
 
-                display: none;
-                
+                display: block;
+
             }
 
         }
@@ -45,15 +51,21 @@ export const Container = styled.div<Props>`
     }
 
     ol li {
+
         transition: all ease-in-out 70ms;
         margin: 16px;
 
         border-bottom: 2px solid transparent;
 
+        font-size: var(--small-2);
         font-weight: 600;
         color: var(--black-50);
 
-        transform: scale(0.9);
+        @media(min-width: 620px){
+
+            transform: scale(0.9);
+            
+        }
 
     }
 

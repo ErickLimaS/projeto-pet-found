@@ -1,24 +1,20 @@
 import type { NextPage } from 'next'
-import React, { FormEvent, PropsWithChildren, useEffect } from 'react'
+import React, { FormEvent, PropsWithChildren, ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../../store'
 import Meta from '../../components/Meta'
-import StepsCreatePost from '../../components/criar-anuncio/StepsCreatePost'
+import CreatePostSteps from '../../components/criar-anuncio/CreatePostSteps'
 import LostPageStyles from '../../styles/FoundPage/Index.module.css'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
-import { useRouter } from 'next/router'
 
 interface Props {
-    children: any;
+    children: ReactElement;
 }
 
-const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => {
+const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: Props) => {
 
     const stepsFromPost = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
     const { currentStep }: any = stepsFromPost
-
-    const choseAnimal = useSelector((state: RootState) => state.chooseWhichAnimal)
-    const { animal }: any = choseAnimal
 
     const dispatch: any = useDispatch()
 
@@ -31,8 +27,6 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
 
     }, [])
 
-    const router = useRouter()
-
     return (
         <div className={LostPageStyles.page_content}>
 
@@ -43,11 +37,11 @@ const CriarAnuncio: NextPage<PropsWithChildren<Props>> = ({ children }: any) => 
                 <h1>Criar Anúncio</h1>
 
                 {/* Show Which Step User is Currently On, changes as user progress with the post creation */}
-                <StepsCreatePost />
+                <CreatePostSteps />
 
             </div>
 
-            <div className={LostPageStyles.children}>
+            <div className={LostPageStyles.children_content}>
 
                 {children}
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import { RootState } from '../../store'
 import { useSelector } from 'react-redux'
-import * as C from '../../styles/FoundPage/StepsCreatePost'
+import * as C from '../../styles/FoundPage/CreatePostSteps'
 import * as SVG from '../../public/imgs/svg'
 
-function StepsCreatePost() {
+function CreatePostSteps() {
 
-    // REDUX - PASSING WHICH STEP USER IS ON 
+    // GETS WHICH STEP USER IS ON 
     const step = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
     const { currentStep }: any = step
 
@@ -33,4 +33,4 @@ function StepsCreatePost() {
     )
 }
 
-export default StepsCreatePost
+export default CreatePostSteps

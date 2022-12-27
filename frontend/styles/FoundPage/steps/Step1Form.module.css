@@ -1,14 +1,16 @@
 .nav_options ul {
 
+    margin: 24px 0;
     display: grid;
-    grid-template-columns: 30% 30% 30%;
-    gap: 0 24px;
-    justify-content: center;
+    grid-template-columns: repeat(2, 49%);
+
+    gap: 16px 0;
+    justify-content: space-between;
     align-items: center;
 
 }
 
-@media(max-width: 768px) {
+@media(min-width: 490px) {
 
     .nav_options ul {
 
@@ -16,16 +18,16 @@
 
         gap: 16px 24px;
         grid-template-columns: 45% 45%;
+        justify-content: center;
+
     }
 }
 
-@media(max-width: 492px) {
-
+@media(min-width: 768px) {
     .nav_options ul {
 
-        margin: 24px 0;
+        grid-template-columns: repeat(3, 25%);
+        gap: 0 24px;
 
-        gap: 16px 0;
-        grid-template-columns: 90%;
     }
 }
