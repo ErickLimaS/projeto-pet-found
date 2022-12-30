@@ -1,10 +1,10 @@
 import Axios from "axios"
 import { store } from "../../store"
 
-const DB_URL = 'https://pet-found.onrender.com/pets'
+// const DB_URL = 'https://pet-found.onrender.com/pets'
 
 // testes
-// const DB_URL = 'http://localhost:9123/pets'
+const DB_URL = 'http://localhost:9123/pets'
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''
@@ -133,6 +133,7 @@ export const createPetPost = async (info: petDataTypes, token?: string) => {
         )
 
         return {
+            pet: res.data.pet,
             status: res.status,
             message: res.data.message,
             success: res.data.success
@@ -208,18 +209,18 @@ export const getAllPetsByQuery = async (query?: queryTypes) => {
 }
 
 // gets a pet info by getting its id and passing it through the url
-export const getPetInfo = async (query: string) => {
+export const getPetInfo = async (id: string) => {
 
     try {
         const { data } = await Axios(
-            config(`/pet`, undefined, `?id=${query}`)
+            config(`/pet`, undefined, `?id=${id}`)
         )
 
         return data;
 
     }
     catch (error: any) {
-
+        
         return { status: error.response.status, message: error.response.data.message }
 
     }

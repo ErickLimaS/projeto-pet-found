@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { chooseWhichAnimal } from '../../redux/actions/lostPetPostStepsActions'
 import { RootState } from '../../store'
-import { AnimalItem } from '../../styles/FoundPage/PetCardStyles'
+import { AnimalItem } from '../../styles/criar-anuncio/PetCardStyles'
 
 function PetCard({ info }: any) {
 

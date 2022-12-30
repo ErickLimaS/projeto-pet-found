@@ -1,0 +1,350 @@
+.container {
+
+    padding: 16px 0;
+    margin: 0 8px;
+    max-width: 760px;
+
+}
+
+@media((min-width: 420px) and (max-width: 759px)) {
+
+    .container {
+
+        margin: 0 16px;
+
+    }
+
+}
+
+@media(min-width: 760px) {
+
+    .container {
+
+        margin: 0 auto;
+
+        max-width: 760px;
+
+    }
+
+}
+
+@media(min-width: 1040px) {
+
+    .container {
+
+        max-width: 1020px;
+
+    }
+
+}
+
+
+@media(min-width: 760px) {
+    .all_pet_info {
+
+        display: grid;
+        justify-items: center;
+        gap: 0 24px;
+
+        grid-template-areas:
+            'img_name_reward all_other_info'
+        ;
+
+    }
+}
+
+@media(min-width: 1020px) {
+    .all_pet_info {
+
+        gap: 0 40px;
+        justify-items: initial;
+
+    }
+}
+
+.container>a {
+
+    margin: 0 auto;
+    margin-top: 32px;
+    padding: 16px 0;
+
+    max-width: 280px;
+
+    display: block;
+    text-align: center;
+
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: var(--white);
+
+}
+
+.post_done {
+
+    padding-top: 16px;
+    margin-bottom: 24px;
+
+}
+
+@media(min-width: 760px) {
+
+    .post_done {
+
+        margin-bottom: 48px;
+
+    }
+}
+
+.post_done h1 {
+
+    text-align: center;
+    color: var(--secondary);
+    font-size: var(--fs-heading3);
+
+}
+
+.post_done p {
+
+    text-align: center;
+
+}
+
+.heading_info {
+
+    grid-area: img_name_reward;
+
+    margin-bottom: 24px;
+
+}
+
+@media(min-width: 760px) {
+
+    .heading_info {
+
+        height: fit-content;
+
+        position: sticky;
+        top: 5vh;
+
+        min-width: 340px;
+        max-width: 340px;
+
+    }
+
+}
+
+@media(min-width: 1020px) {
+
+    .heading_info {
+
+        min-width: 320px;
+        max-width: 610px;
+
+    }
+
+}
+
+.heading_info img, .heading_info span {
+
+    border-radius: 8px;
+
+    background-color: rgb(200, 255, 205);
+
+    max-height: 420px !important;
+
+}
+
+.heading_info h2 {
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+@media(min-width: 1020px) {
+
+    .heading_info h2 {
+
+        font-size: var(--fs-heading3);
+
+    }
+}
+
+.heading_info p {
+
+    margin: 16px 0;
+    padding: 16px;
+
+    text-align: center;
+
+    background-color: var(--primary);
+    border-radius: 4px;
+
+    color: var(--white);
+    font-size: var(--fs-heading5);
+    font-weight: 600;
+
+}
+
+div.grid_template_area {
+
+    grid-area: 'all_other_info';
+
+    min-width: 340px;
+    max-width: 340px;
+
+}
+
+@media(min-width: 1020px) {
+    div.grid_template_area {
+
+        grid-area: 'all_other_info';
+
+        min-width: 440px;
+        max-width: 440px;
+
+    }
+}
+
+@media(min-width: 1040px) {
+    div.grid_template_area {
+
+        grid-area: 'all_other_info';
+
+        min-width: 610px;
+        max-width: 610px;
+
+    }
+}
+
+.info_section:not(:last-child) {
+
+    margin-bottom: 16px;
+
+}
+
+@media(min-width: 760px) {
+
+    .info_section .min_height {
+
+        min-height: 220px;
+    }
+}
+
+.info_section h3 {
+
+    color: var(--secondary);
+    font-size: var(--fs-heading5);
+    font-weight: 700;
+
+}
+
+.info_section .background {
+
+    padding: 16px;
+
+    background-color: var(--black-5);
+    border-radius: 4px;
+
+}
+
+.info_section .smaller_font p {
+
+    font-size: var(--small-1);
+    text-align: center;
+
+}
+
+
+.info_section .heading_navigation {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.info_section .heading_navigation button {
+
+    padding: 16px 8px;
+
+    border: none;
+    background: transparent;
+
+}
+
+.info_section .heading_navigation button[disabled] {
+
+    cursor: default;
+
+}
+
+.info_section .heading_navigation button svg {
+
+    fill: var(--secondary);
+
+}
+
+.info_section .heading_navigation button[disabled] svg {
+
+    opacity: 0.4;
+
+}
+
+.info_section>div[data-tabActive=false] {
+
+    display: none;
+
+}
+
+.info_section .list_container ul {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.info_section .list_container svg {
+
+    margin-right: 16px;
+
+    transform: scale(1.3);
+
+}
+
+.info_section .list_container li {
+
+    font-size: var(--small-1);
+
+}
+
+.info_section .list_container li b {
+
+    font-size: var(--fs-paragraph);
+
+}
+
+.info_section .grid_particulars_container {
+
+    padding: 32px 16px;
+
+}
+
+.info_section .grid_particulars_container ul {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 16px;
+
+}
+
+
+.info_section .grid_particulars_container li {
+
+    border-bottom: 1px solid;
+    border-color: var(--primary);
+
+}

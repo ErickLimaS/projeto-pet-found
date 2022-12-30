@@ -482,10 +482,12 @@ petRouters.get('/pet', expressAsyncHandler(async (req, res) => {
 
     try {
         const chosePet = await Pet.findById(req.query.id)
+        const petOwner = await User.findById(chosePet.ownerId)
+
 
         if (chosePet) {
 
-            return res.status(200).send(chosePet)
+            return res.status(200).json({chosePet, contacts: petOwner.contacts})
 
         }
         else {
@@ -529,10 +531,16 @@ petRouters.post('/register', isAuth, expressAsyncHandler(async (req, res) => {
 
         // populates User model with this Pet schema currently saved
         user.petsRegistered.push(pet)
+        user.activityLog.push(
+            {
+                title: `Criou anúncio de um${pet.genre == 'male' ? 'o' : 'a'} ${pet.typeTranslated} perdid${pet.genre == 'male' ? 'o' : 'a'}.`,
+                type: 'PET_POST_CREATED'
+            }
+        )
 
         await user.save();
 
-        return res.status(201).json({ success: true, message: `Post do Pet Criado com Sucesso!` })
+        return res.status(201).json({ success: true, message: `Post do Pet Criado com Sucesso!`, pet: { id: pet._id } })
 
 
     }

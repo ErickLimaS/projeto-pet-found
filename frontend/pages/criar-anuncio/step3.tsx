@@ -3,8 +3,8 @@ import React, { FormEvent, useEffect,  useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CriarAnuncio from './index'
 import { RootState } from '../../store'
-import Step3FormStyles from '../../styles/FoundPage/steps/Step3Form.module.css'
-import ButtonsStyles from '../../styles/FoundPage/Index.module.css'
+import Step3FormStyles from '../../styles/criar-anuncio/steps/Step3Form.module.css'
+import ButtonsStyles from '../../styles/criar-anuncio/Index.module.css'
 import API from '../api/IBGE_API'
 import * as SVG from '../../public/imgs/svg'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
@@ -65,7 +65,7 @@ function Step3() {
     const form = e.target as HTMLFormElement
 
     // saves pet post on Server and awaits response
-    const responseFromServer: any = await createPetPost(
+    const response: any = await createPetPost(
       {
         type: petInfo.info.type,
         typeTranslated: (petInfo.info.type == 'DOG' && 'Cachorro' || petInfo.info.type == 'CAT' && 'Gato' || petInfo.info.type == 'OTHER' && 'Outro' as any),
@@ -95,11 +95,13 @@ function Step3() {
       user.token
     )
 
-    // redirects to Complete Page
-    if (responseFromServer.status === 201) {
+    // redirects to Complete Page with the pet's ID
+    if (response.status === 201) {
+
+      console.log(response)
 
       dispatch(changeCreateLostPetPostSteps(currentStep, currentStep + 1, 'next'))
-      router.push(`/complete`)
+      router.push(`/criar-anuncio/complete?pet=${response.pet.id}`)
 
     }
 

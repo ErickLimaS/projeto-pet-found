@@ -1,25 +1,58 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
-import PostCompleteStyles from '../../../styles/PostDone.module.css'
-import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../store'
+import Styles from '../../styles/criar-anuncio/steps/Complete.module.css'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 import Link from 'next/link'
-import * as SVG from '../../../public/imgs/svg'
-import Meta from '../../../components/Meta'
+import * as SVG from '../../public/imgs/svg'
+import Meta from '../../components/Meta'
+import { getPetInfo } from '../api/petRoutes'
+import Image from 'next/image'
+import { convertDate } from '../../components/convertDate'
+import { useRouter } from 'next/router'
 
-const Complete: NextPage = () => {
+interface PetProps {
+
+    type: String,
+    createdAt: string,
+    typeTranslated: String,
+    name: String,
+    genre: String,
+    age: Number,
+    size: Number,
+    hasDisability: Boolean,
+    disability: String,
+    breed: String,
+    particulars: [String],
+    lastSeen: {
+        whereOwnerLives: Boolean,
+        state: String,
+        state_abbrev: String,
+        county: String,
+        street: String
+    },
+    hasReward: Boolean,
+    rewardAmount: Number,
+    moreInfo: String,
+    postDetails: String
+
+}
+
+const Complete: NextPage = (info: any) => {
 
     const steps = useSelector((state: RootState) => state.changeCreateLostPetPostSteps)
-    const postInfo: any = useSelector((state: RootState) => state.setOwnerAndPetInfoTogether)
+    const postInfo: any = useSelector((state: RootState) => state.setPetInfo)
     const { currentStep }: any = steps
+
+    const [tabVisible, setTabVisible] = useState<number>(0)
+    const [petQueried] = useState<PetProps>(info.pet)
 
     const router = useRouter()
 
     useEffect(() => {
 
         // if user dont follow the steps from beginning, reiniciate the steps process
-        if (currentStep !== 4 && postInfo.info == null || undefined) {
+        if (currentStep !== 4 && !postInfo.info) {
             router.push('/criar-anuncio/step1')
         }
 
@@ -28,67 +61,187 @@ const Complete: NextPage = () => {
     return (
         <>
             <Meta title='Anúncio Criado' />
-            <div className={PostCompleteStyles.container}>
 
-                <h1>Anúncio Criado</h1>
+            <div className={Styles.container}>
 
-                <p>lorem loremloremloremloremlorem loremlorem vvlorem vloremloremv vloremloremv</p>
+                <section className={Styles.post_done}>
+                    <h1>Anúncio Criado!</h1>
 
-                {postInfo == null && (
-                    <div className={PostCompleteStyles.post_info}>
+                    <p>
+                        Essas são as informações que aparecerão para quem clicar no seu anúncio!
+                    </p>
+                </section>
 
-                        <div>
-                            <h2 className={PostCompleteStyles.pet_name}>
-                                {postInfo.info.pet[0].info.name}
-                                {postInfo.info.pet[0].info.genre === 'femea' ?
-                                    <SVG.FemaleSymbol /> : <SVG.MaleSymbol />}
-                            </h2>
+                <div className={Styles.all_pet_info}>
 
-                            <p>{postInfo.info.pet[0].info.race}</p>
+                    <section className={Styles.heading_info}>
 
-                            <h3>Ultima Vez Visto Em:</h3>
+                        <Image src=''
+                            alt={`Foto d${petQueried.genre == 'male' ? 'o' : 'a'} ${petQueried.name}`}
+                            width={320} height={240}
+                            layout='responsive'
+                        />
 
-                            <p>{postInfo.info.pet[0].lastSeen[0].street}, {postInfo.info.pet[0].lastSeen[0].municipie} - <b>{postInfo.info.pet[0].lastSeen[0].state}</b></p>
+                        <h2>
+                            {petQueried.name}
+                            {petQueried.genre === 'male' ?
+                                <SVG.MaleSymbol title='Macho' alt='Sexo Masculino' fill='rgb(107, 107, 255)' style={{ width: '30px' }} /> :
+                                <SVG.FemaleSymbol title='Fêmea' alt='Sexo Feminino' fill='rgb(255, 146, 164)' style={{ width: '30px' }} />
+                            }
+                        </h2>
 
-                            {postInfo.info.pet[0].info.caracteristicas.length > 0 && (
-                                <>
-                                    <h3>{postInfo.info.pet[0].info.genre === 'femea' ? 'Ela é...' : 'Ele é...'}</h3>
+                        <p>
+                            {petQueried.hasReward ?
+                                `R$ ${petQueried.rewardAmount},00` : 'Sem Recompensa'
+                            }
+                        </p>
 
+                    </section>
+
+                    <div className={Styles.grid_template_area}>
+                        <section className={Styles.info_section}>
+
+                            <h3>Última vez visto em</h3>
+
+                            <div
+                                className={`${Styles.smaller_font} ${Styles.background} ${Styles.flex}`}
+                            >
+
+                                <p>
+                                    <b>{petQueried.lastSeen.street}</b>
+                                </p>
+                                <p>
+                                    {petQueried.lastSeen.county} -{petQueried.lastSeen.state}
+                                </p>
+
+                            </div>
+
+                        </section>
+
+                        <section className={Styles.info_section}>
+
+                            <h3>Contatos</h3>
+
+                            <div className={`${Styles.background} ${Styles.list_container}`}>
+
+                                <ul>
+
+                                    <li><SVG.Telephone fill='var(--primary)' /> {info.contacts.tel1.ddd} {info.contacts.tel1.tel}</li>
+                                    <li><SVG.Telephone fill='var(--primary)' /> {info.contacts.tel2.ddd} {info.contacts.tel2.tel}</li>
+                                    <li>
+                                        <SVG.Facebook fill='#4267B2' />
+                                        {' '}
+                                        <Link href={info.contacts.facebook} target='_blank' rel='no_referrer'>
+                                            Meu Perfil
+                                        </Link>
+                                    </li>
+                                    <li><SVG.Instagram fill='#E1306C' /> {info.contacts.instagram}</li>
+
+                                </ul>
+
+                            </div>
+
+                        </section>
+
+                        <section className={Styles.info_section}>
+
+                            <div className={Styles.heading_navigation}>
+                                <button
+                                    disabled={tabVisible == 0 ? true : false}
+                                    onClick={() => setTabVisible((curr) => curr - 1)}
+                                >
+                                    <SVG.ChevronLeft
+                                        title='Ir para o painel anterior.'
+                                        alt='Seta para esquerda.'
+                                    />
+                                </button>
+                                {tabVisible === 0 && (<h3>Mais Informações</h3>)}
+                                {tabVisible === 1 && (<h3>Outros Detalhes</h3>)}
+                                {tabVisible === 2 && (<h3>Características</h3>)}
+                                <button
+                                    disabled={tabVisible == 2 ? true : false}
+                                    onClick={() => setTabVisible((curr) => curr + 1)}
+                                >
+                                    <SVG.ChevronRight
+                                        title='Ir para o próximo painel.'
+                                        alt='Seta para direita.'
+                                    />
+                                </button>
+                            </div>
+
+                            <div data-tabActive={tabVisible === 0 ? true : false}
+                                className={`${Styles.background} ${Styles.list_container} ${Styles.min_height}`}
+                            >
+
+                                <ul className={Styles.flex}>
+                                    <li>Raça: <b>{petQueried.breed}</b></li>
+                                    <li>Tem Deficiência: <b>{petQueried.disability ? 'Sim' : 'Não'}</b></li>
+                                    {petQueried.disability && (
+                                        <li>Tipo de Deficiência: <b>{petQueried.disability}</b></li>
+                                    )}
+                                    <li>Idade: <b><>{petQueried.age} Anos</></b></li>
+                                    <li>Tamanho: <b><>{petQueried.size} cm</></b></li>
+                                    <li>Perdido em <b>{convertDate(petQueried.createdAt)}</b></li>
+                                </ul>
+
+                            </div>
+
+                            <div data-tabActive={tabVisible === 1 ? true : false}
+                                className={`${Styles.background} ${Styles.min_height}`}
+                            >
+
+                                {petQueried.postDetails ? (
+                                    <p>{petQueried.postDetails}</p>
+                                ) : (
+                                    <p>Nenhum detalhe adicionado pelo dono.</p>
+                                )}
+
+                            </div>
+
+                            <div data-tabActive={tabVisible === 2 ? true : false}
+                                className={`${Styles.background} ${Styles.grid_particulars_container}  ${Styles.min_height}`}
+                            >
+
+                                {petQueried.particulars.length > 0 ? (
                                     <ul>
-                                        {postInfo.info.pet[0].info.caracteristicas.slice(0, 4).map((item: any) => (
-                                            <li key={item}>{item}</li>
+
+                                        <li >item</li>
+                                        <li >item</li>
+                                        {petQueried.particulars.map((item: String, key) => (
+                                            <li key={key}>{item}</li>
                                         ))}
 
-                                        {postInfo.info.pet[0].info.caracteristicas.length > 4 && (
-                                            <li>e mais</li>
-                                        )}
                                     </ul>
-                                </>
-                            )}
+                                ) : (
+                                    <p>Nenhuma característica adicionada pelo dono.</p>
+                                )}
 
-                        </div>
+                            </div>
 
-                        <div>
-                            <h2>{postInfo.info.name}</h2>
-
-                            <h3>Contato</h3>
-                            <p>({postInfo.info.contact_ddd}) {postInfo.info.contact_full}</p>
-
-                            <h3>Mora Em</h3>
-                            <p>{postInfo.info.location.street}, {postInfo.info.location.municipie} - <b>{postInfo.info.location.state}</b></p>
-                        </div>
+                        </section>
                     </div>
-                )}
-
-                <div>
-
-                    <Link href='/perfil'>Ir Para o Meu Perfil</Link>
-
                 </div>
 
-            </div >
+                <Link href='/'>Ir para o Início</Link>
+
+            </div>
+
         </>
     )
 }
 
 export default Complete
+
+// gets the pet info on url query
+export async function getServerSideProps({ query }: any) {
+
+    const res = await getPetInfo(query.pet);
+
+    return {
+        props: {
+            pet: res.chosePet,
+            contacts: res.contacts
+        }
+    }
+
+}
