@@ -3,8 +3,8 @@ import React, { PropsWithChildren, ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../../store'
 import Meta from '../../components/Meta'
-import CreatePostSteps from '../../components/criar-anuncio/CreatePostSteps'
-import LostPageStyles from '../../styles/criar-anuncio/Index.module.css'
+import CreatePostSteps from '../../components/criarAnuncioPage/CreatePostSteps'
+import LostPageStyles from './Index.module.css'
 import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
 
 interface Props {

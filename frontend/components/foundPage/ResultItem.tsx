@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import * as C from '../../styles/criar-anuncio/ResultItem'
+import * as C from './ResultItemStyles'
 import * as SVG from '../../public/imgs/svg'
 
 function ResultItem({ data }: any) {

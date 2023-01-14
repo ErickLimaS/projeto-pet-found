@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router'
 import React, { FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import CriarAnuncio from './index'
-import { RootState } from '../../store'
-import ButtonsStyles from '../../styles/criar-anuncio/Index.module.css'
-import Step2FormStyles from '../../styles/criar-anuncio/steps/Step2Form.module.css'
-import API from '../api/petsInfoApi'
-import * as SVG from '../../public/imgs/svg'
-import PetCaracteristicas from '../../components/criar-anuncio/PetCaracteristicas'
-import { changeCreateLostPetPostSteps, setPetInfo } from '../../redux/actions/lostPetPostStepsActions'
+import CriarAnuncio from '../index'
+import { RootState } from '../../../store'
+import ButtonsStyles from '../Index.module.css'
+import Step2FormStyles from './Step2Form.module.css'
+import API from '../../api/petsInfoApi'
+import * as SVG from '../../../public/imgs/svg'
+import PetCaracteristicas from '../../../components/criarAnuncioPage/Form/PetCaracteristicas'
+import { changeCreateLostPetPostSteps, setPetInfo } from '../../../redux/actions/lostPetPostStepsActions'
 
 function Step2() {
 

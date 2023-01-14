@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-import Styles from '../styles/RedirectToLoginPage.module.css'
+import Styles from './RedirectToLoginPage.module.css'
 
 function RedirectToLoginPage() {
 

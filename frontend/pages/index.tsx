@@ -1,10 +1,10 @@
-import homeStyles from '../styles/Home/Home.module.css'
+import homeStyles from './Home.module.css'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import Meta from '../components/Meta'
 import * as SVG from '../public/imgs/svg'
 import { useState } from 'react'
-import { MemberCardsSection } from '../styles/Home/teamMembersCards'
+import { MemberCardsSection } from './teamMembersCards'
 
 const Home: NextPage = () => {
 

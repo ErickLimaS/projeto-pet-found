@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import React from 'react'
 
-const credits: NextPage = () => {
+const Credits: NextPage = () => {
     return (
         <div>
             credits for the owners of these imgs and svgs
@@ -16,4 +16,4 @@ const credits: NextPage = () => {
     )
 }
 
-export default credits
+export default Credits

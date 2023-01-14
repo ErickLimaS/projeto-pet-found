@@ -1,14 +1,14 @@
 import { NextPage } from 'next/types'
 import React, { FormEvent, useEffect, useState } from 'react'
-import Meta from '../../components/Meta'
-import { registerUser } from '../api/userRoutes'
-import RegisterPageStyles from '../../styles/userPage/registerPage.module.css'
-import { RootState, store } from '../../store'
+import Meta from '../../../components/Meta'
+import { registerUser } from '../../api/userRoutes'
+import RegisterPageStyles from './registerPage.module.css'
+import { RootState, store } from '../../../store'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
-import PageLoading from '../../components/PageLoading'
-import API from '../api/IBGE_API'
+import PageLoading from '../../../components/pageLoading'
+import API from '../../api/IBGE_API'
 
 const Register: NextPage = () => {
 

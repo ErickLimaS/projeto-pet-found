@@ -1,14 +1,14 @@
 import React from 'react'
-import CriarAnuncio from './index'
-import PetCard from '../../components/criar-anuncio/PetCard'
-import Step1Styles from '../../styles/criar-anuncio/steps/Step1Form.module.css'
-import ButtonStyles from '../../styles/criar-anuncio/Index.module.css'
-import * as SVG from '../../public/imgs/svg'
+import CriarAnuncio from '../index'
+import PetCard from '../../../components/criarAnuncioPage/PetCard'
+import Step1Styles from './Step1Form.module.css'
+import ButtonStyles from '../Index.module.css'
+import * as SVG from '../../../public/imgs/svg'
 import { useRouter } from 'next/dist/client/router'
-import { RootState } from '../../store'
+import { RootState } from '../../../store'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeCreateLostPetPostSteps } from '../../redux/actions/lostPetPostStepsActions'
-import Animais from '../api/animals'
+import { changeCreateLostPetPostSteps } from '../../../redux/actions/lostPetPostStepsActions'
+import Animais from '../../api/animals'
 
 interface PetProps{
     name: String, 

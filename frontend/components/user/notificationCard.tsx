@@ -4,7 +4,7 @@ import * as SVG from '../../public/imgs/svg'
 import Styles from '../../styles/userPage/notifications.module.css'
 import { convertDate } from '../convertDate'
 import { deleteNotification, getContactInfoFromUser } from '../../pages/api/userRoutes'
-import NotificationMessage from '../NotificationMessage'
+import NotificationMessage from '../notificationMessage'
 
 function NotificationCard({ props }: any) {
 

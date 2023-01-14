@@ -1,6 +1,6 @@
 import React from 'react'
-import LoadingStyles from '../styles/Loading.module.css'
-import { Loading } from '../public/imgs/svg'
+import LoadingStyles from './Loading.module.css'
+import { Loading } from '../../public/imgs/svg'
 
 function PageLoading() {
 

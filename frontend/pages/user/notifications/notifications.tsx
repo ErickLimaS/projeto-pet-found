@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { getNotifications } from '../api/userRoutes'
-import { store } from '../../store'
+import { getNotifications } from '../../api/userRoutes'
+import { store } from '../../../store'
 import { NextPage } from 'next/types'
-import NotificationMessage from '../../components/NotificationMessage'
-import Meta from '../../components/Meta'
-import Styles from '../../styles/userPage/notifications.module.css'
-import PageLoading from '../../components/PageLoading'
-import NotificationCard from '../../components/user/notificationCard'
+import NotificationMessage from '../../../components/notificationMessage'
+import Meta from '../../../components/Meta'
+import Styles from './notifications.module.css'
+import PageLoading from '../../../components/pageLoading'
+import NotificationCard from '../../../components/user/notificationCard'
 
 const Notifications: NextPage = () => {
 

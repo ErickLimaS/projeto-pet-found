@@ -1,5 +1,5 @@
 import React from 'react'
-import * as C from '../styles/NotificationMessage'
+import * as C from './NotificationMessage'
 
 function NotificationMessage({ props }: any) {
 

@@ -1,16 +1,16 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Styles from '../styles/PetPage.module.css'
-import Meta from '../components/Meta'
+import Styles from './PetPage.module.css'
+import Meta from '../../components/Meta'
 import Image from 'next/image'
-import * as SVG from '../public/imgs/svg'
-import { getPetInfo, notifyOwner } from './api/petRoutes'
-import NotificationMessage from '../components/NotificationMessage'
-import { RootState } from '../store'
+import * as SVG from '../../public/imgs/svg'
+import { getPetInfo, notifyOwner } from '../api/petRoutes'
+import NotificationMessage from '../../components/notificationMessage'
+import { RootState } from '../../store'
 import { useSelector } from 'react-redux'
 import Link from 'next/dist/client/link'
-import { convertDate } from '../components/convertDate'
+import { convertDate } from '../../components/convertDate'
 
 const Pet: NextPage = (info: any) => {
 

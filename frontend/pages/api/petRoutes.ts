@@ -2,9 +2,8 @@ import Axios from "axios"
 import { store } from "../../store"
 
 // testes
-// const DB_URL = 'http://localhost:9123/pets'
-const DB_URL = 'https://pet-found.onrender.com/pets'
-
+const DB_URL = 'http://localhost:9123/pets'
+// const DB_URL = 'https://pet-found.onrender.com/pets'
 
 const state: any = store.getState()
 const userToken: string = state.currentUser.token ? state.currentUser.token : ''

@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import { NextPage } from 'next/types'
 import React, { FormEvent, useEffect, useState } from 'react'
-import Meta from '../../components/Meta'
-import LoginPageStyles from '../../styles/userPage/loginPage.module.css'
-import * as SVG from '../../public/imgs/svg'
+import Meta from '../../../components/Meta'
+import LoginPageStyles from './loginPage.module.css'
+import * as SVG from '../../../public/imgs/svg'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
+import { RootState } from '../../../store'
 import { useRouter } from 'next/router'
-import { loginUser } from '../api/userRoutes'
-import PageLoading from '../../components/PageLoading'
+import { loginUser } from '../../api/userRoutes'
+import PageLoading from '../../../components/pageLoading'
 
 export const Login: NextPage = () => {
 

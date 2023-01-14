@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
 import React from 'react'
 import Head from 'next/head'
-import Meta from '../components/Meta'
+import Meta from '../../components/Meta'
 
-const about: NextPage = () => {
+const About: NextPage = () => {
     return (
         <>
             <Meta title='About' />
@@ -15,4 +15,4 @@ const about: NextPage = () => {
     )
 }
 
-export default about
+export default About

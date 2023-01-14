@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { chooseWhichAnimal } from '../../redux/actions/lostPetPostStepsActions'
-import { RootState } from '../../store'
-import { AnimalItem } from '../../styles/criar-anuncio/PetCardStyles'
+import { chooseWhichAnimal } from '../../../redux/actions/lostPetPostStepsActions'
+import { RootState } from '../../../store'
+import { AnimalItem } from './PetCardStyles'
 
 function PetCard({ info }: any) {
 

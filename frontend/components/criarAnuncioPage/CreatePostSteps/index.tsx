@@ -1,8 +1,8 @@
 import React from 'react'
-import { RootState } from '../../store'
+import { RootState } from '../../../store'
 import { useSelector } from 'react-redux'
-import * as C from '../../styles/criar-anuncio/CreatePostSteps'
-import * as SVG from '../../public/imgs/svg'
+import * as C from './CreatePostSteps'
+import * as SVG from '../../../public/imgs/svg'
 
 function CreatePostSteps() {
 
