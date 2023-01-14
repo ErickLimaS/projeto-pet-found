@@ -2,10 +2,9 @@ import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
 import { store } from '../../store'
 
-const DB_URL = 'https://pet-found.onrender.com/user'
-
 // testes
 // const DB_URL = 'http://localhost:9123/user'
+const DB_URL = 'https://pet-found.onrender.com/user'
 
 interface userRegisterTypes {
     email: string,

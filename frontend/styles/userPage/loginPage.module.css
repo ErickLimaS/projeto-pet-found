@@ -100,7 +100,7 @@ div.error_message_container>button:hover {
 
 .container {
 
-    min-height: inherit;
+    min-height: 80vh;
 
     display: flex;
     flex-direction: row;
@@ -111,6 +111,8 @@ div.error_message_container>button:hover {
 @media(max-width: 576px) {
 
     .container {
+
+        min-height: inherit;
 
         flex-direction: column;
         justify-content: flex-start;

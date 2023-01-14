@@ -1,20 +1,22 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import PetPageStyles from '../styles/PetPage/PetPage.module.css'
+import Styles from '../styles/PetPage.module.css'
 import Meta from '../components/Meta'
-import PageLoading from '../components/PageLoading'
 import Image from 'next/image'
 import * as SVG from '../public/imgs/svg'
 import { getPetInfo, notifyOwner } from './api/petRoutes'
 import NotificationMessage from '../components/NotificationMessage'
 import { RootState } from '../store'
 import { useSelector } from 'react-redux'
+import Link from 'next/dist/client/link'
+import { convertDate } from '../components/convertDate'
 
-const Pet: NextPage = () => {
+const Pet: NextPage = (info: any) => {
 
+    console.log(info)
     const [loading, setLoading] = useState<boolean>(true)
-    const [petInfo, setPetInfo] = useState<any>(null)
+    const [pet, setPet] = useState<any>(null)
     const [expanded, setExpanded] = useState<boolean>(false)
     const [hasCollarInput, setHasCollarInput] = useState<boolean>(true)
     const [responseForNotification, setResponseForNotification] = useState(null)
@@ -25,17 +27,12 @@ const Pet: NextPage = () => {
 
     const router = useRouter()
 
-    // gets current pet's data 
-    const getPetData = async () => {
+    // sets pet's data to state
+    const settingPetData = async () => {
 
         setLoading(true)
-        if (router.query.id) {
 
-            const data = await getPetInfo(`${router.query.id}`)
-
-            setPetInfo(data)
-
-        }
+        setPet(info.chosePet)
 
         setLoading(false)
 
@@ -50,8 +47,8 @@ const Pet: NextPage = () => {
         const data = {
             pet: {
                 _id: `${router.query.id}`,
-                name: `${petInfo.name}`,
-                type: `${petInfo.type}`
+                name: `${pet.name}`,
+                type: `${pet.type}`
             },
             moreInfo: {
                 // petImg: form.petImg.value,
@@ -75,16 +72,16 @@ const Pet: NextPage = () => {
 
     useEffect(() => {
 
-        getPetData()
+        settingPetData()
 
-    }, [router])
+    }, [])
 
     return (
         <>
             <Meta
                 title={loading === true ?
-                    'Loading' : (petInfo != null ? petInfo.name : 'Not Found')}
-                description={petInfo?.moreInfo && petInfo.moreInfo}
+                    'Loading' : (pet != null ? `${pet.name} (${pet.typeTranslated})` : 'Not Found')}
+                description={pet?.moreInfo && pet.moreInfo}
             />
 
             {/* SHOWS NOTIFICATION WITH THE RESULT AFTER A FORM IS SENT */}
@@ -92,66 +89,121 @@ const Pet: NextPage = () => {
                 <NotificationMessage props={responseForNotification} />
             )}
 
-            {loading ? (
-                <div className={PetPageStyles.loading}>
+            {/* Page Error Message */}
+            {info.status == 500 && (
 
-                    <PageLoading />
+                <div role='alertdialog' id={Styles.not_found_error_message}>
+
+                    <h1><span aria-label={`Código de Erro ${info.status}.`}>({info.status})</span> Algum erro aconteceu...</h1>
+
+                    <p>
+                        O Pet pesquisado não está disponível ou não foi propriamente cadastrado.<br />
+                        Tente novamente mais tarde.
+                    </p>
+
+                    <small>{info.message}</small>
+
+                    <Link href='/found'>Voltar para Procurar Pelos Anúncios</Link>
 
                 </div>
-            ) : (
-                <>
-                    <div className={PetPageStyles.container} data-panel-expanded={expanded ? 'true' : 'false'}>
 
-                        <section id={PetPageStyles["first-content"]}>
+            )}
 
-                            <div className={PetPageStyles.img_container}>
+            <div
+                data-error-fetching-data={info.status == 500 ? true : false}
+                className={Styles.container}
+                data-panel-expanded={expanded ? 'true' : 'false'}
+            >
 
-                                <button type='button' aria-label='Foto Anterior'>
-                                    <SVG.ChevronLeft />
-                                </button>
+                <section id={Styles["first-content"]}>
 
-                                <Image
-                                    src={petInfo?.img}
-                                    alt={petInfo?.name}
-                                    width={720} height={405}
-                                    layout='intrinsic'
-                                />
+                    <div className={Styles.img_container}>
 
-                                <button type='button' aria-label='Proxima Foto'>
-                                    <SVG.ChevronRight />
-                                </button>
+                        <button type='button' aria-label='Foto Anterior'>
+                            <SVG.ChevronLeft />
+                        </button>
 
-                            </div>
+                        <Image
+                            src={pet?.img}
+                            alt={pet?.name}
+                            width={720} height={405}
+                            layout='intrinsic'
+                        />
 
-                            <div className={PetPageStyles.pet_info}>
+                        <button type='button' aria-label='Proxima Foto'>
+                            <SVG.ChevronRight />
+                        </button>
 
-                                <h1>{petInfo?.name}</h1>
+                    </div>
 
-                                <div className={PetPageStyles.details}>
+                    <div className={Styles.pet_info}>
 
-                                    <p>
-                                        Espécie: <b>{petInfo?.breed}</b>
-                                    </p>
-                                    <p>
-                                        Gênero: {petInfo?.genre}
-                                    </p>
-                                    <p>
-                                        Idade: {petInfo?.age}
-                                    </p>
+                        <div className={Styles.name_genre}>
+                            <h1>{pet?.name}</h1>
 
-                                </div>
+                            {pet?.genre == 'male' ?
+                                <SVG.MaleSymbol title='Macho' alt='Sexo Masculino' fill='rgb(107, 107, 255)' style={{ width: '30px' }} />
+                                :
+                                <SVG.FemaleSymbol title='Fêmea' alt='Sexo Feminino' fill='rgb(255, 146, 164)' style={{ width: '30px' }} />
+                            }
+                        </div>
 
-                            </div>
+                        <div className={Styles.details}>
 
                             <div>
-                                <h2 className={`${PetPageStyles.heading2_color}`}>
-                                    Segundo o dono, el{petInfo?.genre === 'male' ? 'e' : 'a'} é...
+                                <h2 className={Styles.heading2_color}>
+                                    Informações
                                 </h2>
 
-                                <div className={PetPageStyles.singularities}>
+                                <ul>
+
+                                    <li> Espécie: <b>{pet?.breed}</b></li>
+                                    <li> Idade: <b>{pet?.age} Anos</b></li>
+                                    <li> Tamanho: <b>{pet?.size} cm</b></li>
+                                    <li> Tem Deficiência: <b>{pet?.hasDisability ? 'Sim' : 'Não'}</b></li>
+                                    {pet?.hasDisability && (
+                                        <li> Qual Tipo de Deficiência: {pet?.disability}</li>
+                                    )}
+                                    <li> Post Criado em <b>{convertDate(pet?.createdAt)}</b></li>
+
+                                </ul>
+                            </div>
+
+                            <div id={Styles["description"]}>
+
+                                <h2 className={Styles.heading2_color}>
+                                    Descrição do Pet
+                                </h2>
+
+
+                                <p>
+                                    {pet?.moreInfo ?
+                                        <><span>
+                                            <SVG.Quote fill='var(--primary)'
+                                                alt='Aspas, segundo o dono do pet...'
+                                            />
+                                        </span>
+                                            {pet?.moreInfo}
+                                        </>
+                                        :
+                                        'Sem informações adicionais dadas pelo dono.'
+                                    }
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        {pet?.particulars.length > 0 && (
+                            <div>
+                                <h2 className={`${Styles.heading2_color}`}>
+                                    Segundo o dono, el{pet?.genre === 'male' ? 'e' : 'a'} é...
+                                </h2>
+
+                                <div className={Styles.singularities}>
 
                                     <ul>
-                                        {petInfo?.particulars?.map((item: string) => (
+                                        {pet?.particulars?.map((item: string) => (
 
                                             <li key={item}><SVG.Exclamation />{item}</li>
                                         ))}
@@ -160,154 +212,151 @@ const Pet: NextPage = () => {
                                 </div>
 
                             </div>
-
-                        </section>
-
-                        <section className={PetPageStyles.second_info_container}>
-
-                            <div id={PetPageStyles["second-content"]}>
-                                <div className={PetPageStyles.text}>
-
-                                    <h2 className={`${PetPageStyles.heading2_color} ${PetPageStyles.heading2_size}`}>
-                                        Perdido em
-                                    </h2>
-
-                                    <p>
-
-                                        {petInfo?.lastSeen?.street}<br /> {petInfo?.lastSeen?.county} <br /> {petInfo?.lastSeen?.state}
-
-                                    </p>
-
-                                </div>
-
-                                <div className={`${PetPageStyles.text} ${PetPageStyles.reward}`}>
-
-                                    <h2 className={PetPageStyles.heading2_size}>
-                                        Recompença
-                                    </h2>
-
-                                    <p>
-                                        R$ {petInfo?.rewardAmount},00
-                                    </p>
-
-                                </div>
-
-                                <div className={PetPageStyles.button}>
-
-                                    <button type='button' onClick={() => {
-                                        if (userState.token && userState.name) {
-                                            setExpanded(!expanded)
-                                        }
-                                        else {
-                                            router.push(`/login?redirect=/pet?id=${router.query.id}`)
-                                        }
-                                    }}>
-                                        Achei Seu Pet
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                            <div id={PetPageStyles["description"]}>
-
-                                <h2 className={PetPageStyles.heading2_color}>
-                                    Descrição do Pet
-                                </h2>
-
-                                <p>
-                                    {petInfo?.moreInfo}
-                                </p>
-
-                            </div>
-
-                        </section>
-
-                    </div >
-
-                    {/* Panel to be expanded */}
-                    <div
-                        className={expanded ? PetPageStyles.expand_true_found_pet_owner_contact : PetPageStyles.expand_false_found_pet_owner_contact}
-                    >
-
-                        <h1>Você viu mesmo!!!</h1>
-
-                        <p>Preencha algumas informações para o dono saber se é ele mesmo!</p>
-
-                        <form
-                            encType="multipart/form-data"
-                            onSubmit={(e) => submitPetFoundForm(e)}
-                        >
-
-                            <div>
-                                <label>
-
-                                    Foto do Pet
-                                    <input type='file' name='petImg' />
-
-                                </label>
-                            </div>
-                            <div>
-                                <p>
-                                    Está com coleira?
-                                </p>
-                                <div className={PetPageStyles.radio_inputs}>
-                                    <label>
-                                        Sim
-                                        <input type='radio' onClick={() => setHasCollarInput(true)} value='true' name='hasCollar' id='hasCollar_true' />
-
-                                    </label>
-
-                                    <label>
-
-                                        Não
-                                        <input type='radio' onClick={() => setHasCollarInput(false)} value='false' name='hasCollar' id='hasCollar_false' />
-
-                                    </label>
-                                </div>
-                            </div>
-                            <div>
-                                <label>
-
-                                    O que está escrito nela?
-                                    <input type='text' name='collarName' disabled={hasCollarInput ? false : true} />
-
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-
-                                    Onde Encontrou o Pet?
-                                    <input type='text'
-                                        id='foundAddress' name='foundAddress'
-                                        placeholder='Ex: Rua das Laranjeiras, Bairro do Limão, SP' />
-
-                                </label>
-                            </div>
-                            <div className={PetPageStyles.confirmValues}>
-                                <label>
-
-                                    Você confirma que o dados acima são reais?
-                                    <input type='checkbox' value='true' name='confirmedDataOnForm' required />
-
-                                </label>
-                            </div>
-
-                            <div className={PetPageStyles.submitButton}>
-                                <button type='submit'>Informar Dono</button>
-                                <button type='button' onClick={() => setExpanded(false)}>Voltar</button>
-                            </div>
-
-                        </form>
+                        )}
 
                     </div>
 
-                </>
-            )
-            }
+
+                </section>
+
+                <section className={Styles.second_info_container}>
+
+                    <div id={Styles["second-content"]}>
+                        <div className={Styles.text}>
+
+                            <h2 className={`${Styles.heading2_color} ${Styles.heading2_size}`}>
+                                Perdido em
+                            </h2>
+
+                            <p>
+                                {pet?.lastSeen?.street}, {pet?.lastSeen?.county} - {pet?.lastSeen?.state}
+                            </p>
+
+                        </div>
+
+                        <div className={`${Styles.text} ${Styles.reward}`}>
+
+                            <h2 className={Styles.heading2_size}>
+                                Recompença
+                            </h2>
+
+                            <p>
+                                R$ {pet?.rewardAmount},00
+                            </p>
+
+                        </div>
+
+                        <div className={Styles.button}>
+
+                            <button type='button' onClick={() => {
+                                if (userState.token && userState.name) {
+                                    setExpanded(!expanded)
+                                }
+                                else {
+                                    router.push(`/user/login?redirect=/pet?id=${router.query.id}`)
+                                }
+                            }}>
+                                Achei Seu Pet
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div >
+
+            {/* Panel to be expanded */}
+            <div
+                className={expanded ? Styles.expand_true_found_pet_owner_contact : Styles.expand_false_found_pet_owner_contact}
+            >
+
+                <h1>Você viu mesmo ?</h1>
+
+                <p>Preencha algumas informações para o dono saber se é ele mesmo!</p>
+
+                <form
+                    encType="multipart/form-data"
+                    onSubmit={(e) => submitPetFoundForm(e)}
+                >
+
+                    <div>
+                        <label>
+
+                            Foto do Pet
+                            <input type='file' name='petImg' />
+
+                        </label>
+                    </div>
+                    <div>
+                        <p>
+                            Está com coleira?
+                        </p>
+                        <div className={Styles.radio_inputs}>
+                            <label>
+                                Sim
+                                <input type='radio' onClick={() => setHasCollarInput(true)} value='true' name='hasCollar' id='hasCollar_true' />
+
+                            </label>
+
+                            <label>
+
+                                Não
+                                <input type='radio' onClick={() => setHasCollarInput(false)} value='false' name='hasCollar' id='hasCollar_false' />
+
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+
+                            O que está escrito nela?
+                            <input type='text' name='collarName' disabled={hasCollarInput ? false : true} />
+
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+
+                            Onde Encontrou o Pet?
+                            <input type='text'
+                                id='foundAddress' name='foundAddress'
+                                placeholder='Ex: Rua das Laranjeiras, Bairro do Limão, SP' />
+
+                        </label>
+                    </div>
+                    <div className={Styles.confirmValues}>
+                        <label>
+
+                            Você confirma que o dados acima são reais?
+                            <input type='checkbox' value='true' name='confirmedDataOnForm' required />
+
+                        </label>
+                    </div>
+
+                    <div className={Styles.submitButton}>
+                        <button type='submit'>Informar Dono</button>
+                        <button type='button' onClick={() => setExpanded(false)}>Voltar</button>
+                    </div>
+
+                </form>
+
+            </div>
 
         </>
     )
 }
 
 export default Pet
+
+export async function getServerSideProps({ query }: { query: { id: string } }) {
+
+    // get pet info through the provided ID on url query
+    const res = await getPetInfo(`${query.id}`)
+
+    return {
+        props: res
+    }
+
+}

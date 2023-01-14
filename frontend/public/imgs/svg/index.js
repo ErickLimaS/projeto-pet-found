@@ -32,6 +32,7 @@ export { default as PersonFill } from "./PersonFill";
 export { default as ProfilePerson } from "./ProfilePerson";
 export { default as Profile } from "./Profile";
 export { default as QuestionLg } from "./QuestionLg";
+export { default as Quote } from "./Quote";
 export { default as Rocket } from "./Rocket";
 export { default as Rocket2 } from "./Rocket2";
 export { default as SackMoney } from "./SackMoney";

@@ -177,10 +177,10 @@ function Step2() {
               ></input>
             </label>
 
-            <label htmlFor='hasDisabilities'>
+            <label htmlFor='hasNoDisabilities'>
               Não tem deficiência
               <input type='radio'
-                id='hasDisabilities' name='hasDisabilities'
+                id='hasNoDisabilities' name='hasDisabilities'
                 value='false'
                 onClick={() => { setHasDisabilities(false) }}
               ></input>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Styles from '../../styles/Layout/Header.module.css'
 import * as C from '../../styles/Layout/headerStyledComponents'
 import * as SVG from '../../public/imgs/svg'
@@ -70,11 +70,11 @@ function Header() {
 
                     <ul className={Styles.list}>
                         <li>
-                            <Link href='/criar-anuncio/step1'>Ajude achar meu Pet</Link>
+                            <Link href='/criar-anuncio/step1'>Ajudem a achar meu Pet</Link>
                         </li>
 
                         <li>
-                            <Link href='/found'>Achei um Pet</Link>
+                            <Link href='/found'>Procurar Pelos Anúncios</Link>
                         </li>
 
                         {/* <li>
@@ -386,11 +386,11 @@ function Header() {
                             </li>
 
                             <li>
-                                <Link href='/criar-anuncio/step1'>Ajude achar meu Pet</Link>
+                                <Link href='/criar-anuncio/step1'>Ajudem a achar meu Pet</Link>
                             </li>
 
                             <li>
-                                <Link href='/found'>Achei um Pet</Link>
+                                <Link href='/found'>Procurar Pelos Anúncios</Link>
                             </li>
 
                             {/* <li>
