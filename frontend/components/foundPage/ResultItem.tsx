@@ -3,7 +3,7 @@ import Image from 'next/image'
 import * as C from './ResultItemStyles'
 import * as SVG from '../../public/imgs/svg'
 
-function ResultItem({ data }: any) {
+function ResultItem({ data }: { data: PetInfoTypes }) {
 
     return (
         <C.Container

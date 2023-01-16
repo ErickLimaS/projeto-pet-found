@@ -2,45 +2,32 @@ import Axios from 'axios'
 import { currentUser } from '../../redux/actions/userActions'
 import { store } from '../../store'
 
-// testes
 const DB_URL = 'http://localhost:9123/user'
 // const DB_URL = 'https://pet-found.onrender.com/user'
 
-interface userRegisterTypes {
-    email: string,
-    password: string,
-    firstName: string,
-    surname: string,
-    address: {
-        state: string,
-        county: string,
-        street: string | null // null is for the optional inputs
-    },
-    contacts: {
-        tel1: {
-            ddd: string | null,
-            tel: string | null
-        },
-        tel2: {
-            ddd: string | null,
-            tel: string | null
-        },
-        facebook: string | null,
-        instagram: string | null
-    }
-}
+interface UpdateAccountTypes {
 
-interface userLoginTypes {
-    email: string,
-    password: string
-}
+    email?: string,
+    newPassword?: string,
+    currentPassword?: string,
+    firstName?: string,
+    surname?: string,
+    street?: string,
+    county?: string,
+    state?: string,
+    tel1?: object,
+    tel2?: object,
+    facebook?: string,
+    instagram?: string
 
-// gets token of the user already logged in
-const reduxState = store.getState()
-const userStoredData: any = reduxState.currentUser
+}
 
 // sets the route and config used for the intended page purpose (DISABLED)
-const config = (route: string, body?: any, query?: string, token?: string) => {
+function reqConfig(route: string, body?: unknown, query?: string) {
+
+    // gets token of the user already logged in
+    const state = store.getState()
+    const userStoredData: any = state.currentUser
 
     let methodUsedByRoute: string = "";
     let headerUsedByRoute: {};
@@ -57,13 +44,24 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
 
             break;
 
+        case '/info':
+
+            methodUsedByRoute = "GET"
+
+            headerUsedByRoute = {
+                "Authorization": `Bearer ${userStoredData.token}`,
+                "Content-Type": "application/json"
+            }
+
+            break;
+
 
         case '/notifications':
 
             methodUsedByRoute = "GET"
 
             headerUsedByRoute = {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${userStoredData.token}`,
                 "Content-Type": "application/json"
             }
 
@@ -115,7 +113,7 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
 
         default:
 
-            methodUsedByRoute = "PUT" //fix
+            methodUsedByRoute = "GET" //fix
 
             headerUsedByRoute = {
                 "Content-Type": "application/json"
@@ -134,7 +132,7 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
 
 }
 
-export const registerUser = async (info: userRegisterTypes) => {
+export const registerUser = async (info: UserRegisterTypes) => {
 
     try {
 
@@ -170,7 +168,7 @@ export const registerUser = async (info: userRegisterTypes) => {
     }
 }
 
-export const loginUser = async (info: userLoginTypes) => {
+export const loginUser = async (info: UserLoginTypes) => {
 
     try {
 
@@ -211,23 +209,17 @@ export const getAccountInfo = async () => {
 
     try {
 
-        const { data } = await Axios({
-            url: `${DB_URL}/info`,
-            method: 'GET',
-            headers: {
-
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userStoredData.token}`
-
-            }
-        })
+        const { data } = await Axios(reqConfig(`/info`))
 
         return { status: 200, data: data };
 
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message };
+        return {
+            status: error.response.status,
+            message: error.response.data.message
+        };
 
     }
 
@@ -237,22 +229,23 @@ export const getAnotherUserInfo = async (id: string) => {
 
     try {
 
-        const { data } = await Axios(
-            config('/profile-info', undefined, `?id=${id}`)
-        )
+        const { data } = await Axios(reqConfig('/profile-info', undefined, `?id=${id}`))
 
         return data;
 
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message };
+        return {
+            status: error.response.status,
+            message: error.response.data.message
+        };
 
     }
 
 }
 
-export const updateAccountData = async (method: string, email?: string, newPassword?: string, currentPassword?: string, firstName?: string, surname?: string, street?: string, county?: string, state?: string, tel1?: object, tel2?: object, facebook?: string, instagram?: string) => {
+export const updateAccountData = async (method: string, info: UpdateAccountTypes) => {
 
     try {
 
@@ -263,10 +256,9 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
                 dataToBeSend = {
 
-                    updateMethod: email && 'CHANGE_EMAIL' || newPassword && 'CHANGE_PASSWORD',
-                    email: email || null,
-                    newPassword: newPassword || null,
-                    currentPassword: currentPassword
+                    email: info.email || null,
+                    newPassword: info.newPassword || null,
+                    currentPassword: info.currentPassword
 
                 }
                 break;
@@ -275,10 +267,9 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
                 dataToBeSend = {
 
-                    updateMethod: 'CHANGE_NAME',
-                    firstName: firstName,
-                    surname: surname,
-                    currentPassword: currentPassword
+                    firstName: info.firstName,
+                    surname: info.surname,
+                    currentPassword: info.currentPassword
 
                 }
                 break;
@@ -287,13 +278,12 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
                 dataToBeSend = {
 
-                    updateMethod: 'CHANGE_NAME_AND_ADDRESS',
-                    firstName: firstName,
-                    surname: surname,
-                    street: street,
-                    county: county,
-                    state: state,
-                    currentPassword: currentPassword
+                    firstName: info.firstName,
+                    surname: info.surname,
+                    street: info.street,
+                    county: info.county,
+                    state: info.state,
+                    currentPassword: info.currentPassword
 
                 }
                 break;
@@ -302,11 +292,10 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
                 dataToBeSend = {
 
-                    updateMethod: 'CHANGE_ADDRESS',
-                    street: street,
-                    county: county,
-                    state: state,
-                    currentPassword: currentPassword
+                    street: info.street,
+                    county: info.county,
+                    state: info.state,
+                    currentPassword: info.currentPassword
 
                 }
                 break;
@@ -315,12 +304,11 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
                 dataToBeSend = {
 
-                    updateMethod: 'CHANGE_CONTACTS',
                     contacts: {
-                        tel1: tel1,
-                        tel2: tel2,
-                        facebook: facebook,
-                        instagram: instagram
+                        tel1: info.tel1,
+                        tel2: info.tel2,
+                        facebook: info.facebook,
+                        instagram: info.instagram
                     }
                 }
                 break;
@@ -329,21 +317,10 @@ export const updateAccountData = async (method: string, email?: string, newPassw
                 return
         }
 
-        // const res = await Axios({
-        //     url: `${DB_URL}/update-profile`,
-        //     method: 'PUT',
-        //     headers: {
-
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${userStoredData.token}`
-
-        //     },
-        //     data: dataToBeSend
-
-        // })
-        const res = await Axios(config('/update-profile', dataToBeSend))
+        const res = await Axios(reqConfig('/update-profile', dataToBeSend))
 
         return { success: true, status: res.status, data: res.data };
+
     }
     catch (error: any) {
 
@@ -359,7 +336,6 @@ export const updateAccountData = async (method: string, email?: string, newPassw
 
 export const logoutUser = async () => {
 
-    // redux dispatch
     store.dispatch(currentUser("REMOVE_USER"))
 
 }
@@ -368,7 +344,7 @@ export const getNotifications = async (token: string, query?: string) => {
 
     try {
         const { data } = await Axios(
-            config('/notifications', undefined, query ? `?q=${query}` : '', token)
+            reqConfig('/notifications', undefined, query ? `?q=${query}` : '')
         )
 
         return data
@@ -397,7 +373,7 @@ export const setNotificationsToRead = async () => {
     try {
 
         const { data } = await Axios(
-            config('/set-notifications-read')
+            reqConfig('/set-notifications-read')
         )
 
         return data
@@ -416,7 +392,7 @@ export const getContactInfoFromUser = async (id: string) => {
     try {
 
         const { data } = await Axios(
-            config(`/another-user-contacts`, undefined, `?id=${id}`)
+            reqConfig(`/another-user-contacts`, undefined, `?id=${id}`)
         )
 
         return data
@@ -433,7 +409,7 @@ export const deleteNotification = async (id: string) => {
     try {
 
         const { data } = await Axios(
-            config(`/delete-notification`, {
+            reqConfig(`/delete-notification`, {
                 notification: {
                     _id: id
                 }

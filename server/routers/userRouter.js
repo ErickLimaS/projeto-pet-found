@@ -94,7 +94,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 
 }))
 
-// all user data (WHILE LOGGED IN)
+// fetch profile data (WHILE LOGGED IN)
 userRouter.get('/info', isAuth, expressAsyncHandler(async (req, res) => {
 
     // verifies if email exist
@@ -149,10 +149,11 @@ userRouter.get('/profile-info', expressAsyncHandler(async (req, res) => {
 // updates user profile data 
 userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) => {
 
-    const user = await User.findById(req.user.userInfo._id)
+    try {
 
-    // checks if password matchs with the one stored on server
-    const checkPassword = async () => {
+        const user = await User.findById(req.user.userInfo._id)
+
+        // checks if password matchs with the one stored on server
         const passwordIsCorrect = await bcrypt.compare(req.body.currentPassword, user.password)
 
         if (!passwordIsCorrect) {
@@ -160,183 +161,15 @@ userRouter.put('/update-profile', isAuth, expressAsyncHandler(async (req, res) =
             return res.status(401).json({ success: false, message: 'Incorrect User Info Received' })
 
         }
-    }
 
-    // standardize the result for a successfull update request
-    const successfullReponse = async (logTitle, logType) => {
+        await user.update(req.body)
 
-        const user = await User.findById(req.user.userInfo._id)
-
-        user.activityLog.push({ title: logTitle, type: logType })
-
-        await user.save()
-
-        return {
-            success: true,
-            message: 'Success',
-            name: user.firstName,
-            token: generateToken(user)
-        }
-
-    }
-
-    try {
-
-        // gets which data the user wants to update
-        const requestedUpdate = req.body.updateMethod
-
-        if (requestedUpdate) {
-
-            switch (requestedUpdate) {
-
-                case 'CHANGE_PROFILE_IMAGE':
-
-                    await checkPassword()
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        { profileImg: req.body.profileImg },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou a Foto de Perfil', 'CHANGE_PROFILE_IMAGE'))
-
-                case 'CHANGE_EMAIL':
-
-                    await checkPassword()
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        { email: req.body.email },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou o Email', 'CHANGE_EMAIL'))
-
-                case 'CHANGE_PASSWORD':
-
-                    await checkPassword()
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        { password: await bcrypt.hash(req.body.newPassword, passwordSalt) },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou a Senha', 'CHANGE_PASSWORD'))
-
-                case 'CHANGE_NAME':
-
-                    await checkPassword()
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        {
-                            firstName: req.body.firstName,
-                            surname: req.body.surname
-                        },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou o Nome', 'CHANGE_NAME'))
-
-                case 'CHANGE_NAME_AND_ADDRESS':
-
-                    await checkPassword()
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        {
-                            firstName: req.body.firstName,
-                            surname: req.body.surname,
-                            address: {
-                                street: req.body.street,
-                                county: req.body.county,
-                                state: req.body.state
-                            }
-                        },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou o Nome e Endereço', 'CHANGE_NAME_AND_ADDRESS'))
-
-                case 'CHANGE_ADDRESS':
-
-                    await checkPassword()
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        {
-                            address: {
-                                street: req.body.street,
-                                county: req.body.county,
-                                state: req.body.state
-                            }
-                        },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou o Endereço', 'CHANGE_ADDRESS'))
-
-                case 'CHANGE_CONTACTS':
-
-                    User.findOneAndUpdate(
-                        { _id: req.user.userInfo._id },
-                        { contacts: req.body.contacts },
-                        async function (err, result) {
-
-                            if (err) {
-                                return res.status(404).json({ success: false, message: `${err}` })
-                            }
-
-                        }
-                    )
-
-                    return res.status(202).json(await successfullReponse('Trocou os Contatos', 'CHANGE_CONTACTS'))
-
-                default:
-                    return res.status(400).json({ success: false, message: 'Server Error. Provided method do not match.' })
-
+        return res.status(200).json(
+            {
+                success: true,
+                message: 'Dados do Usuário Atualizado.'
             }
-        }
-        else {
-            return res.status(400).json({ success: false, message: 'Server Error. No method received' })
-        }
+        )
 
     }
     catch (err) {

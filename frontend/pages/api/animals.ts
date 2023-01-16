@@ -1,4 +1,4 @@
-const Animais = [
+const Animais: AnimalsTemplateTypes[] = [
 
     {
         name: 'CAT',

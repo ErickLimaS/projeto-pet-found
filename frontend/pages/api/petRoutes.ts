@@ -5,44 +5,10 @@ import { store } from "../../store"
 const DB_URL = 'http://localhost:9123/pets'
 // const DB_URL = 'https://pet-found.onrender.com/pets'
 
-const state: any = store.getState()
-const userToken: string = state.currentUser.token ? state.currentUser.token : ''
+const config = (route: string, body?: unknown, query?: string, token?: string) => {
 
-interface petDataTypes {
-    type: String,
-    typeTranslated: String,
-    name: String,
-    genre: String,
-    age: Number,
-    size: Number,
-    hasDisability: Boolean,
-    disability: String,
-    breed: String,
-    particulars: [String],
-    lastSeen: {
-        whereOwnerLives: Boolean,
-        state: String,
-        state_abbrev: String,
-        county: String,
-        street: String
-    },
-    hasReward: Boolean,
-    rewardAmount: Number,
-    moreInfo: String,
-    postDetails: String
-}
-
-interface queryTypes {
-
-    type: any[] | null,
-    state: string,
-    county: string,
-    time_sort?: any | null,
-    hasDisability?: any | null
-
-}
-
-const config = (route: string, body?: any, query?: string, token?: string) => {
+    const state: any = store.getState()
+    const userToken = state.currentUser.token ? state.currentUser.token : ''
 
     let methodUsedByRoute: string = "";
     let headerUsedByRoute: {};
@@ -121,7 +87,7 @@ const config = (route: string, body?: any, query?: string, token?: string) => {
 }
 
 // makes POST request to register a new lost pet post and relate it with his owner
-export const createPetPost = async (info: petDataTypes, token?: string) => {
+export const createPetPost = async (info: PetInfoTypes, token?: string) => {
 
     try {
 
@@ -148,7 +114,7 @@ export const createPetPost = async (info: petDataTypes, token?: string) => {
 
 }
 
-export const getAllPetsByQuery = async (query?: queryTypes) => {
+export const getAllPetsByQuery = async (query?: QueryTypes) => {
 
     let queryOnUrl: string = '';
 
@@ -219,7 +185,7 @@ export const getPetInfo = async (id: string) => {
 
     }
     catch (error: any) {
-        
+
         return { status: error.response.status, message: error.response.data.message }
 
     }
@@ -239,7 +205,10 @@ export const getPetsRegisteredByUser = async () => {
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message }
+        return {
+            status: error.response.status,
+            message: error.response.data.message
+        }
 
     }
 
@@ -258,7 +227,10 @@ export const updatePetStatus = async () => {
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message }
+        return {
+            status: error.response.status,
+            message: error.response.data.message
+        }
     }
 
 }
@@ -276,14 +248,17 @@ export const removePetFromDB = async () => {
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message }
+        return {
+            status: error.response.status,
+            message: error.response.data.message
+        }
 
     }
 
 }
 
 // sets a notification of pet found to owner / who found will be paired with post of the pet
-export const notifyOwner = async (info: any) => {
+export const notifyOwner = async (info: unknown) => {
 
     try {
 
@@ -295,7 +270,10 @@ export const notifyOwner = async (info: any) => {
     }
     catch (error: any) {
 
-        return { status: error.response.status, message: error.response.data.message }
+        return {
+            status: error.response.status,
+            message: error.response.data.message
+        }
 
     }
 

@@ -1,7 +1,15 @@
 import React from 'react'
 import * as C from './NotificationMessage'
 
-function NotificationMessage({ props }: any) {
+interface ServerResponseTypes {
+
+    success: boolean,
+    message: string,
+    status: number
+
+}
+
+function NotificationMessage({ props }: { props: ServerResponseTypes | any }) {
 
     setTimeout(() => props = null, 6000)
 

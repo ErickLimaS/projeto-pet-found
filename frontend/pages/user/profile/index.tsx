@@ -60,7 +60,11 @@ const Profile: NextPage = () => {
 
         }
 
-        const result = await updateAccountData(method, email, newPasswordCheck1, currentPassword)
+        const result = await updateAccountData(method, {
+            email: email,
+            newPassword: newPasswordCheck1,
+            currentPassword: currentPassword
+        })
 
         // sets what the server responded to be notified on screen
         setResponseForNotification(result)
@@ -90,10 +94,12 @@ const Profile: NextPage = () => {
                 if (firstName && !street && !county && !state) {
                     const result = await updateAccountData(
                         'CHANGE_NAME',
-                        undefined, // not sent by this function 
-                        undefined, // not sent by this function 
-                        password, // current password
-                        firstName, surname, undefined, undefined, undefined
+                        {
+                            newPassword: password,
+                            firstName: firstName,
+                            surname: surname
+
+                        }
                     )
 
                     // sets what the server responded to be notified on screen
@@ -103,10 +109,14 @@ const Profile: NextPage = () => {
                 else if (firstName && street && county && state) {
                     const result = await updateAccountData(
                         'CHANGE_NAME_AND_ADDRESS',
-                        undefined, // not sent by this function 
-                        undefined, // not sent by this function 
-                        password, // current password
-                        firstName, surname, street, county, state
+                        {
+                            firstName: firstName,
+                            surname: surname,
+                            street: street,
+                            county: county,
+                            state: state,
+                            currentPassword: password
+                        }
                     )
 
                     // sets what the server responded to be notified on screen
@@ -116,10 +126,12 @@ const Profile: NextPage = () => {
                 else {
                     const result = await updateAccountData(
                         'CHANGE_ADDRESS',
-                        undefined, // not sent by this function 
-                        undefined, // not sent by this function 
-                        password, // current password
-                        undefined, undefined, street, county, state
+                        {
+                            newPassword: password,
+                            street: street,
+                            county: county,
+                            state: state
+                        }
                     )
 
                     // sets what the server responded to be notified on screen
@@ -138,17 +150,14 @@ const Profile: NextPage = () => {
 
                 const result = await updateAccountData(
                     'CHANGE_CONTACTS',
-                    undefined, // not sent by this function 
-                    undefined, // not sent by this function 
-                    undefined, // current password
-                    undefined, // not sent by this function 
-                    undefined, // not sent by this function 
-                    undefined, // not sent by this function 
-                    undefined, // not sent by this function 
-                    undefined, // not sent by this function 
-                    tel1, tel2, facebook, instagram
+                    {
+                        tel1:tel1,
+                        tel2:tel2,
+                        facebook:facebook,
+                        instagram:instagram
+                    }
                 )
-                
+
                 // sets what the server responded to be notified on screen
                 setResponseForNotification(result)
 

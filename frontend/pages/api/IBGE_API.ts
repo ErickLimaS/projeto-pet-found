@@ -3,10 +3,14 @@ import Axios from "axios"
 
 const IBGE_API = "https://servicodados.ibge.gov.br/api/v1/localidades"
 
-const headers: any = {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'
+function reqConfig(route: string) {
+
+    return {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        url: route
     }
 }
 
@@ -16,10 +20,7 @@ export default {
 
         try {
 
-            const { data } = await Axios({
-                headers,
-                url: `${IBGE_API}/estados?orderBy=nome`
-            })
+            const { data } = await Axios(reqConfig(`${IBGE_API}/estados?orderBy=nome`))
 
             return data
 
@@ -27,6 +28,8 @@ export default {
         catch (error: any) {
 
             console.log(error)
+
+            return error
 
         }
 
@@ -36,10 +39,7 @@ export default {
 
         try {
 
-            const { data } = await Axios({
-                headers,
-                url: `${IBGE_API}/estados/${uf}/municipios?orderBy=nome`
-            })
+            const { data } = await Axios(reqConfig(`${IBGE_API}/estados/${uf}/municipios?orderBy=nome`))
 
             return data
 
@@ -47,6 +47,8 @@ export default {
         catch (error: any) {
 
             console.log(error)
+            
+            return error
 
         }
 
