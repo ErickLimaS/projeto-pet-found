@@ -20,7 +20,18 @@
 @media(max-width: 425px) {
 
     .first_content {
-        min-height: 90vh;
+        justify-content: initial;
+        min-height: 620px;
+        max-height: unset;
+    }
+
+}
+
+@media(max-width: 350px) {
+
+    .first_content {
+        justify-content: initial;
+        min-height: 720px;
         max-height: unset;
     }
 
@@ -48,11 +59,23 @@
 }
 
 
+
 @media(max-width: 744px) {
 
     .first_content::before {
 
-        min-height: 780px;
+        min-height: 720px;
+        background-image: url('/imgs/home/background-mobile.png');
+
+    }
+
+}
+
+@media(max-width: 350px) {
+
+    .first_content::before {
+
+        min-height: 820px;
         background-image: url('/imgs/home/background-mobile.png');
 
     }
@@ -99,7 +122,7 @@
     .first_content .hero .text {
 
         width: 60%;
-    
+
     }
 
 }
@@ -147,6 +170,11 @@
 
 .first_content .hero div.img {
 
+    /* background: linear-gradient(white, white) padding-box,
+        linear-gradient(to right, darkblue, darkorchid) border-box;
+    border-radius: 50em;
+    border: 4px solid transparent; */
+
     border-radius: 50%;
     height: 545px;
     width: 545px;
@@ -190,7 +218,6 @@
     div.sections {
 
         position: relative;
-        top: 20vh;
 
     }
 
@@ -198,11 +225,18 @@
 
 div.sections>section {
 
+
     margin: 0 48px;
 
     margin-bottom: 48px;
 
 }
+
+div.sections>section>* {
+
+    max-width: 1180px;
+}
+
 
 @media(max-width: 1020px) {
 
@@ -754,10 +788,21 @@ section.newsletter_section {
     justify-content: space-between;
 }
 
+@media(min-width: 820px) {
+
+    section.newsletter_section {
+
+        padding: 0 48px;
+
+    }
+
+}
+
 @media(max-width: 820px) {
 
     section.newsletter_section {
 
+        width: inherit;
         margin-bottom: 70px !important;
 
     }
@@ -769,6 +814,7 @@ section.newsletter_section {
     section.newsletter_section {
 
         min-height: 800px;
+        justify-content: space-evenly;
 
     }
 
@@ -778,19 +824,13 @@ section.newsletter_section {
 
     section.newsletter_section {
 
+        width: inherit;
         min-height: 700px;
-        margin-bottom: 120px !important;
         top: 48px;
-        justify-content: center;
+        justify-content: space-evenly;
+        align-items: stretch !important;
 
     }
-
-}
-
-section.newsletter_section>* {
-
-    margin-left: 45px;
-    margin-right: 45px;
 
 }
 
@@ -823,7 +863,6 @@ section.newsletter_section::before {
     section.newsletter_section::before {
 
         background-position: bottom;
-        background-size: 100% 100vw;
 
     }
 
@@ -831,14 +870,22 @@ section.newsletter_section::before {
 
 section.newsletter_section div.text {
 
-    width: 45%;
-    height: 40%;
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
 
+}
+
+
+@media(max-width: 725px) {
+
+    section.newsletter_section div.text {
+
+        width: inherit;
+        height: 40%;
+
+    }
 }
 
 @media(max-width: 425px) {
@@ -868,7 +915,19 @@ section.newsletter_section .text h2 {
 
 }
 
+@media(min-width: 620px) {
+
+    section.newsletter_section .text h2 {
+
+        width: 45%;
+
+    }
+
+}
+
 section.newsletter_section div.form_container {
+
+    margin: 0 auto;
 
     height: 300px;
 
@@ -878,6 +937,9 @@ section.newsletter_section div.form_container {
 
     section.newsletter_section div.form_container {
 
+        margin: 0 auto;
+
+        width: 90%;
         height: initial;
 
     }
@@ -891,6 +953,18 @@ section.newsletter_section form {
     align-content: center;
     justify-content: center;
     align-items: center;
+
+}
+
+@media((min-width: 625px) and (max-width: 820px)) {
+
+    section.newsletter_section form {
+
+        max-width: 420px;
+
+        margin: 0 auto;
+
+    }
 
 }
 
@@ -947,7 +1021,7 @@ section.newsletter_section form button {
     padding: 16px;
     margin-left: 16px;
 
-    background: var(--brand-gradient);
+    background: var(--secondary);
 
     border: none;
     border-radius: 8px;
@@ -973,8 +1047,6 @@ section.newsletter_section form button {
 section.newsletter_section form button:hover {
 
     transition: all ease-in-out 220ms;
-
-    background: var(--secondary);
 
     transform: scale(1.04);
 
